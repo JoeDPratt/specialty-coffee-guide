@@ -1,26 +1,81 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+    /* Colors */
+    --color-pr-100: #FAF5F5;
+    --color-pr-200: #F2E6E6;
+    --color-pr-300: #E5D7DD;
+    --color-pr-400: #C2B6BB;
+    --color-pr-500: #A81D1F;
+    --color-pr-600: #837373;
+    --color-pr-700: #524343;
+    --color-pr-800: #170404;
+    --color-sc-100: #501DA8;
+
+    --color-brown-800: #451E0C;
+    --color-brown-700: #532A18;
+    --color-brown-600::#5F3522;
+    --color-brown-500: #6D402D;
+    --color-brown-400: #7A4C38;
+
+    --color-green-400: #1DA832;
+    --color-blue-400: #1D4BA8;
+    --color-aqua-400: #1D8FA8;
+  
+    /* Fonts */
+    --font-teko: "Teko", sans-serif;
+    --font-sofia-sans: "Sofia Sans Semi Condensed", sans-serif;
+    --font-sofia-sans-condensed: "Sofia Sans Condensed", sans-serif;
+
+    /* Breakpoints */
+    --container-sm: 500px;
+    --breakpoint-xs: 400px;
+    --breakpoint-xl: 1360px;
+
+}
+
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-pr-200);
+  --foreground: var(--color-pr-800);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-pr-800);
+    --foreground: var(--color-pr-100);
   }
 }
+
+@layer base {
+    h1 {
+      @apply font-teko text-5xl dark:text-white font-medium;
+    }
+    h2 {
+      @apply font-teko text-4xl dark:text-white font-medium mb-2;
+    }
+    h3 {
+      @apply font-teko text-3xl dark:text-white font-medium mb-2;
+    }
+    p {
+        @apply font-sofia-sans dark:text-white text-xl font-light mb-10;
+    }
+    a {
+        @apply font-sofia-sans text-lg font-bold;
+    }
+  }
+  
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sofia-sans), Helvetica, sans-serif;
 }
