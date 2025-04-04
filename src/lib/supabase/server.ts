@@ -1,7 +1,9 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { cache } from 'react' 
 
-export async function createClient() {
+export const createClient = cache (async () => {
+    console.log("Creating Supabase Server Client (Cached)...");
     const cookieStore = await cookies();
     const client = createServerClient(
         process.env.SUPABASE_URL!,
@@ -24,7 +26,7 @@ export async function createClient() {
         }
     );
     return client
-}
+});
 
 export async function getUser() {
     const { auth } = await createClient();

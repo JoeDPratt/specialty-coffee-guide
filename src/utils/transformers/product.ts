@@ -53,9 +53,7 @@ export function transformProduct(raw: any): Product {
 
         description: raw.description,
         insight: raw.insight,
-
         attribute: attributes,
-
         is_single_origin: raw.is_single_origin,
         sca_cup_score: raw.sca_cup_score,
 

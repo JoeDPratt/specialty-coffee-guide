@@ -1,5 +1,11 @@
 import "./globals.css";
+import { ReactQueryClientProvider } from '@/components/providers/ReactQueryClientProvider';
 export const dynamic = 'force-dynamic'
+
+export const metadata = {
+    title: 'Specialty Coffee Guide',
+    description: 'Discover the finest specialty coffee beans.',
+  }
 
 export default function RootLayout({
     children,
@@ -16,7 +22,9 @@ export default function RootLayout({
                     backgroundPosition: 'center -650px'
                 }}
             >
+                <ReactQueryClientProvider>
                 {children}
+                </ReactQueryClientProvider>
             </body>
         </html>
     );

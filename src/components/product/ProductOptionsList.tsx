@@ -38,7 +38,7 @@ function ProductOption({
             aria-label={ariaLabel}
             role="listitem"
         >
-            <div className="group shadow-b-neumorphic hover:scale-101 bg-pr-100 flex flex-col border-pr-300 border-2 items-center hover:shadow-none pt-6 pb-2.5 px-3 xs:pt-6 xs:pb-5.5 xs:px-6 font-sofia-sans text-2xl xs:text-3xl font-normal gap-10">
+            <div className="group shadow-b-neumorphic hover:scale-101 bg-pr-100 flex flex-col border-pr-300 border-2 items-center hover:shadow-none pt-6 pb-2.5 px-3 xs:pt-6 xs:pb-5.5 xs:px-6 font-sofia-sans font-normal gap-10">
                 <div className="flex flex-row flex-wrap flex-1 text-center">
                     <div className="w-full mb-4 flex py-2.25">
                         <BrandLogo
@@ -49,11 +49,11 @@ function ProductOption({
                             className="h-[30px] w-full object-contain inline-block"
                         />
                     </div>
-                    <div className="w-full leading-none border-t-2 border-pr-300 pt-7.75 pl-3">
+                    <div className="w-full leading-none text-3xl border-t-2 border-pr-300 pt-7.75 pl-3">
                         {displayWeight}
                         <span className="text-lg"> {weightUnit}</span>
                     </div>
-                    <div className="w-full font-sofia-sans text-5xl leading-none">
+                    <div className="w-full font-sofia-sans text-5xl xs:text-4xl leading-none mt-6">
                         {displayPrice}
                     </div>
                     <span className="w-full font-normal text-pr-600 text-base leading-none self-baseline pt-1.5">

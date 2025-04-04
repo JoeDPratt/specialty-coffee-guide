@@ -1,10 +1,11 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import Image from "next/image";
-// import Head from 'next/head'
 import SCGLogo from "@/assets/scg-logo-hz-dark.svg";
 import SCGIcon from "@/assets/scg-logomark-red.svg";
 import SCALogo from "@/assets/sca-logo.svg";
-import ProdcutPlaceholder from "@/assets/coffee_product_placeholder.svg"
-import ProductImage from "@/assets/test-product-image.jpg";
+import ProdcutPlaceholder from "/placeholders/coffee_product_placeholder.svg"
 import { JSX } from "react";
 import { Product } from "@/types/product";
 import ProvenanceSection from "@/components/product/ProvenanceSection";
@@ -28,7 +29,7 @@ function RoastLabel({ roast }: { roast: string }): JSX.Element | null {
     };
 
     // Default to green if the flagName doesn't exist in the map
-    const { bg: bgColor } = colorMap[roast];
+    const bgColor = colorMap[roast?.toLowerCase()]?.bg ?? "bg-gray-600";
     console.log("ROAST LABEL", bgColor);
 
     return (
@@ -39,7 +40,33 @@ function RoastLabel({ roast }: { roast: string }): JSX.Element | null {
     )
 }
 
-export default function ProductPage({ product }: ProductPageProps) {
+// Define the fetch function for the client
+const fetchProductBySlugFromApi = async (slug: string): Promise<Product> => {
+    const response = await fetch(`/api/products/${slug}`);
+    if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data as Product; // Assume the API returns data matching the Product type
+};
+
+export default function ProductPage({ slug }: { slug: string }) {
+
+    console.log("Product Page Component...", slug);
+    const { data: product, isLoading, isError, error } = useQuery<Product, Error>({
+        queryKey: ['product', slug],
+        queryFn: () => fetchProductBySlugFromApi(slug),
+    });
+
+    if (isLoading) return <p>Loading…</p>;
+
+    if (isError) {
+        console.error("Error fetching product:", error);
+        return <p>Error loading product: {error.message}</p>;
+    }
+
+    // If hydration worked and no error, product should be available
+    if (!product) return <p>Product not found</p>;
 
     const flavors = product.flavours.join(" • ");
 
@@ -75,18 +102,12 @@ export default function ProductPage({ product }: ProductPageProps) {
 
                         {/* LEFT COLUMN: Product image */}
                         <div className="lg:sticky lg:top-8 relative aspect-square lg:self-start lg:w-auto lg:flex-1 border-pr-100 sm:border-16 border-8 order-1">
-                            {product.images[0]?.image_url ? (
-                                <Image
-                                    src={product.images[0]?.image_url}
-                                    alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
-                                    fill
-                                    className="object-cover"
-                                />
-                            ) : (
-                                <div className="absolute inset-0">
-                                    <ProdcutPlaceholder className="object-fill" />
-                                </div>
-                            )}
+                            <Image
+                                src={product.images[2]?.image_url ?? "/placeholders/coffee-placeholder.svg"}
+                                alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
+                                fill
+                                className="object-cover bg-pr-100"
+                            />
                         </div>
 
                         {/* RIGHT COLUMN: Product details and attributes */}
