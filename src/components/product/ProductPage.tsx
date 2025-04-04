@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Head from 'next/head'
+// import Head from 'next/head'
 import SCGLogo from "@/assets/scg-logo-hz-dark.svg";
 import SCGIcon from "@/assets/scg-logomark-red.svg";
 import SCALogo from "@/assets/sca-logo.svg";
+import ProdcutPlaceholder from "@/assets/coffee_product_placeholder.svg"
 import ProductImage from "@/assets/test-product-image.jpg";
 import { JSX } from "react";
 import { Product } from "@/types/product";
@@ -28,6 +29,7 @@ function RoastLabel({ roast }: { roast: string }): JSX.Element | null {
 
     // Default to green if the flagName doesn't exist in the map
     const { bg: bgColor } = colorMap[roast];
+    console.log("ROAST LABEL", bgColor);
 
     return (
         <span
@@ -40,30 +42,25 @@ function RoastLabel({ roast }: { roast: string }): JSX.Element | null {
 export default function ProductPage({ product }: ProductPageProps) {
 
     const flavors = product.flavours.join(" • ");
-    const firstVariant = product.product_variants[0];
 
     return (
         <>
             {/* Dynamic product metadata */}
-            <Head>
-                <title>{`${product.product_name} | Buy Specialty Coffee from ${product.brand}`}</title>
+            {/* <Head>
+                <title>{`${product.product_name} | Buy Specialty Coffee from ${product.roaster}`}</title>
                 <meta name="description" content={product.description} />
-
-                {/* Open Graph */}
                 <meta property="og:title" content={product.product_name} />
                 <meta property="og:description" content={product.description} />
                 <meta property="og:image" content={product.images?.[0]?.image_url || ''} />
                 <meta property="og:type" content="product" />
-
-                {/* Product-specific OG tags */}
                 {firstVariant && (
                     <>
                         <meta property="product:price:amount" content={(firstVariant?.price ?? 0).toString()} />
                         <meta property="product:price:currency" content={firstVariant?.currency || 'GBP'} />
                     </>
                 )}
-            </Head>
-        // Root wrapper for the full product page layout
+            </Head> */}
+
             <div className="w-full">
                 {/* SITE HEADER: Contains logo/branding */}
                 <header className="bg-pr-800 flex justify-center gap-3 items-center h-20" role="banner" aria-label="SCG site header">
@@ -78,21 +75,26 @@ export default function ProductPage({ product }: ProductPageProps) {
 
                         {/* LEFT COLUMN: Product image */}
                         <div className="lg:sticky lg:top-8 relative aspect-square lg:self-start lg:w-auto lg:flex-1 border-pr-100 sm:border-16 border-8 order-1">
-                            <Image
-                                // src={product.images[0]?.image_url || placeholder}
-                                src={ProductImage}
-                                alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
-                                fill
-                                className="object-cove"
-                            />
+                            {product.images[0]?.image_url ? (
+                                <Image
+                                    src={product.images[0]?.image_url}
+                                    alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
+                                    fill
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <div className="absolute inset-0">
+                                    <ProdcutPlaceholder className="object-fill" />
+                                </div>
+                            )}
                         </div>
 
                         {/* RIGHT COLUMN: Product details and attributes */}
                         <div id="product-details" aria-label="Product details section" role="region" className="@container text-left flex-1 sm:min-w-[350px] order-2">
                             <BrandLogo
-                                src={"/rave-logo.svg"}
-                                alt={`${product.brand} logo`}
-                                aria-label={`${product.brand} logo`}
+                                src={product.roaster.logo_img_url}
+                                alt={product.roaster.alt_text}
+                                aria-label={product.roaster.alt_text}
                                 height={32}
                                 width={32}
                                 className="h-8 w-auto mb-7 dark:mb-6.5 dark:bg-white dark:border-4 dark:border-white dark:p-1"
@@ -105,7 +107,7 @@ export default function ProductPage({ product }: ProductPageProps) {
                                     className="flex flex-row gap-1 pb-1 sm:pb-1 md:pb-1">
                                     {product?.roasts.map((roast, index) => (
                                         <RoastLabel
-                                            roast={roast}
+                                            roast={roast.toLowerCase()}
                                             key={roast}
                                         />
                                     ))}
@@ -113,14 +115,14 @@ export default function ProductPage({ product }: ProductPageProps) {
                                 <span className="font-sofia-sans font-medium">{flavors}</span>
                             </div>
                             <p>{product.description}</p>
-                            <hr className="text-pr-300 bg-pr-300 color-pr-300 border-none h-0.5 w-full @sm:mt-11.5 mt-10.5 mb-9 @sm:mb-8"></hr>
+                            <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full @sm:mt-11.5 mt-10.5 mb-9 @sm:mb-8"></hr>
                             <div className="flex flex-col @sm:flex-row flex-1">
 
                                 {/* Product attributes: e.g. Organic, Fairtrade */}
                                 <AttributeSection
                                     attributeData={product?.attribute || {}}
                                 />
-                                <div className="@sm:w-1/3 w-full @sm:py-0 pb-8.25 @sm:pb-0 flex flex-row items-center gap-4 @sm:order-2 order-1 @sm:border-none border-b-2 border-pr-300">
+                                <div className="@sm:w-1/3 w-full @sm:py-0 pb-8.25 @sm:pb-0 flex flex-row items-center gap-4 @sm:order-2 order-1 @sm:border-none border-b-2 border-pr-300 shadow-b-neumorphic @sm:shadow-none">
                                     <SCALogo
                                         role="img"
                                         aria-label="Specialty Coffee Association cup score logo"
@@ -128,7 +130,7 @@ export default function ProductPage({ product }: ProductPageProps) {
                                     />
                                     <div className="font-sofia-sans">
                                         <div className="text-lg font-light pl-1 pb-1.25">Cup score</div>
-                                        {!product.sca_cup_score ?
+                                        {product.sca_cup_score ?
                                             <div className="text-5xl -mt-2">{product.sca_cup_score}</div>
                                             :
                                             <div className=" pl-1 text-xl -mt-2 opacity-50">Unrated</div>
@@ -137,11 +139,11 @@ export default function ProductPage({ product }: ProductPageProps) {
                                 </div>
 
                             </div>
-                            <hr className="text-pr-300 bg-pr-300 color-pr-300 border-none h-0.5 w-full mb-7.25 mt-7.5"></hr>
+                            <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full mb-7.25 mt-7.5"></hr>
 
                             {/* Provenance details such as origin, producer, altitude */}
                             <ProvenanceSection provenanceData={product?.provenance} />
-                            <hr className="text-pr-300 bg-pr-300 color-pr-300 border-none h-0.5 w-full @sm:mt-0.25 mt-1.25"></hr>
+                            <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full @sm:mt-0.25 mt-1.25"></hr>
                         </div>
                     </section>
 
@@ -166,10 +168,9 @@ export default function ProductPage({ product }: ProductPageProps) {
                         <div id="product-options" className="dark:text-pr-800 lg:sticky lg:top-8 relative lg:w-[calc(50%-36px)] lg:self-start lg:mt-8.75 mt-12.75">
                             <h2 className="pb-1.25">Buy this coffee</h2>
                             <ProductOptionsList
-                                brand={product.brand}
+                                roaster={product.roaster}
                                 productOptions={product.product_variants}
                                 url={product.product_url}
-                                brandLogoUrl="/rave-logo.svg"
                             />
                         </div>
                     </section>

@@ -2,7 +2,7 @@ import { HtmlContext } from "next/dist/server/route-modules/pages/vendored/conte
 
 export interface ProductVariant {
     weight: number;
-    weight_unit: string;
+    price_per_kg: number;
     price: number | null;
     currency: string | null;
     discount_percent: string | null;
@@ -25,26 +25,6 @@ export const ROAST_LEVELS: RoastLevel[] = [
 ];
 
 
-export interface CompleteProductOptions {
-    product_variants: ProductVariant[];
-    roasts: string[];
-    grind_type: string[];
-}
-
-export interface DeliveryOption {
-    lower_order_weight_threshold: number,
-    upper_order_weight_threshold: number;
-    price: number;
-    currency: string;
-}
-
-export interface DeliveryInfo {
-    delivery_options: DeliveryOption[];
-    free_delivery_currency: string;
-    free_delivery_threshold: number;
-    free_delivery_policy_text: string;
-}
-
 export interface ProductImages {
     image_url: string;
     alt_text?: string;
@@ -58,10 +38,12 @@ export interface Brewing {
     ratio: string | null;
     temperature: string | null;
 }
+
 export interface CoffeeAttributes {
     is_organic: boolean | null;
     is_fairtrade: boolean | null;
-    is_decaf: boolean;
+    is_decaf?: boolean;
+    is_lowcaf?: boolean;
     is_mycotoxin_free: boolean | null;
 }
 
@@ -79,8 +61,15 @@ export interface Provenance {
     processes: string[];
 }
 
+export interface ProductRoaster {
+    name: string;
+    slug: string;
+    logo_img_url: string;
+    alt_text: string;
+}
+
 export interface Product {
-    brand: string;
+    roaster: ProductRoaster;
     product_name: string;
     product_url: string;
     slug: string;
@@ -90,12 +79,14 @@ export interface Product {
     product_variants: ProductVariant[];
     images: ProductImages[];
     description: string
-    insight: string;
+    insight: string | null;
     attribute: CoffeeAttributes;
     is_single_origin: boolean | null;
-    sca_cup_score: number;
+    sca_cup_score: number | null; 
     provenance: Provenance;
-    brewing_info: Brewing;
-    delivery_info?: DeliveryInfo;
+    brewing_info?: Brewing; // Optional as it is not used in UI yet
+    meta_title: string;
+    meta_description: string;
+    schema: string;
 }
 

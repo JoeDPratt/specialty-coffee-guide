@@ -16,6 +16,7 @@ const labelColorMap: Record<string, { label: string; bg: string }> = {
     is_mycotoxin_free: { label: "MYCO FREE", bg: "bg-teal-400" },
     is_fairtrade: { label: "FAIRTRADE", bg: "bg-brown-400" },
     is_decaf: { label: "DECAF", bg: "bg-blue-400" },
+    is_lowcaf: { label: "LOW CAFFEINE", bg: "bg-blue-400" }
 };
 
 function AttributeItem({
@@ -41,7 +42,7 @@ function AttributeItem({
             />
             <div
                 className={`${!isActive && "opacity-50"
-                    } text-pr-800 dark:text-white leading-6`}
+                    } text-pr-800 dark:text-white leading-7 -mt-0.25`}
             >
                 {labelText}
                 <span className="sr-only">

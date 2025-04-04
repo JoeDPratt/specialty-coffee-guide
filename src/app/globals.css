@@ -17,7 +17,7 @@
 
     --color-brown-800: #451E0C;
     --color-brown-700: #532A18;
-    --color-brown-600::#5F3522;
+    --color-brown-600: #5F3522;
     --color-brown-500: #6D402D;
     --color-brown-400: #7A4C38;
 
@@ -34,6 +34,9 @@
     --container-sm: 500px;
     --breakpoint-xs: 400px;
     --breakpoint-xl: 1360px;
+
+    /* Shadows */   
+    --shadow-b-neumorphic: 0 1px 0 rgba(255,255,255,0.4)
 
 }
 
