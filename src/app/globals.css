@@ -5,6 +5,7 @@
 
 @theme {
     /* Colors */
+    --color-pr-50: rgba(250, 245, 245, 0.5);
     --color-pr-100: #FAF5F5;
     --color-pr-200: #F2E6E6;
     --color-pr-300: #E5D7DD;
@@ -14,6 +15,7 @@
     --color-pr-700: #524343;
     --color-pr-800: #170404;
     --color-sc-100: #501DA8;
+    --color-sc-200: #3d167f;
 
     --color-brown-800: #451E0C;
     --color-brown-700: #532A18;
@@ -32,7 +34,7 @@
 
     /* Breakpoints */
     --container-sm: 500px;
-    --breakpoint-xs: 400px;
+    --breakpoint-xs: 420px;
     --breakpoint-xl: 1360px;
 
     /* Shadows */   

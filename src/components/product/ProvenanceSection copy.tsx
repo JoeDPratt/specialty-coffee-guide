@@ -1,11 +1,5 @@
 import { Altitude, Provenance } from "@/types/product";
 import { JSX } from "react";
-import CountryIcon from '@/../public/icons/icon-countries.svg'
-import RegionIcon from '@/../public/icons/icon-regions.svg'
-import ProducerIcon from '@/../public/icons/icon-producers.svg'
-import ProcessIcon from '@/../public/icons/icon-processes.svg'
-import AltitudeIcon from '@/../public/icons/icon-altitude.svg'
-import VarietalIcon from '@/../public/icons/icon-varietals.svg'
 
 type ProvenanceLabel = keyof Provenance;
 
@@ -28,22 +22,12 @@ const labelDisplayNames: Record<ProvenanceLabel, string[]> = {
     processes: ["Process", "Processes"],
 };
 
-const iconMap: Record<string, React.ComponentType<any>> = {
-    origin_countries: CountryIcon,
-    origin_regions: RegionIcon,
-    producers: ProducerIcon,
-    altitude: AltitudeIcon,
-    varietals: VarietalIcon,
-    processes: ProcessIcon,
-};
-
 function ProvenanceItem({ label, value }: ProvenanceItemProps): JSX.Element {
     const isAltitude = label === "altitude";
 
     let isActive: boolean;
     let valueString: string;
     let displayLabel: string;
-    const Icon = iconMap[label];
 
     if (isAltitude) {
         const altitude = value as Altitude;
@@ -60,24 +44,19 @@ function ProvenanceItem({ label, value }: ProvenanceItemProps): JSX.Element {
 
     return (
         <div
-            className="flex flex-row gap-1.5 font-sofia-sans text-pr-800 dark:text-white text-lg w-[calc(50%-8px)] pb-6.5 pr-6"
+            className="font-sofia-sans text-pr-800 dark:text-white text-lg w-1/2 @sm:w-1/3 pb-6.5 pr-6"
             role="listitem"
             aria-label={`${displayLabel}: ${isActive ? valueString : "Not specified"}`}
         >
-            <div className="w-12 shrink-0 items-start align-top">
-                <Icon className="w-full h-auto object-cover fill-pr-800 -ml-0.5" />
-            </div>
-            <div>
-                <div className="font-extralight pb-0.5">{displayLabel}</div>
-                {isActive ? (
-                    <div className="font-medium leading-6">{valueString}</div>
-                ) : (
-                    <div className="font-medium text-pr-400">
-                        <span className="sr-only">Not specified</span>
-                        <span aria-hidden="true">-</span>
-                    </div>
-                )}
-            </div>
+            <div className="font-extralight pb-0.5">{displayLabel}</div>
+            {isActive ? (
+                <div className="font-medium leading-6">{valueString}</div>
+            ) : (
+                <div className="font-medium text-pr-400">
+                    <span className="sr-only">Not specified</span>
+                    <span aria-hidden="true">-</span>
+                </div>
+            )}
         </div>
     );
 }
@@ -99,7 +78,7 @@ export default function ProvenanceSection({
             <h3 id="provenance-heading" className="sr-only">
                 Coffee provenance details
             </h3>
-            <div role="list" className="flex flex-row flex-wrap w-full gap-4">
+            <div role="list" className="flex flex-row flex-wrap w-full">
                 {entries.map(([key, value]) => (
                     <ProvenanceItem key={key} label={key} value={value} />
                 ))}

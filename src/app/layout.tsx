@@ -18,7 +18,7 @@ export default function RootLayout({
             <body
                 className="bg-no-repeat bg-center bg-pr-100"
                 style={{
-                    backgroundImage: `url('/scg-lines-bg.svg')`,
+                    backgroundImage: `url('/images/scg-lines-bg.svg')`,
                     backgroundPosition: 'center -650px'
                 }}
             >

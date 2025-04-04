@@ -103,7 +103,7 @@ export default function ProductPage({ slug }: { slug: string }) {
                         {/* LEFT COLUMN: Product image */}
                         <div className="lg:sticky lg:top-8 relative aspect-square lg:self-start lg:w-auto lg:flex-1 border-pr-100 sm:border-16 border-8 order-1">
                             <Image
-                                src={product.images[2]?.image_url ?? "/placeholders/coffee-placeholder.svg"}
+                                src={product.images[0]?.image_url ?? "/placeholders/coffee-placeholder.svg"}
                                 alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
                                 fill
                                 className="object-cover bg-pr-100"
@@ -111,17 +111,20 @@ export default function ProductPage({ slug }: { slug: string }) {
                         </div>
 
                         {/* RIGHT COLUMN: Product details and attributes */}
-                        <div id="product-details" aria-label="Product details section" role="region" className="@container text-left flex-1 sm:min-w-[350px] order-2">
-                            <BrandLogo
-                                src={product.roaster.logo_img_url}
-                                alt={product.roaster.alt_text}
-                                aria-label={product.roaster.alt_text}
-                                height={32}
-                                width={32}
-                                className="h-8 w-auto mb-7 dark:mb-6.5 dark:bg-white dark:border-4 dark:border-white dark:p-1"
-                            />
-                            <h1 className="mb-1">{product.product_name}</h1>
-                            <div id="roast-flavours" className="font-sofia-sans-condensed text-xl flex flex-col items-start gap-2 pb-11">
+                        <div id="product-details" aria-label="Product details section" role="region" className="@container flex-1 sm:min-w-[350px] order-2 md:pt-6 lg:pt-8">
+                            <div className="flex items-center w-full">
+                                <BrandLogo
+                                    src={product.roaster.logo_img_url}
+                                    alt={product.roaster.alt_text}
+                                    aria-label={product.roaster.alt_text}
+                                    height={32}
+                                    width={32}
+                                    className="h-8 flex-1 w-auto mb-7 dark:mb-6.5 dark:bg-white dark:border-4 dark:border-white dark:p-1"
+                                />
+                            </div>
+                            <h1 className="mb-1 text-center">{product.product_name}</h1>
+                            <div id="roast-flavours" className="font-sofia-sans-condensed text-xl flex flex-col items-center gap-2 pb-4">
+                                <span className="font-sofia-sans font-medium">{flavors}</span>
                                 <div
                                     id="roasts"
 
@@ -133,9 +136,7 @@ export default function ProductPage({ slug }: { slug: string }) {
                                         />
                                     ))}
                                 </div>
-                                <span className="font-sofia-sans font-medium">{flavors}</span>
                             </div>
-                            <p>{product.description}</p>
                             <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full @sm:mt-11.5 mt-10.5 mb-9 @sm:mb-8"></hr>
                             <div className="flex flex-col @sm:flex-row flex-1">
 
@@ -161,7 +162,8 @@ export default function ProductPage({ slug }: { slug: string }) {
 
                             </div>
                             <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full mb-7.25 mt-7.5"></hr>
-
+                            <p className="text-center">{product.description}</p>
+                            <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full mb-7.25 mt-7.5"></hr>
                             {/* Provenance details such as origin, producer, altitude */}
                             <ProvenanceSection provenanceData={product?.provenance} />
                             <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full @sm:mt-0.25 mt-1.25"></hr>
@@ -187,7 +189,35 @@ export default function ProductPage({ slug }: { slug: string }) {
 
                         {/* Purchase options – links to the brand's product page */}
                         <div id="product-options" className="dark:text-pr-800 lg:sticky lg:top-8 relative lg:w-[calc(50%-36px)] lg:self-start lg:mt-8.75 mt-12.75">
-                            <h2 className="pb-1.25">Buy this coffee</h2>
+
+                            <h2 className="pb-1.25">Available from</h2>
+                            <a
+                                href={product.product_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full xs:w-[calc(50%-8px)] "
+                                aria-label={"Get this coffee"}
+                                role="listitem"
+                            >
+                                <div className="group flex flex-col bg-pr-50 xs:flex-row w-auto pt-6 pb-2 gap-6 xs:p-4 border-2 shadow-b-neumorphic border-pr-300 hover:border-sc-100 hover:bg-pr-100 hover:shadow-none mb-4 items-center justify-between transition-colors duration-150 ease-in-out">
+                                    <BrandLogo
+                                        src={product.roaster.logo_img_url}
+                                        alt={product.roaster.alt_text}
+                                        height={20}
+                                        width={20}
+                                        className="h-[24px] w-auto object-contain mx-4 group-hover:scale-110 transition-colors duration-150 ease-in-out"
+                                    />
+                                    <div
+                                        className="flex-1 text-sc-100 py-4 xs:pt-0 xs:pb-0.5 text-right font-sofia-sans-condensed font-black text-3xl border-t-2 border-pr-300 xs:border-none"
+                                        aria-hidden="true"
+                                    >
+                                        <span className="text-xl font-bold tracking-wide">
+                                            IN-STOCK: VISIT STORE →
+                                        </span>
+                                        <span className="hidden">→</span>
+                                    </div>
+                                </div>
+                            </a>
                             <ProductOptionsList
                                 roaster={product.roaster}
                                 productOptions={product.product_variants}
