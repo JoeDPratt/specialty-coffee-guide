@@ -28,7 +28,7 @@ export function cloudinaryLoader({
             parts.splice(uploadIndex + 1, 0, `f_auto,q_${q},w_${width}`);
 
             const finalUrl = `${url.origin}${parts.join('/')}`;
-            console.log("IMG PARAMS (full url):", finalUrl);
+
             return finalUrl;
         } catch (err) {
             console.warn("Invalid Cloudinary URL passed to loader:", src);
@@ -37,7 +37,7 @@ export function cloudinaryLoader({
     } else {
         // Treat it as a public_id (e.g. "roaster_logos/clifton-coffee-roasters.png")
         const finalUrl = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_${q},w_${width}/${src}`;
-        console.log("IMG PARAMS (public_id):", finalUrl);
+
         return finalUrl;
     }
 }

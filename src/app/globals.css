@@ -42,6 +42,7 @@
     /* Shadows */   
     --shadow-b-neumorphic: 0 1px 0 rgba(255,255,255,0.4);
     --shadow-img-lg: 0px 0px 56px 0px rgba(0,0,0,0.1);
+    --shadow-cup-score: -4px 4px 0px 0px rgba(23,4,4,0.15);
 
 }
 

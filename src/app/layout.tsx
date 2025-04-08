@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 export const metadata = {
     title: 'Specialty Coffee Guide',
     description: 'Discover the finest specialty coffee beans.',
-  }
+}
 
 export default function RootLayout({
     children,
@@ -15,17 +15,26 @@ export default function RootLayout({
     console.log("Layout Loading...");
     return (
         <html lang="en">
-            <body
-                className="bg-no-repeat bg-center bg-pr-100"
+            {/* <body
+                className="bg-center bg-gradient-to-b from-black to-white"
                 style={{
                     backgroundImage: `url('/images/scg-lines-bg.svg')`,
                     backgroundPosition: 'center -650px'
                 }}
+            > */}
+            <body
+                className="bg-center bg-no-repeat bg-cover min-h-screen"
+                style={{
+                    backgroundImage: `linear-gradient(to bottom, rgba(229, 215, 221, 0.8), rgba(229, 215, 221, 0.1)), url('/images/scg-lines-bg.svg')`,
+                    backgroundPosition: 'center -650px',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                }}
             >
                 <ReactQueryClientProvider>
-                {children}
+                    {children}
                 </ReactQueryClientProvider>
             </body>
-        </html>
+        </html >
     );
 }

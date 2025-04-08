@@ -13,7 +13,7 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items, className}: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className="bg-pr-100">
+    <nav aria-label="Breadcrumb" className="bg-pr-200">
       <ol className={`${className} flex overflow-x-auto whitespace-nowrap scrollbar-hide gap-1 no-scrollbar`}>
 
         {items.map((item, index) => {
@@ -25,20 +25,20 @@ export function Breadcrumbs({ items, className}: BreadcrumbsProps) {
                 <>
                   <Link
                     href={item.href || "#"}
-                    className="hover:underline text-pr-800 font-sofia-sans text-lg font-light"
+                    className="hover:underline text-pr-800 font-sofia-sans text-base font-normal"
                   >
                     {item.label}
                   </Link>
                   <ChevronRightIcon className="w-4 h-4 text-pr-600" />
                 </>
               ) : (
-                <span className="text-sc-100 font-sofia-sans text-lg font-light">{item.label}</span>
+                <span className="text-sc-100 font-sofia-sans text-base font-normal">{item.label}</span>
               )}
             </li>
           );
         })}
       </ol>
-      <hr className="text-pr-300 shadow-b-neumorphic bg-pr-100 color-pr-300 border-none w-full mx-auto h-0.5 mb-20 mt-2"></hr>
+      <hr className="text-pr-200 shadow-b-neumorphic bg-pr-200 color-pr-200 border-none w-full mx-auto h-0.5 mt-2.25"></hr>
 
     </nav>
   );
