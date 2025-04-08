@@ -1,9 +1,13 @@
 import { CoffeeAttributes } from "@/types/product";
 import { JSX } from "react";
+import OrganicIcon from "@/../public/icons/icon-organic.svg";
+import FairtradeIcon from "@/../public/icons/icon-fairtrade.svg";
+import DecafIcon from "@/../public/icons/icon-decaf.svg";
+import MycoIcon from "@/../public/icons/icon-myco-free.svg";
+import SingleOriginIcon from "@/../public/icons/icon-single-origin.svg";
 
 interface AttributeItemProps {
     flagName: string;
-    position: number;
     isActive?: boolean;
 }
 
@@ -11,43 +15,49 @@ interface AttributeSectionProps {
     attributeData: CoffeeAttributes;
 }
 
-const labelColorMap: Record<string, { label: string; bg: string }> = {
-    is_organic: { label: "ORGANIC", bg: "bg-green-400" },
-    is_mycotoxin_free: { label: "MYCO FREE", bg: "bg-teal-400" },
-    is_fairtrade: { label: "FAIRTRADE", bg: "bg-brown-400" },
-    is_decaf: { label: "DECAF", bg: "bg-blue-400" },
-    is_lowcaf: { label: "LOW CAFFEINE", bg: "bg-blue-400" }
+type LabelConfig = {
+    label: string | JSX.Element;
+    bgColor: string;
+    icon: React.ComponentType<any>;
+    iconColor: string;
+};
+
+const labelColorMap: Record<string, LabelConfig> = {
+    is_organic: { label: "ORGANIC", bgColor: "bg-green-400", icon: OrganicIcon, iconColor: "fill-green-400" },
+    is_mycotoxin_free: { label: "MYCO FREE", bgColor: "bg-teal-400", icon: MycoIcon, iconColor: "fill-teal-400" },
+    is_fairtrade: { label: "FAIRTRADE", bgColor: "bg-brown-400", icon: FairtradeIcon, iconColor: "fill-brown-400" },
+    is_decaf: { label: "DECAF", bgColor: "bg-blue-400", icon: DecafIcon, iconColor: "fill-blue-400" },
+    is_lowcaf: { label: "LOW CAFF", bgColor: "bg-blue-400", icon: DecafIcon, iconColor: "fill-blue-400" },
+    is_single_origin: { label: "SINGLE ORIGIN", bgColor: "bg-orange-400", icon: SingleOriginIcon, iconColor: "fill-orange-400" },
 };
 
 function AttributeItem({
     flagName,
-    position,
     isActive = false,
 }: AttributeItemProps): JSX.Element {
-    const { label: labelText, bg: bgColor } = labelColorMap[flagName] || {
+    const { label: labelText, bgColor: bgColor, icon: Icon, iconColor: iconColor } = labelColorMap[flagName] || {
         label: "ORGANIC",
         bg: "bg-green-400",
     };
 
     return (
-        <div
-            className="w-1/2 py-2 flex flex-row gap-2 justify-left items-start self-start"
-            role="listitem"
-            aria-label={`${labelText} attribute is ${isActive ? "active" : "inactive"}`}
-        >
+        <div className={`flex w-1/2 xs:w-auto`}>
             <div
-                className={`${isActive ? bgColor : "bg-pr-400 opacity-50"
-                    } aspect-square h-6 w-6 rounded-full inline-block`}
-                aria-hidden="true"
-            />
-            <div
-                className={`${!isActive && "opacity-50"
-                    } text-pr-800 dark:text-white leading-7 -mt-0.25`}
+                className={`@sm:w-max xs:w-min py-2 flex flex-row xs:flex-col gap-1 xs:gap-2 items-center`}
+                role="listitem"
+                aria-label={`${labelText} attribute is ${isActive ? "active" : "inactive"}`}
             >
-                {labelText}
-                <span className="sr-only">
-                    {isActive ? " (active)" : " (inactive)"}
-                </span>
+                <div className="w-10 shrink-0 items-center xs:align-top align-middle">
+                    <Icon className={`w-full h-auto object-cover ${isActive ? iconColor : "fill-pr-800 opacity-25"}`} />
+                </div>
+                <hr className="text-brown-300 xs:shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-10 w-0 xs:h-0.5 xs:w-10 mb-1.25 mt-0.25"></hr>
+                <div
+                    className={`${!isActive && "opacity-25"} text-pr-800 dark:text-white text-center text-base leading-4 -mt-0.25`}>
+                    {labelText}
+                    <span className="sr-only">
+                        {isActive ? " (active)" : " (inactive)"}
+                    </span>
+                </div>
             </div>
         </div>
     );
@@ -57,26 +67,26 @@ export default function AttributeSection({
     attributeData,
 }: AttributeSectionProps): JSX.Element {
     const entries = Object.entries(attributeData || {});
+    const labelCount = entries.length;
 
     return (
-        <section
-            className="flex flex-row @sm:w-2/3 w-full flex-wrap font-sofia-sans-condensed text-lg tracking-wide font-medium @sm:order-1 order-2 @sm:pt-0 pt-8 gap-y-4 @sm:gap-0"
+        <div
+            className="font-sofia-sans-condensed tracking-wide font-medium lg:pt-1.25 -mt-1.75 lg:mt-0"
             role="region"
             aria-labelledby="attribute-section-heading"
         >
             <h3 id="attribute-section-heading" className="sr-only">
                 Product attributes
             </h3>
-            <div className="w-full flex flex-wrap" role="list">
-                {entries.map(([key, value], index) => (
+            <div className="w-full flex flex-wrap xs:justify-between" role="list">
+                {entries.map(([key, value]) => (
                     <AttributeItem
                         key={key}
                         flagName={key}
-                        position={index + 1}
                         isActive={Boolean(value)}
                     />
                 ))}
             </div>
-        </section>
+        </div>
     );
 }

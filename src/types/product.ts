@@ -24,6 +24,10 @@ export const ROAST_LEVELS: RoastLevel[] = [
   'light'
 ];
 
+export type LogoLayout =
+    | "wide"
+    | "square"
+    | "tall";
 
 export interface ProductImages {
     image_url: string;
@@ -45,6 +49,7 @@ export interface CoffeeAttributes {
     is_decaf?: boolean;
     is_lowcaf?: boolean;
     is_mycotoxin_free: boolean | null;
+    is_single_origin?: boolean | null;
 }
 
 export interface Altitude {
@@ -66,6 +71,7 @@ export interface ProductRoaster {
     slug: string;
     logo_img_url: string;
     alt_text: string;
+    logo_layout: LogoLayout;
 }
 
 export interface Product {
@@ -81,12 +87,12 @@ export interface Product {
     description: string
     insight: string | null;
     attribute: CoffeeAttributes;
-    is_single_origin: boolean | null;
     sca_cup_score: number | null; 
     provenance: Provenance;
     brewing_info?: Brewing; // Optional as it is not used in UI yet
     meta_title: string;
     meta_description: string;
     schema: string;
+    lowest_price_per_kg: number;
 }
 

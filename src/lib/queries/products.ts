@@ -14,7 +14,7 @@ export const getFullProductBySlug = cache(async (slug: string): Promise<Product 
         .select(`
             product_name, product_url, description, meta_title, meta_description, schema, slug,
             sca_cup_score, is_decaf, is_lowcaf, is_fairtrade, is_instock, is_mycotoxin_tested,
-            is_organic, is_single_origin, insight,
+            is_organic, is_single_origin, insight, lowest_price_per_kg,
             product_variants ( price, weight, price_per_kg, currency, discount_percent ),
             product_images ( image_url, alt_text, is_primary ),
             coffee_provenance (
@@ -28,7 +28,7 @@ export const getFullProductBySlug = cache(async (slug: string): Promise<Product 
             coffee_roasts ( default_roasts ( display_name ) ),
             coffee_grinds ( default_grinds ( display_name ) ),
             coffee_flavours_identified ( canonical_flavour ),
-            coffee_roasters ( name, slug, roaster_images ( image_url, alt_text, is_primary ) )
+            coffee_roasters ( name, slug, roaster_images ( image_url, alt_text, is_primary, logo_layout ) )
         `)
         .eq('slug', slug)
         .eq('is_published', true)
@@ -55,7 +55,7 @@ export async function getProductImages(): Promise<any | null> {
     const supabase = await createClient()
     const { data } = await supabase
         .from('product_images')
-        .select('id, image_url, alt_text, is_primary');
+        .select('id, image_url, alt_text, is_primary, logo_layout');
 
     console.log('All product images:', data);
 

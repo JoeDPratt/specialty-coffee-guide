@@ -26,6 +26,8 @@
     --color-green-400: #1DA832;
     --color-blue-400: #1D4BA8;
     --color-aqua-400: #1D8FA8;
+    --color-orange-400: #A8621D;
+    --color-red-400: #F03538;
   
     /* Fonts */
     --font-teko: "Teko", sans-serif;
@@ -77,7 +79,17 @@
     a {
         @apply font-sofia-sans text-lg font-bold;
     }
-  }
+}
+
+ @layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+}
   
 
 body {

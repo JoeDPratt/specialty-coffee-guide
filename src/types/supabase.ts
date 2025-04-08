@@ -1,3 +1,4 @@
+import { LogoLayout } from "./product"
 export type Json =
   | string
   | number
@@ -965,6 +966,7 @@ export type Database = {
           is_primary: boolean | null
           roaster_id: string | null
           type: string | null
+          logo_layout: LogoLayout
           uploaded_at: string | null
           uploaded_by: string | null
         }

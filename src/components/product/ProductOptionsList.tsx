@@ -1,20 +1,18 @@
-import { JSX } from "react";
 import { ProductVariant, ProductRoaster } from "@/types/product"
-import BrandLogo from "@/components/product/BrandLogo";
-import Pouch from '@/../public/images/coffee-pouch-outline-2.svg';
+import Pouch from '@/../public/images/coffee-pouch-2.svg';
 
 interface productOptionsListProps {
-    roaster: ProductRoaster;
+    lowestPricePerKg: number;
     productOptions: ProductVariant[];
     url: string;
 }
 
 function ProductOption({
-    roaster,
+    lowestPricePerKg,
     option,
-    url
+    url,
 }: {
-    roaster: ProductRoaster;
+    lowestPricePerKg: number;
     option: ProductVariant;
     url: string;
 }) {
@@ -27,6 +25,8 @@ function ProductOption({
     const perKgValue = option.price_per_kg;
     const perKgRounded = perKgValue.toFixed(2);
     const displayPerKg = `${currency}${perKgRounded} /kg`;
+    const isBestValue = lowestPricePerKg >= option.price_per_kg;
+ 
 
     const ariaLabel = `Buy ${displayWeight}${weightUnit} for ${displayPrice}. Price per kilogram is ${perKgRounded}${currency}`;
 
@@ -41,9 +41,14 @@ function ProductOption({
         >
             {/* <div className="group shadow-b-neumorphic hover:scale-101 flex flex-row border-pr-300 border-2 items-center hover:shadow-none pt-6 pb-2.5 px-3 xs:pt-6 xs:pb-5.5 xs:px-6 font-sofia-sans font-normal gap-10"> */}
             <div className="group flex flex-col items-center bg-pr-50 hover:shadow-none shadow-b-neumorphic font-sofia-sans font-normal  px-4 py-10 gap-4 border-2 border-pr-300 hover:border-sc-100 hover:bg-pr-100 transition-colors duration-150 ease-in-out">
-                <div className="relative w-20 aspect-[3/4] shrink-0 group-hover:scale-105">
+                <div className="relative w-30 aspect-[3/4] shrink-0 group-hover:scale-105">
                     <Pouch className="w-full h-full object-cover fill-brown-700" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center pt-12">
+
+                    <div className="absolute inset-0 flex flex-col items-center justify-end mb-10 gap-3.5">
+                        {isBestValue && 
+                        <div className="bg-red-400 text-white text-base rounded-full border-2 border-white pt-0.5 px-2">
+                            BEST VALUE
+                        </div>}
                         <div className="text-center leading-none text-3xl text-white">
                             {displayWeight}
                             <span className="text-base">{weightUnit}</span>
@@ -65,10 +70,11 @@ function ProductOption({
 }
 
 export default function ProductOptionList({
-    roaster,
+    lowestPricePerKg,
     productOptions,
-    url,
+    url
 }: productOptionsListProps) {
+    
     return (
         <div
             className="flex flex-row flex-wrap gap-4 w-full"
@@ -77,9 +83,9 @@ export default function ProductOptionList({
         >
             {productOptions.map((option, index) => (
                 <ProductOption
-                    roaster={roaster}
                     option={option}
                     url={url}
+                    lowestPricePerKg={lowestPricePerKg}
                     key={(option.price || 0) + index}
                 />
             ))}
