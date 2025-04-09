@@ -22,17 +22,7 @@ export default function RootLayout({
         <html
             lang="en"
             className={`${teko.variable} ${sofiaCondensed.variable} ${sofiaSemiCondensed.variable}`}
-            style={{
-                fontFamily: `${teko.style.fontFamily}, ${sofiaCondensed.style.fontFamily}, ${sofiaSemiCondensed.style.fontFamily}`,
-            }}
         >
-            {/* <body
-                className="bg-center bg-gradient-to-b from-black to-white"
-                style={{
-                    backgroundImage: `url('/images/scg-lines-bg.svg')`,
-                    backgroundPosition: 'center -650px'
-                }}
-            > */}
             <head>
                 <meta name="apple-mobile-web-app-title" content="MyWebSite" />
             </head>
@@ -44,7 +34,13 @@ export default function RootLayout({
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                 }}
-            >
+            > 
+                {/* FORCING FONTS */}
+                <div style={{ display: 'none' }}>
+                    <span style={teko.style}>Teko</span>
+                    <span style={sofiaCondensed.style}>Sofia Condensed</span>
+                    <span style={sofiaSemiCondensed.style}>Sofia Semi Condensed</span>
+                </div>
                 <ReactQueryClientProvider>
                     {children}
                 </ReactQueryClientProvider>
