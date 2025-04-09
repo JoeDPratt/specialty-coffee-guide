@@ -1,4 +1,4 @@
-import type { Product } from '@/types/product'
+import type { Product, ProductCard } from '@/types/product'
 
 interface Attributes {
     is_organic: boolean;
@@ -24,7 +24,7 @@ export function transformProduct(raw: any): Product {
         attributes.is_lowcaf = raw.is_lowcaf
     } else {
         attributes.is_decaf = raw.is_decaf
-        
+
     }
 
     return {
@@ -77,3 +77,28 @@ export function transformProduct(raw: any): Product {
         lowest_price_per_kg: raw.lowest_price_per_kg
     };
 }
+
+export function transformCardProduct(raw: any): ProductCard {
+
+    const roaster = raw.coffee_roasters || {};
+    const primaryLogo = roaster.roaster_images?.find((img: any) => img.is_primary);
+
+    return {
+        slug: raw.slug,
+        product_name: raw.product_name,
+        flavours: raw.search_flavours ?? [],
+        images: (raw.product_images || []).map((img: any) => ({
+            image_url: img.image_url,
+            alt_text: img.alt_text,
+        })),
+        lowest_price_per_kg: raw.lowest_price_per_kg ?? null,
+        roaster: {
+            name: roaster.name,
+            slug: roaster.slug,
+            logo_img_url: primaryLogo?.image_url || '',
+            alt_text: primaryLogo?.alt_text || 'Roaster logo',
+            logo_layout: primaryLogo?.logo_layout || 'wide',
+        }
+    };
+}
+

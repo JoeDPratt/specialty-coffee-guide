@@ -3,7 +3,7 @@
 import { cache } from 'react'; // Import cache from React
 import { createClient } from '@/lib/supabase/server';
 import { Product } from '@/types/product';
-import { transformProduct } from '@/utils/transformers/product';
+import { transformCardProduct, transformProduct } from '@/utils/transformers/product';
 
 export const getFullProductBySlug = cache(async (slug: string): Promise<Product | null> => {
     console.log("Get Product Page Loading (cached)... Slug:", slug); // Add slug for clarity
@@ -49,6 +49,32 @@ export const getFullProductBySlug = cache(async (slug: string): Promise<Product 
     if (!data) return null;
 
     return transformProduct(data);
+});
+
+export const getProductsByRoasterSlug = cache(async (roasterSlug: string, limit = 4): Promise<any[]> => {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('coffee_products')
+        .select(`
+            product_name, slug, lowest_price_per_kg, is_organic, is_decaf, is_lowcaf, is_mycotoxin_tested, sca_cup_score, search_flavours, 
+            product_images ( image_url, alt_text, is_primary ),
+            coffee_roasters!inner ( name, slug, 
+                roaster_images ( image_url, alt_text, logo_layout, is_primary ))
+        `)
+        .eq('is_published', true)
+        .eq('is_deleted', false)
+        .eq('coffee_roasters.slug', roasterSlug)
+        .limit(limit);
+
+    if (error) {
+        console.error("Error in getProductsByRoasterSlug:", error);
+        return [];
+    }
+
+    const transformedProduct = data.map(transformCardProduct)
+
+    return transformedProduct;
 });
 
 export async function getProductImages(): Promise<any | null> {

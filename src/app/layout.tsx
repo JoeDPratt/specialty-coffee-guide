@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ReactQueryClientProvider } from '@/components/providers/ReactQueryClientProvider';
+import Header from "@/components/shared/header/Header";
 export const dynamic = 'force-dynamic'
 import { Teko, Sofia_Sans_Condensed, Sofia_Sans_Semi_Condensed } from 'next/font/google';
 
@@ -43,6 +44,7 @@ export default function RootLayout({
                     <span style={sofiaCondensed.style}>Sofia Condensed</span>
                     <span style={sofiaSemiCondensed.style}>Sofia Semi Condensed</span>
                 </div>
+                <Header />
                 <ReactQueryClientProvider>
                     {children}
                 </ReactQueryClientProvider>

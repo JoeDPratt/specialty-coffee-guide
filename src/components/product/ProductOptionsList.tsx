@@ -1,5 +1,6 @@
 import { ProductVariant, ProductRoaster } from "@/types/product"
-import Pouch from '@/../public/images/coffee-pouch-2.svg';
+import Pouch from '@public/images/coffee-pouch-2.svg';
+import { JSX } from 'react';
 
 interface productOptionsListProps {
     lowestPricePerKg: number;
@@ -15,7 +16,7 @@ function ProductOption({
     lowestPricePerKg: number;
     option: ProductVariant;
     url: string;
-}) {
+}) : JSX.Element {
     const currency = option.currency === "GBP" ? "£" : "$";
     const price = option.price || 0;
     const weight = option.weight || 0;
@@ -73,7 +74,7 @@ export default function ProductOptionList({
     lowestPricePerKg,
     productOptions,
     url
-}: productOptionsListProps) {
+}: productOptionsListProps) : JSX.Element {
     
     return (
         <div
@@ -81,7 +82,9 @@ export default function ProductOptionList({
             role="list"
             aria-label="Product purchase options"
         >
-            {productOptions.map((option, index) => (
+            {[...productOptions]
+            .sort((a, b) => ((a.weight || 0) - (b.weight || 0)))
+            .map((option, index) => (
                 <ProductOption
                     option={option}
                     url={url}

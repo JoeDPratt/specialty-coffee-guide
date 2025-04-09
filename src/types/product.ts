@@ -10,18 +10,18 @@ export interface ProductVariant {
 }
 
 export type RoastLevel =
-  | 'dark'
-  | 'medium dark'
-  | 'medium'
-  | 'medium light'
-  | 'light';
+    | 'dark'
+    | 'medium dark'
+    | 'medium'
+    | 'medium light'
+    | 'light';
 
 export const ROAST_LEVELS: RoastLevel[] = [
-  'dark',
-  'medium dark',
-  'medium',
-  'medium light',
-  'light'
+    'dark',
+    'medium dark',
+    'medium',
+    'medium light',
+    'light'
 ];
 
 export type LogoLayout =
@@ -87,7 +87,7 @@ export interface Product {
     description: string
     insight: string | null;
     attribute: CoffeeAttributes;
-    sca_cup_score: number | null; 
+    sca_cup_score: number | null;
     provenance: Provenance;
     brewing_info?: Brewing; // Optional as it is not used in UI yet
     meta_title: string;
@@ -96,3 +96,21 @@ export interface Product {
     lowest_price_per_kg: number;
 }
 
+export interface ProductCard {
+    slug: string;
+    product_name: string;
+    flavours: string[];
+    images: {
+        image_url: string;
+        alt_text: string;
+    }[];
+    lowest_price_per_kg: number | null;
+    roaster: {
+        name: string;
+        slug: string;
+        logo_img_url: string;
+        alt_text: string;
+        logo_layout: LogoLayout;
+    };
+    likes_count?: number;
+}

@@ -2,9 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Image from "next/image";
-import SCGLogo from "@/assets/scg-logo-hz-dark.svg";
+import SCGLogo from "@public/logos/scg-logo-stacked.svg";
 import SCGIcon from "@/assets/scg-logomark-red.svg";
-import { JSX } from "react";
 import { Product } from "@/types/product";
 import ProvenanceSection from "@/components/product/ProvenanceSection";
 import AttributeSection from "@/components/product/AttributeSection";
@@ -12,52 +11,22 @@ import SafeHtml from '@/components/shared/SafeHtml';
 import BrandLogo from "@/components/product/BrandLogo"
 import ProductOptionsList from "@/components/product/ProductOptionsList";
 import FollowButton from '../shared/FollowButton';
-import { Breadcrumbs } from '../shared/Breadcrumbs';
-import CupScoreBadge from '../shared/CupScoreBadge';
+import CupScoreBadge from '../shared/product/CupScoreBadge';
 import { cloudinaryLoader } from '@/utils/image/cloudinaryLoader';
+import { fetchProductBySlug } from '@/lib/fetchers/products';
+import RoastLabel from '../shared/product/RoastLabel';
+import { JSX } from 'react';
 
 interface ProductPageProps {
     product: Product;
 }
 
-function RoastLabel({ roast }: { roast: string }): JSX.Element | null {
-
-    const colorMap: Record<string, { bg: string }> = {
-        "dark": { bg: "bg-brown-800" },
-        "medium dark": { bg: "bg-brown-700" }, // Tailwind doesn't have 'aqua-400'
-        "medium": { bg: "bg-brown-600" },
-        "medium light": { bg: "bg-brown-500" },
-        "light": { bg: "bg-brown-400" }
-    };
-
-    // Default to green if the flagName doesn't exist in the map
-    const bgColor = colorMap[roast?.toLowerCase()]?.bg ?? "bg-gray-600";
-    console.log("ROAST LABEL", bgColor);
-
-    return (
-        <span
-            aria-label={`${roast} roast`}
-            className={`${bgColor} text-white font-sofia-sans px-1.5 pt-1.5 pb-1 text-center text-base font-bold leading-3 tracking-wider`}>{roast.toUpperCase()}
-        </span>
-    )
-}
-
-// Define the fetch function for the client
-const fetchProductBySlugFromApi = async (slug: string): Promise<Product> => {
-    const response = await fetch(`/api/products/${slug}`);
-    if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
-    const data = await response.json();
-    return data as Product; // Assume the API returns data matching the Product type
-};
-
-export default function ProductPage({ slug }: { slug: string }) {
+export default function ProductPage({ slug }: { slug: string }): JSX.Element {
 
     console.log("Product Page Component...", slug);
     const { data: product, isLoading, isError, error } = useQuery<Product, Error>({
         queryKey: ['product', slug],
-        queryFn: () => fetchProductBySlugFromApi(slug),
+        queryFn: () => fetchProductBySlug(slug),
     });
 
     if (isLoading) return <p>Loading…</p>;
@@ -70,7 +39,7 @@ export default function ProductPage({ slug }: { slug: string }) {
     // If hydration worked and no error, product should be available
     if (!product) return <p>Product not found</p>;
     const flavors = product.flavours.join(" • ");
-    product.roasts = ["dark"];
+
     console.log("LPPKG", product.lowest_price_per_kg)
 
     return (
@@ -93,23 +62,18 @@ export default function ProductPage({ slug }: { slug: string }) {
 
             {/* <div className="w-full"> */}
             {/* SITE HEADER: Contains logo/branding */}
-            <header className="bg-pr-800 flex justify-left gap-3 items-center h-20" role="banner" aria-label="SCG site header">
-                <div className="mx-auto lg:max-w-[1400px] w-full md:max-lg:max-w-172 xl:px-20 sm:px-6.5 px-4">
-                    <SCGLogo />
-                </div>
-            </header>
-            <Breadcrumbs
+            {/* <Breadcrumbs
                 items={[
                     { label: "Home", href: "/" },
                     { label: "Coffee Beans", href: "/coffee-beans" },
                     { label: "Passion Fruit Filter" }
                 ]}
                 className={"lg:max-w-[1400px] mx-auto md:max-lg:max-w-172 pt-3.25 xl:px-20 sm:px-6.5 px-4"}
-            />
+            /> */}
 
 
             {/* MAIN CONTENT AREA */}
-            <main role="main" id="main-content" className="lg:max-w-[1400px] w-full mx-auto md:max-lg:max-w-172 font-teko text-pr-800 dark:text-white xl:px-20 sm:px-6.5 px-4 pt-1 mt-17.5">
+            <main role="main" id="main-content" className="layout-container text-pr-800 dark:text-white pt-1 mt-17.5">
 
 
                 {/* PRODUCT INFO SECTION */}
@@ -124,9 +88,9 @@ export default function ProductPage({ slug }: { slug: string }) {
                                 layout={product.roaster.logo_layout}
                                 baseHeight={48}
                             />
-                            <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none w-1/2 lg:w-1/3 mx-auto h-0.5 mt-3.75 mb-2.25" />
+                            <hr className="hr-neu-shadow w-1/2 lg:w-1/3 mx-auto mt-3.75 mb-2.25" />
 
-                            <h1 className="text-center w-full text-6xl lg:w-2/3 mx-auto leading-12 -mb-3 mt-2 ">
+                            <h1 className="text-center w-full text-6xl lg:text-7xl lg:w-3/4 mx-auto leading-12 lg:leading-14 -mb-3 mt-2 ">
                                 {product.product_name.toUpperCase()}
                             </h1>
 
@@ -135,12 +99,8 @@ export default function ProductPage({ slug }: { slug: string }) {
                                 className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-lg justify-center gap-2 mx-auto w-full lg:w-2/3"
                             >{flavors}
                             </div>
-                            {product?.roasts[0] && (
-                                <div id="roasts" className="flex flex-row gap-1 pb-1">
-                                    <RoastLabel roast={product?.roasts[0].toLowerCase()} key={product?.roasts[0]} />
-                                </div>
-                            )}
-                            <div className="flex items-end mt-3 mb-6">
+                            <RoastLabel roasts={product?.roasts} />
+                            <div className="flex items-end mt-4.75 mb-6">
                                 <FollowButton
                                     isFollowing={false}
                                     onToggle={() => console.log("follow toggled")}
@@ -177,10 +137,10 @@ export default function ProductPage({ slug }: { slug: string }) {
                             attributeData={product?.attribute || {}}
                         />
                         <p className="text-left font-base pt-14">{product.description}</p>
-                        <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full mb-12 mt-16"></hr>
+                        <hr className="hr-neu-shadow w-full mb-12 mt-16"></hr>
                         {/* Provenance details such as origin, producer, altitude */}
                         <ProvenanceSection provenanceData={product?.provenance} />
-                        <hr className="text-pr-300 shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-0.5 w-full mt-6"></hr>
+                        <hr className="hr-neu-shadow w-full mt-6"></hr>
                         {/* Purchase options – links to the brand's product page */}
                         <div id="product-options" className="dark:text-pr-800 lg:sticky lg:top-8 relative lg:self-start lg:mt-16.75 mt-12.75">
 

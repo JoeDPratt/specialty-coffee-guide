@@ -1,6 +1,7 @@
 import SCALogo from "@/../public/icons/sca-logo.svg";
 import Wreath from "@/../public/images/wreath.svg";
 import SCGLogoMark from "@/../public/images/scg-logomark-red.svg";
+import { JSX } from "react";
 
 interface CupScoreBadgeProps {
     score: number | null;
@@ -8,7 +9,7 @@ interface CupScoreBadgeProps {
     variant?: string;
 }
 
-export default function CupScoreBadge({ score, className, variant = "default" }: CupScoreBadgeProps) {
+export default function CupScoreBadge({ score, className, variant = "default" }: CupScoreBadgeProps) : JSX.Element | null{
     if (!score) return null;
 
     return (

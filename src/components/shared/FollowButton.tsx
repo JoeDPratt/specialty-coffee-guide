@@ -1,5 +1,4 @@
-import { useState } from "react";
-// import { BellIcon } from "@heroicons/react/24/outline";
+import { JSX, useState } from "react";
 import { BellSlashIcon, BellIcon } from "@heroicons/react/24/solid";
 
 interface FollowButtonProps {
@@ -10,14 +9,13 @@ interface FollowButtonProps {
   className?: string;
 }
 
-
 export default function FollowButton({
   isFollowing,
   onToggle,
   labelType,
   className,
   showLabel = true
-}: FollowButtonProps) {
+}: FollowButtonProps) : JSX.Element {
     isFollowing = true
   const label = labelType === "coffee" ? "Coffee" : "Roaster";
   const ariaLabel = `${isFollowing ? "Unfollow" : "Follow"} ${label}`;

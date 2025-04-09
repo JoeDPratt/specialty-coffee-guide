@@ -1,11 +1,11 @@
 import { Altitude, Provenance } from "@/types/product";
 import { JSX } from "react";
-import CountryIcon from '@/../public/icons/icon-countries.svg'
-import RegionIcon from '@/../public/icons/icon-regions.svg'
-import ProducerIcon from '@/../public/icons/icon-producers.svg'
-import ProcessIcon from '@/../public/icons/icon-processes.svg'
-import AltitudeIcon from '@/../public/icons/icon-altitude.svg'
-import VarietalIcon from '@/../public/icons/icon-varietals.svg'
+import CountryIcon from '@public/icons/icon-countries.svg'
+import RegionIcon from '@public/icons/icon-regions.svg'
+import ProducerIcon from '@public/icons/icon-producers.svg'
+import ProcessIcon from '@public/icons/icon-processes.svg'
+import AltitudeIcon from '@public/icons/icon-altitude.svg'
+import VarietalIcon from '@public/icons/icon-varietals.svg'
 
 type ProvenanceLabel = keyof Provenance;
 
@@ -60,7 +60,8 @@ function ProvenanceItem({ label, value }: ProvenanceItemProps): JSX.Element {
 
     return (
         <div
-            className="flex flex-row gap-1.5 font-sofia-sans text-pr-800 dark:text-white text-lg w-[calc(50%-8px)] pb-6.5 pr-6"
+            className="flex flex-col xs:flex-row gap-1.5 font-sofia-sans text-pr-800 dark:text-white text-lg w-[calc(50%-8px)] pb-6.5 pr-3
+             xs:pr-6"
             role="listitem"
             aria-label={`${displayLabel}: ${isActive ? valueString : "Not specified"}`}
         >

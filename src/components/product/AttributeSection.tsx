@@ -1,10 +1,10 @@
 import { CoffeeAttributes } from "@/types/product";
 import { JSX } from "react";
-import OrganicIcon from "@/../public/icons/icon-organic.svg";
-import FairtradeIcon from "@/../public/icons/icon-fairtrade.svg";
-import DecafIcon from "@/../public/icons/icon-decaf.svg";
-import MycoIcon from "@/../public/icons/icon-myco-free.svg";
-import SingleOriginIcon from "@/../public/icons/icon-single-origin.svg";
+import OrganicIcon from "@public/icons/icon-organic.svg";
+import FairtradeIcon from "@public/icons/icon-fairtrade.svg";
+import DecafIcon from "@public/icons/icon-decaf.svg";
+import MycoIcon from "@public/icons/icon-myco-free.svg";
+import SingleOriginIcon from "@public/icons/icon-single-origin.svg";
 
 interface AttributeItemProps {
     flagName: string;
@@ -50,9 +50,9 @@ function AttributeItem({
                 <div className="w-10 shrink-0 items-center xs:align-top align-middle">
                     <Icon className={`w-full h-auto object-cover ${isActive ? iconColor : "fill-pr-800 opacity-25"}`} />
                 </div>
-                <hr className="text-brown-300 xs:shadow-b-neumorphic bg-pr-300 color-pr-300 border-none h-10 w-0 xs:h-0.5 xs:w-10 mb-1.25 mt-0.25"></hr>
+                <hr className="hidden xs:block hr-neu-shadow w-0 xs:w-10 mb-1.25 mt-0.25"></hr>
                 <div
-                    className={`${!isActive && "opacity-25"} text-pr-800 dark:text-white text-center text-base leading-4 -mt-0.25`}>
+                    className={`${!isActive && "opacity-25"} text-pr-800 dark:text-white xs:text-center text-base leading-4 -mt-0.25`}>
                     {labelText}
                     <span className="sr-only">
                         {isActive ? " (active)" : " (inactive)"}

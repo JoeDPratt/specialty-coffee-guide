@@ -38,6 +38,7 @@
     --shadow-b-neumorphic: 0 1px 0 rgba(255,255,255,0.4);
     --shadow-img-lg: 0px 0px 56px 0px rgba(0,0,0,0.1);
     --shadow-cup-score: -4px 4px 0px 0px rgba(23,4,4,0.15);
+    --shadow-breadcrumbs: 0px 0px 20px 2px rgba(0,0,0,0.05);
 
 }
 
@@ -87,6 +88,15 @@
   }
 
  @layer utilities {
+    .layout-container {
+        @apply mx-auto w-full lg:max-w-[1400px] md:max-lg:max-w-172 xl:px-20 sm:px-6.5 px-4;
+      }
+      .hr-neu-shadow {
+        @apply border-none h-0.5;
+        background-color: var(--color-pr-300);
+        color: var(--color-pr-300);
+        box-shadow: var(--shadow-b-neumorphic);
+      }
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
