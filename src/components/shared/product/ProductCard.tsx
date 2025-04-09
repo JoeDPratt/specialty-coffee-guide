@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { JSX } from 'react';
-import { ProductCard } from '@/types/product'; // Replace with your actual type
+import type { ProductCard } from '@/types/product';
 import { cloudinaryLoader } from '@/utils/image/cloudinaryLoader';
 import BrandLogo from '@/components/product/BrandLogo';
 import { getProductPath } from '@/utils/navigation/paths';
