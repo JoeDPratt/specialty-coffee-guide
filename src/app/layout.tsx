@@ -33,7 +33,9 @@ export default function RootLayout({
                     backgroundPosition: 'center -650px',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
+                    fontFamily: `${teko.style.fontFamily}, ${sofiaCondensed.style.fontFamily}, ${sofiaSemiCondensed.style.fontFamily}`
                 }}
+                
             > 
                 {/* FORCING FONTS */}
                 <div style={{ display: 'none' }}>
