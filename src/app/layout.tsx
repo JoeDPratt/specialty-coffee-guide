@@ -19,7 +19,13 @@ export default function RootLayout({
 }>) {
     console.log("Layout Loading...");
     return (
-        <html lang="en" className={`${teko.variable} ${sofiaCondensed.variable} ${sofiaSemiCondensed.variable}`}>
+        <html
+            lang="en"
+            className={`${teko.variable} ${sofiaCondensed.variable} ${sofiaSemiCondensed.variable}`}
+            style={{
+                fontFamily: `${teko.style.fontFamily}, ${sofiaCondensed.style.fontFamily}, ${sofiaSemiCondensed.style.fontFamily}`,
+            }}
+        >
             {/* <body
                 className="bg-center bg-gradient-to-b from-black to-white"
                 style={{
