@@ -1,6 +1,11 @@
 import "./globals.css";
 import { ReactQueryClientProvider } from '@/components/providers/ReactQueryClientProvider';
 export const dynamic = 'force-dynamic'
+import { Teko, Sofia_Sans_Condensed, Sofia_Sans_Semi_Condensed } from 'next/font/google';
+
+const teko = Teko({ subsets: ['latin'], variable: '--font-teko' });
+const sofiaCondensed = Sofia_Sans_Condensed({ subsets: ['latin'], variable: '--font-sofia-sans-condensed' });
+const sofiaSemiCondensed = Sofia_Sans_Semi_Condensed({ subsets: ['latin'], variable: '--font-sofia-sans' });
 
 export const metadata = {
     title: 'Specialty Coffee Guide',
