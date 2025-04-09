@@ -1,17 +1,18 @@
 import { LogoLayout } from '@/types/product';
 import { cloudinaryLoader } from '@/utils/image/cloudinaryLoader';
 import Image from 'next/image';
+import { ImageProps } from 'next/image';
 import React from 'react';
 
-interface BrandLogoProps {
+interface BrandLogoProps extends Partial<ImageProps> {
     src: string;
     alt?: string;
     className?: string;
     containerClassName?: string;
     priority?: boolean;
     layout?: LogoLayout;
-    baseHeight?: number; // e.g. 'h-8'
-}
+    baseHeight?: number;
+  }
 
 const BrandLogo: React.FC<BrandLogoProps> = ({
     src,
