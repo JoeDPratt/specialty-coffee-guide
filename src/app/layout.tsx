@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
     title: 'Specialty Coffee Guide',
-    description: 'Discover the finest specialty coffee beans.',
+    description: 'Discover the finest specialty coffee beans.'
 }
 
 export default function RootLayout({
@@ -22,6 +22,9 @@ export default function RootLayout({
                     backgroundPosition: 'center -650px'
                 }}
             > */}
+            <head>
+                <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+            </head>
             <body
                 className="bg-center bg-no-repeat bg-cover min-h-screen"
                 style={{

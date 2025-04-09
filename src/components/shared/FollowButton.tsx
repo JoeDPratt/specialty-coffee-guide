@@ -18,13 +18,14 @@ export default function FollowButton({
   className,
   showLabel = true
 }: FollowButtonProps) {
+    isFollowing = true
   const label = labelType === "coffee" ? "Coffee" : "Roaster";
   const ariaLabel = `${isFollowing ? "Unfollow" : "Follow"} ${label}`;
 
   return (
     <button
       onClick={onToggle}
-      className={`${className} border-1 ${isFollowing ? "border-sc-100" : "border-pr-400" } flex items-center font-sofia-sans-condensed uppercase tracking-wider gap-1.5 text-lg px-3 py-1.5 hover:bg-pr-100 transition-all duration-200 cursor-pointer group`}
+      className={`${className} border-1 ${isFollowing ? "border-sc-100" : "border-pr-600" } flex items-center font-sofia-sans-condensed uppercase tracking-wider gap-1.5 text-lg px-3 py-1.5 hover:bg-pr-100 transition-all duration-200 cursor-pointer group`}
       aria-label={ariaLabel}
     >
       {isFollowing ? (
