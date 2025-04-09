@@ -28,11 +28,6 @@
     --color-aqua-400: #1D8FA8;
     --color-orange-400: #A8621D;
     --color-red-400: #F03538;
-  
-    /* Fonts */
-    /* --font-teko: "Teko", sans-serif;
-    --font-sofia-sans: "Sofia Sans Semi Condensed", sans-serif;
-    --font-sofia-sans-condensed: "Sofia Sans Condensed", sans-serif; */
 
     /* Breakpoints */
     --container-sm: 500px;
@@ -66,21 +61,30 @@
 
 @layer base {
     h1 {
-      @apply font-teko text-5xl dark:text-white font-medium;
+      font-family: var(--font-teko), sans-serif;
+      @apply text-5xl dark:text-white font-medium;
     }
+  
     h2 {
-      @apply font-teko text-4xl dark:text-white font-medium mb-2;
+      font-family: var(--font-teko), sans-serif;
+      @apply text-4xl dark:text-white font-medium mb-2;
     }
+  
     h3 {
-      @apply font-teko text-3xl dark:text-white font-medium mb-2;
+      font-family: var(--font-teko), sans-serif;
+      @apply text-3xl dark:text-white font-medium mb-2;
     }
+  
     p {
-        @apply font-sofia-sans dark:text-white text-xl font-light mb-10;
+      font-family: var(--font-sofia-sans), sans-serif;
+      @apply dark:text-white text-xl font-light mb-10;
     }
+  
     a {
-        @apply font-sofia-sans text-lg font-bold;
+      font-family: var(--font-sofia-sans), sans-serif;
+      @apply text-lg font-bold;
     }
-}
+  }
 
  @layer utilities {
     .no-scrollbar::-webkit-scrollbar {
@@ -89,6 +93,18 @@
     .no-scrollbar {
       -ms-overflow-style: none;
       scrollbar-width: none;
+    }
+    /* Fonts */
+    .font-teko {
+        font-family: var(--font-teko), sans-serif;
+    }
+    
+    .font-sofia-sans {
+        font-family: var(--font-sofia-sans), sans-serif;
+    }
+    
+    .font-sofia-sans-condensed {
+        font-family: var(--font-sofia-sans-condensed), sans-serif;
     }
 }
   
