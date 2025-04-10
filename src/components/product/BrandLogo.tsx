@@ -1,5 +1,5 @@
 import { LogoLayout } from '@/types/product';
-import { cloudinaryLoader } from '@/utils/image/cloudinaryLoader';
+import { cloudinaryLoader } from '@/utils/image/cloudinary';
 import Image from 'next/image';
 import { ImageProps } from 'next/image';
 import React from 'react';

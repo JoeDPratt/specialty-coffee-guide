@@ -12,10 +12,12 @@ import BrandLogo from "@/components/product/BrandLogo"
 import ProductOptionsList from "@/components/product/ProductOptionsList";
 import FollowButton from '../shared/FollowButton';
 import CupScoreBadge from '../shared/product/CupScoreBadge';
-import { cloudinaryLoader } from '@/utils/image/cloudinaryLoader';
+import { cloudinaryLoader } from '@/utils/image/cloudinary';
 import { fetchProductBySlug } from '@/lib/fetchers/products';
 import RoastLabel from '../shared/product/RoastLabel';
 import { JSX } from 'react';
+import { motion } from 'framer-motion';
+import { fadeUpItem, slideUpVariant, staggerContainer, subtleSpring } from '@/utils/animation';
 
 interface ProductPageProps {
     product: Product;
@@ -73,15 +75,29 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
 
 
             {/* MAIN CONTENT AREA */}
-            <main role="main" id="main-content" className="layout-container text-pr-800 dark:text-white pt-1 mt-17.5">
-
+            <motion.main 
+                role="main" 
+                id="main-content" 
+                className="layout-container text-pr-800 dark:text-white pt-1 mt-17.5"
+                initial="hidden"
+                animate="visible"
+                variants={staggerContainer}
+                >
 
                 {/* PRODUCT INFO SECTION */}
-                <section id="coffee-info" aria-labelledby="product-title" role="region" className="flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-16 gap-12 mt-1.5">
+                <section 
+                    id="coffee-info" 
+                    aria-labelledby="product-title" 
+                    role="region" 
+                    className="flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-16 gap-12 mt-1.5"
+                    >
                     {/* Background + Content Layer */}
                 
                         {/* FOREGROUND CONTENT */}
-                        <div className="flex flex-col relative z-10 w-full items-center justify-center gap-4">
+                        <motion.div 
+                            className="flex flex-col relative z-10 w-full items-center justify-center gap-4"
+                            variants={fadeUpItem}
+                            >
                             <BrandLogo
                                 src={product.roaster.logo_img_url}
                                 alt={product.roaster.alt_text}
@@ -108,13 +124,18 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                                     showLabel={true}
                                 />
                             </div>
-                        </div>
+                        </motion.div>
                     
 
                     {/* LEFT COLUMN: Product image */}
-                    <div className="flex flex-col lg:top-8 lg:sticky lg:self-start lg:flex-1 bg-pr-100 sm:p-6 p-4 border-2 shadow-b-neumorphic border-pr-300">
-
-                        <div className="w-full relative aspect-square order-2">
+                    <motion.div 
+                        className="flex flex-col lg:top-8 lg:sticky lg:self-start lg:flex-1 bg-pr-100 sm:p-6 p-4 border-2 shadow-b-neumorphic border-pr-300"
+                        variants={fadeUpItem}>
+                    <motion.div 
+                        layoutId={`product-image-${product.slug}`}
+                        transition={subtleSpring} 
+                        className="w-full relative aspect-square order-2"
+                        >
                             <CupScoreBadge
                                 score={product.sca_cup_score}
                                 className="absolute bottom-0 -mb-8 lg:top-0 lg:-mt-8.5 left-1/2 -translate-x-1/2 lg:left-8/10 z-10 px-4 rounded-full"
@@ -126,13 +147,18 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                                 fill
                                 className="object-cover bg-pr-100"
                             />
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
 
 
                     {/* RIGHT COLUMN: Product details and attributes */}
-                    <div id="product-details" aria-label="Product details section" role="region" className="@container lg:flex-1 sm:min-w-[350px] px-0 xs:px-2 sm:px-6 lg:px-0">
-
+                    <motion.div 
+                        id="product-details" 
+                        aria-label="Product details section" 
+                        role="region" 
+                        className="@container lg:flex-1 sm:min-w-[350px] px-0 xs:px-2 sm:px-6 lg:px-0"
+                        variants={fadeUpItem}
+                        >
                         <AttributeSection
                             attributeData={product?.attribute || {}}
                         />
@@ -178,7 +204,7 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                                 url={product.product_url}
                             />
                         </div>
-                    </div>
+                    </motion.div>
 
 
                 </section>
@@ -203,7 +229,7 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                 </section>
                 {/* <section className="bg-white h-200">
                     </section> */}
-            </main>
+            </motion.main>
         </>
     );
 }

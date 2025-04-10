@@ -41,3 +41,11 @@ export function cloudinaryLoader({
         return finalUrl;
     }
 }
+
+export function getBlurURL(src: string): string {
+    const publicId = src.startsWith('http')
+        ? new URL(src).pathname.split('/upload/')[1]
+        : src;
+
+    return `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_1,w_20,e_blur:1000/${publicId}`;
+};

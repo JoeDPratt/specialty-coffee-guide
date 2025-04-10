@@ -4,6 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchProductsByRoaster } from '@/lib/fetchers/products';
 import { JSX } from 'react';
 import ProductCard from '@/components/shared/product/ProductCard';
+import { motion } from 'framer-motion';
+import { staggerContainer, fadeUpItem } from '@/utils/animation/index';
+import SkeletonHome from './SkeletonHome';
 
 export default function HomePage({ roasterSlug }: { roasterSlug: string }): JSX.Element {
     const { data: products, isLoading } = useQuery({
@@ -11,7 +14,7 @@ export default function HomePage({ roasterSlug }: { roasterSlug: string }): JSX.
         queryFn: () => fetchProductsByRoaster(roasterSlug),
     });
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <SkeletonHome />;
 
     console.log('Products:', products);
     products?.forEach((p) => {
@@ -26,13 +29,22 @@ export default function HomePage({ roasterSlug }: { roasterSlug: string }): JSX.
         <main className="layout-container mt-20">
 
             <h2>Specialty Coffee by {roasterName}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+            <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6"
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
+            >
                 {products?.map((product) => (
-                    <ProductCard
-                        product={product}
-                        key={product.slug} />
+                    <motion.div 
+                        key={product.slug} 
+                        variants={fadeUpItem}
+                        className="flex flex-col h-full"
+                        >
+                        <ProductCard product={product} />
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
         </main>
     );
 }

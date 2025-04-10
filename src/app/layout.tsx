@@ -12,7 +12,7 @@ export const metadata = {
     title: 'Specialty Coffee Guide',
     description: 'Discover the finest specialty coffee beans.'
 }
-
+// rgba(229, 215, 221, 0.8), rgba(229, 215, 221, 0.1)
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -25,29 +25,33 @@ export default function RootLayout({
             className={`${teko.variable} ${sofiaCondensed.variable} ${sofiaSemiCondensed.variable}`}
         >
             <head>
-                <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+                <meta name="apple-mobile-web-app-title" content="Specialty Coffee Guide" />
             </head>
-            <body
-                className="bg-center bg-no-repeat bg-cover min-h-screen"
-                style={{
-                    backgroundImage: `linear-gradient(to bottom, rgba(229, 215, 221, 0.8), rgba(229, 215, 221, 0.1)), url('/images/scg-lines-bg.svg')`,
-                    backgroundPosition: 'center -650px',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    fontFamily: `${teko.style.fontFamily}, ${sofiaCondensed.style.fontFamily}, ${sofiaSemiCondensed.style.fontFamily}`
-                }}
-                
-            > 
-                {/* FORCING FONTS */}
-                <div style={{ display: 'none' }}>
-                    <span style={teko.style}>Teko</span>
-                    <span style={sofiaCondensed.style}>Sofia Condensed</span>
-                    <span style={sofiaSemiCondensed.style}>Sofia Semi Condensed</span>
+            <body>
+                <div
+                    className="min-h-screen bg-cover bg-no-repeat bg-center"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(to bottom, rgba(225, 200, 206, 0.7), rgba(225, 205, 206, 0.1)),
+                            url('/images/scg-lines-bg.svg'),
+                            url('/images/handmade-paper.png')
+                            `,
+                        backgroundPosition: 'center top, center -650px, top left',
+                        backgroundSize: 'cover, auto, auto',
+                        backgroundRepeat: 'no-repeat, no-repeat, repeat',
+                    }}
+                >
+                    {/* FORCING FONTS */}
+                    <div style={{ display: 'none' }}>
+                        <span style={teko.style}>Teko</span>
+                        <span style={sofiaCondensed.style}>Sofia Condensed</span>
+                        <span style={sofiaSemiCondensed.style}>Sofia Semi Condensed</span>
+                    </div>
+                    <Header />
+                    <ReactQueryClientProvider>
+                        {children}
+                    </ReactQueryClientProvider>
                 </div>
-                <Header />
-                <ReactQueryClientProvider>
-                    {children}
-                </ReactQueryClientProvider>
             </body>
         </html >
     );
