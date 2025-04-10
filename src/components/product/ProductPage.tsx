@@ -17,7 +17,7 @@ import { fetchProductBySlug } from '@/lib/fetchers/products';
 import RoastLabel from '../shared/product/RoastLabel';
 import { JSX } from 'react';
 import { motion } from 'framer-motion';
-import { fadeUpItem, slideUpVariant, staggerContainer, subtleSpring } from '@/utils/animation';
+import { fadeUpItem, staggerContainer, subtleSpring } from '@/utils/animation';
 
 interface ProductPageProps {
     product: Product;

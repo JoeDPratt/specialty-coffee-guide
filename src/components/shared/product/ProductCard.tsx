@@ -34,7 +34,7 @@ export default function ProductCard({ product }: ProductCardProps): JSX.Element 
     return (
         <Link
             href={getProductPath(slug)}
-            className="group flex flex-col h-full bg-white hover:shadow-xl transition-all overflow-hidden border-2 border-pr-300 shadow-b-neumorphic"
+            className="group flex flex-col h-full bg-pr-100 hover:shadow-xl transition-all overflow-hidden border-2 border-pr-300 shadow-b-neumorphic"
         >
             {/* Image */}
             <motion.div 

@@ -16,7 +16,7 @@ export const fadeUpItem = {
         scale: 1,
         y: 0,
         transition: {
-            duration: 0.4,
+            duration: 0.25,
             ease: 'easeOut',
         },
     },
@@ -24,19 +24,7 @@ export const fadeUpItem = {
 
 export const subtleSpring = {
     type: 'spring',
-    stiffness: 120,
-    damping: 20,
+    stiffness: 200,
+    damping: 30,
     mass: 0.8,
-};
-
-export const slideUpVariant = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.5,
-            ease: 'easeOut',
-        },
-    },
 };
