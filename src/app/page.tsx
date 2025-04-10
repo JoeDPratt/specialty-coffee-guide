@@ -1,10 +1,14 @@
 // src/app/page.tsx
 
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import HomePage from '@/components/home/HomePage';
-import { getProductsByRoasterSlug } from '@/lib/queries/products';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import HomePage from "@/components/home/HomePage";
+import { getProductsByRoasterSlug } from "@/lib/queries/products";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 // export async function generateMetadata() {
@@ -15,19 +19,19 @@ export const dynamicParams = true;
 // }
 
 export default async function Page() {
-    console.log("Home Page Loading...");
+  console.log("Home Page Loading...");
 
-    const queryClient = new QueryClient();
-    const roasterSlug = 'extract-coffee-roasters';
+  const queryClient = new QueryClient();
+  const roasterSlug = "extract-coffee-roasters";
 
-    await queryClient.prefetchQuery({
-        queryKey: ['products-by-roaster', roasterSlug],
-        queryFn: () => getProductsByRoasterSlug(roasterSlug, 4),
-    });
+  await queryClient.prefetchQuery({
+    queryKey: ["products-by-roaster", roasterSlug],
+    queryFn: () => getProductsByRoasterSlug(roasterSlug, 4),
+  });
 
-    return (
-        <HydrationBoundary state={dehydrate(queryClient)}>
-            <HomePage roasterSlug={roasterSlug} />
-        </HydrationBoundary>
-    );
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <HomePage roasterSlug={roasterSlug} />
+    </HydrationBoundary>
+  );
 }

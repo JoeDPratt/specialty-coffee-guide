@@ -1,6 +1,6 @@
 // components/ProductCard/SkeletonProductCard.tsx
 
-import SkeletonBase from '@/components/skeleton/SkeletonBase';
+import SkeletonBase from "@/components/skeleton/SkeletonBase";
 
 export default function SkeletonProductCard() {
   return (

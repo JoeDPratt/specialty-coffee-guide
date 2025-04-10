@@ -1,3 +1,3 @@
 export function getProductPath(slug: string): string {
-    return `/coffee-beans/${slug}`;
-  }
+  return `/coffee-beans/${slug}`;
+}

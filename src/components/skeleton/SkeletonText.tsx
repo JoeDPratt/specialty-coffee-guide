@@ -1,12 +1,12 @@
 // components/Skeleton/SkeletonText.tsx
-import SkeletonBase from './SkeletonBase';
+import SkeletonBase from "./SkeletonBase";
 
 export default function SkeletonText({
-    width = 'w-full',
-    height = 'h-4',
+  width = "w-full",
+  height = "h-4",
 }: {
-    width?: string;
-    height?: string;
+  width?: string;
+  height?: string;
 }) {
-    return <SkeletonBase width={width} height={height} />;
+  return <SkeletonBase width={width} height={height} />;
 }
