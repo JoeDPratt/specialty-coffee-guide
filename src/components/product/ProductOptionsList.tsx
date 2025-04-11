@@ -40,13 +40,13 @@ function ProductOption({
             role="listitem"
         >
             {/* <div className="group shadow-b-neumorphic hover:scale-101 flex flex-row border-pr-300 border-2 items-center hover:shadow-none pt-6 pb-2.5 px-3 xs:pt-6 xs:pb-5.5 xs:px-6 font-sofia-sans font-normal gap-10"> */}
-            <div className="group flex flex-col items-center bg-pr-50 hover:shadow-none shadow-b-neumorphic font-sofia-sans font-normal  px-4 py-10 gap-4 border-2 border-pr-300 hover:border-sc-100 hover:bg-pr-100 transition-colors duration-150 ease-in-out">
+            <div className="group flex flex-col items-center bg-pr-100 hover:shadow-none shadow-b-neumorphic font-sofia-sans font-normal  px-4 py-10 gap-4 border-2 border-pr-300 hover:border-pr-400 hover:bg-pr-100 transition-colors duration-150 ease-in-out rounded-md">
                 <div className="relative w-30 aspect-[3/4] shrink-0 group-hover:scale-105">
-                    <Pouch className="w-full h-full object-cover fill-brown-700" />
+                    <Pouch className="w-full h-full object-cover fill-pr-700" />
 
                     <div className="absolute inset-0 flex flex-col items-center justify-end mb-10 gap-3.5">
                         {isBestValue && (
-                            <div className="bg-red-400 text-white text-base rounded-full border-2 border-white pt-0.5 px-2">
+                            <div className="bg-pr-400 text-white text-base rounded-full border-2 border-white pt-0.5 px-2">
                                 BEST VALUE
                             </div>
                         )}

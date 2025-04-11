@@ -9,7 +9,7 @@ import AttributeSection from "@/components/product/AttributeSection";
 import SafeHtml from "@/components/shared/SafeHtml";
 import BrandLogo from "@/components/product/BrandLogo";
 import ProductOptionsList from "@/components/product/ProductOptionsList";
-import FollowButton from "../shared/FollowButton";
+import FollowButton from "../shared/buttons/FollowButton";
 import CupScoreBadge from "../shared/product/CupScoreBadge";
 import { cloudinaryLoader } from "@/utils/image/cloudinary";
 import { fetchProductBySlug } from "@/lib/fetchers/products";
@@ -18,7 +18,12 @@ import type { JSX } from "react";
 import { motion } from "framer-motion";
 import { fadeUpItem, staggerContainer, subtleSpring } from "@/utils/animation";
 
-export default function ProductPage({ slug }: { slug: string }): JSX.Element {
+export default function ProductPage({
+    slug
+}: {
+    slug: string;
+}): JSX.Element {
+
     console.log("Product Page Component...", slug);
     const {
         data: product,
@@ -76,45 +81,54 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
             <motion.main
                 role="main"
                 id="main-content"
-                className="layout-container text-pr-800 dark:text-white pt-1 mt-17.5"
+                className="text-pr-800 dark:text-white pt-1 mt-7.5"
                 initial="hidden"
                 animate="visible"
                 variants={staggerContainer}
             >
                 {/* PRODUCT INFO SECTION */}
                 <section
-                    id="coffee-info"
+                    id="coffee-details"
                     aria-labelledby="product-title"
                     role="region"
-                    className="flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-16 gap-12 mt-1.5"
+                    className="flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-x-16 xl:gap-y-20 gap-12 md:mt-10 lg:mt-14.5 shadow-xl"
                 >
-                    {/* Background + Content Layer */}
 
-                    {/* FOREGROUND CONTENT */}
+                    {/* Hero Section */}
                     <motion.div
-                        className="flex flex-col relative z-10 w-full items-center justify-center gap-4"
+                        className="flex flex-col z-1 relative w-full items-center justify-center gap-4 pb-24"
                         variants={fadeUpItem}
                     >
+                        {/* Background + Content Layer */}
+                        <div
+                            className="absolute inset-0 -top-100 -z-10 opacity-90"
+                            style={{
+                                backgroundColor: 'rgba(24, 10, 8, 1)',
+                                backgroundImage: `radial-gradient(rgba(24, 10, 8, 0.5), rgba(24, 10, 8, 0.9)), url('/images/beans-tile-250.webp')`,
+                                backgroundRepeat: 'repeat',
+                                backgroundPosition: 'top left',
+                                backgroundSize: 'auto',
+                            }}
+                        />
                         <BrandLogo
                             src={product.roaster.logo_img_url}
                             alt={product.roaster.alt_text}
                             layout={product.roaster.logo_layout}
-                            baseHeight={48}
+                            baseHeight={28}
                         />
-                        <hr className="hr-neu-shadow w-1/2 lg:w-1/3 mx-auto mt-3.75 mb-2.25" />
-
-                        <h1 className="text-center w-full text-6xl lg:text-7xl lg:w-3/4 mx-auto leading-12 lg:leading-14 -mb-3 mt-2 ">
+                        <hr className="hr-neu-shadow w-1/3 lg:w-1/5 mx-auto mt-3.75 mb-2.25" />
+                        <h1 className="text-center text-white w-full text-6xl lg:text-7xl lg:w-3/4 mx-auto leading-12 lg:leading-14 -mb-3 mt-2 ">
                             {product.product_name.toUpperCase()}
                         </h1>
 
                         <div
                             id="roast-flavours"
-                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-lg justify-center gap-2 mx-auto w-full lg:w-2/3"
+                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-lg text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3"
                         >
                             {flavors}
                         </div>
                         <RoastLabel roasts={product?.roasts} />
-                        <div className="flex items-end mt-4.75 mb-6">
+                        <div className="flex items-end mt-4.75">
                             <FollowButton
                                 isFollowing={false}
                                 onToggle={() => console.log("follow toggled")}
@@ -123,10 +137,17 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                             />
                         </div>
                     </motion.div>
+                </section>
+                <section
+                    id="coffee-details"
+                    aria-labelledby="product-title"
+                    role="region"
+                    className="section-layout flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-x-16 gap-12 md:mt-10 lg:mt-20.5"
+                >
 
                     {/* LEFT COLUMN: Product image */}
                     <motion.div
-                        className="flex flex-col lg:top-8 lg:sticky lg:self-start lg:flex-1 bg-pr-100 sm:p-6 p-4 border-2 shadow-b-neumorphic border-pr-300"
+                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-pr-100 sm:p-6 p-4 border-2 shadow-b-neumorphic border-pr-300 rounded-md"
                         variants={fadeUpItem}
                     >
                         <motion.div
@@ -179,20 +200,20 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                                 aria-label={"Get this coffee"}
                                 role="listitem"
                             >
-                                <div className="group flex flex-col bg-pr-50 xs:flex-row w-auto pt-6 pb-2 gap-6 xs:p-4 border-2 shadow-b-neumorphic border-pr-300 hover:border-sc-100 hover:bg-pr-100 hover:shadow-none mb-4 items-center justify-between transition-colors duration-150 ease-in-out">
+                                <div className="group flex flex-col xs:flex-row w-auto pb-2 gap-6 hover:border-sc-500 mb-4 items-center justify-between transition-colors duration-150 ease-in-out rounded-md">
                                     <BrandLogo
                                         src={product.roaster.logo_img_url}
                                         alt={product.roaster.alt_text}
-                                        className="pl-3 mt-0.25"
+                                        className="mt-0.25"
                                         layout={product.roaster.logo_layout}
                                         baseHeight={32}
                                     />
                                     <div
-                                        className="flex-1 text-sc-100 py-4 xs:pt-0 xs:pb-0.5 text-right font-sofia-sans-condensed font-black text-3xl border-t-2 border-pr-300 xs:border-none"
+                                        className="text-sc-500 py-4 xs:pt-1 xs:pb-1.75 px-4 text-right font-sofia-sans-condensed font-black text-3xl border-2 border-sc-500 rounded-full group-hover:bg-pr-100"
                                         aria-hidden="true"
                                     >
-                                        <span className="text-xl font-bold tracking-wide">
-                                            IN-STOCK: VISIT STORE →
+                                        <span className="text-xl font-medium tracking-wide">
+                                            IN-STOCK: VISIT STORE
                                         </span>
                                         <span className="hidden">→</span>
                                     </div>
@@ -212,7 +233,7 @@ export default function ProductPage({ slug }: { slug: string }): JSX.Element {
                     id="specialty-coffee-guide"
                     role="region"
                     aria-labelledby="scg-insight-heading"
-                    className="flex flex-col-reverse lg:flex-row w-full lg:w-2/3 mx-auto xl:gap-20 lg:gap-10 md:gap-12 sm:gap-13.5 gap-16 pb-8 mt-20"
+                    className="section-layout w-full lg:w-2/3 xl:gap-20 lg:gap-10 md:gap-12 sm:gap-13.5 gap-16 pb-8 mt-20"
                 >
                     {product.insight ? (
                         <div id="scg-insight" className="flex-1 lg:mt-20">

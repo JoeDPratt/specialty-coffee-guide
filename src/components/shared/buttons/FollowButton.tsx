@@ -23,17 +23,17 @@ export default function FollowButton({
     return (
         <button
             onClick={onToggle}
-            className={`${className} border-1 ${isFollowing ? "border-sc-100" : "border-pr-600"} flex items-center font-sofia-sans-condensed uppercase tracking-wider gap-1.5 text-lg px-3 py-1.5 hover:bg-pr-100 transition-all duration-200 cursor-pointer group`}
+            className={`${className} border-1 ${isFollowing ? "border-pr-100" : "border-pr-500"} flex items-center font-sofia-sans-condensed uppercase tracking-wider gap-1.5 text-lg px-3 py-1.5 hover:bg-pr-25 rounded-full transition-all duration-200 cursor-pointer group`}
             aria-label={ariaLabel}
         >
             {isFollowing ? (
-                <BellSlashIcon className="w-4 h-4 text-sc-100 group-hover:animate-pulse" />
+                <BellSlashIcon className="w-4 h-4 text-pr-100 group-hover:animate-pulse" />
             ) : (
-                <BellIcon className="w-4 h-4 text-pr-700" />
+                <BellIcon className="w-4 h-4 text-pr-100" />
             )}
             {showLabel && (
                 <span
-                    className={`${isFollowing ? "text-sc-100" : "text-pr-700"} mt-0.5`}
+                    className={`${isFollowing ? "text-pr-100" : "text-pr-100"} mt-0.5`}
                 >
                     {isFollowing ? "Unfollow" : "Follow"}
                 </span>

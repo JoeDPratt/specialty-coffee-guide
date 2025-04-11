@@ -1,25 +1,27 @@
 import Link from "next/link";
-import { ChevronRightIcon } from "@heroicons/react/24/solid"; // or use Heroicons
-import { getBreadcrumbsFromPath } from "@/utils/navigation/breadcrumbs";
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
+
+interface BreadcrumbItem {
+    label: string;
+    href: string;
+}
 
 interface BreadcrumbsProps {
-    path: string;
-    finalLabel?: string;
+    crumbs: BreadcrumbItem[];
     className?: string;
 }
 
-export async function Breadcrumbs({
-    path,
-    finalLabel,
+export function Breadcrumbs({
+    crumbs,
     className = "",
 }: BreadcrumbsProps) {
-    const crumbs = getBreadcrumbsFromPath(path, finalLabel);
 
     return (
-        <nav aria-label="Breadcrumb" className="bg-pr-200 shadow-breadcrumbs">
-            <ol
-                className={`${className} flex overflow-x-auto whitespace-nowrap scrollbar-hide gap-1 no-scrollbar`}
-            >
+        <nav
+            aria-label="Breadcrumb"
+            className={`pt-3.25 pb-2.25`}
+        >
+            <ol className="flex overflow-x-auto whitespace-nowrap scrollbar-hide gap-1 no-scrollbar">
                 {crumbs.map((item, index) => {
                     const isLast = index === crumbs.length - 1;
                     return (
@@ -28,14 +30,14 @@ export async function Breadcrumbs({
                                 <>
                                     <Link
                                         href={item.href}
-                                        className="hover:underline text-pr-800 font-sofia-sans text-base font-normal"
+                                        className="hover:underline font-sofia-sans text-base font-normal"
                                     >
                                         {item.label}
                                     </Link>
-                                    <ChevronRightIcon className="w-4 h-4 text-pr-600" />
+                                    <ChevronRightIcon className="w-4 h-4" />
                                 </>
                             ) : (
-                                <span className="text-sc-100 font-sofia-sans text-base font-normal">
+                                <span className="text-pr-500 font-sofia-sans text-base font-normal">
                                     {item.label}
                                 </span>
                             )}
@@ -43,7 +45,6 @@ export async function Breadcrumbs({
                     );
                 })}
             </ol>
-            <hr className="text-pr-200 shadow-b-neumorphic bg-pr-200 color-pr-200 border-none w-full mx-auto h-0.5 mt-2.25" />
         </nav>
     );
 }

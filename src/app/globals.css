@@ -5,6 +5,7 @@
 
 @theme {
     /* Colors */
+    /* --color-pr-25: rgba(250, 245, 245, 0.25);
     --color-pr-50: rgba(250, 245, 245, 0.5);
     --color-pr-100: #FAF5F5;
     --color-pr-200: #F2E6E6;
@@ -13,9 +14,21 @@
     --color-pr-500: #A81D1F;
     --color-pr-600: #837373;
     --color-pr-700: #524343;
-    --color-pr-800: #170404;
-    --color-sc-100: #501DA8;
-    --color-sc-200: #3d167f;
+    --color-pr-800: #170404; */
+
+    --color-pr-100: rgb(242, 236, 236); /* lightest neutral tint */
+    --color-pr-200: rgb(247, 233, 231); /* light surface */
+    --color-pr-300: rgb(237, 212, 209); /* soft background hover */
+    --color-pr-400: rgb(255, 82, 64);
+    --color-pr-500: rgb(246, 32, 9);
+    --color-pr-600: rgb(154, 20, 6);
+    --color-pr-700: rgb(64, 6, 0);
+    --color-pr-800: rgb(27, 7, 5);
+    --color-pr-900: rgb(24, 10, 8); 
+
+    --color-sc-400: rgb(104, 153, 94);
+    --color-sc-500: rgb(79, 116, 71);
+    --color-sc-600: rgb(52, 77, 47);
 
     --color-brown-800: #451E0C;
     --color-brown-700: #532A18;
@@ -27,7 +40,6 @@
     --color-blue-400: #1D4BA8;
     --color-aqua-400: #1D8FA8;
     --color-orange-400: #A8621D;
-    --color-red-400: #F03538;
 
     /* Breakpoints */
     --container-sm: 500px;
@@ -36,7 +48,7 @@
 
     /* Shadows */   
     --shadow-b-neumorphic: 0 1px 0 0 rgba(255,255,255,0.4);
-    --shadow-hr-neumorphic: 0 2px 0px 0 rgba(255,255,255, 1);
+    --shadow-hr-neumorphic: 0 1px 0px 0 rgba(255,255,255,0);
     --shadow-img-lg: 0px 0px 56px 0px rgba(0,0,0,0.1);
     --shadow-cup-score: -4px 4px 0px 0px rgba(23,4,4,0.15);
     --shadow-breadcrumbs: 0px 0px 20px 2px rgba(0,0,0,0.05);
@@ -89,12 +101,12 @@
   }
 
  @layer utilities {
-    .layout-container {
-        @apply mx-auto w-full lg:max-w-[1400px] md:max-lg:max-w-172 xl:px-20 sm:px-6.5 px-4;
+    .section-layout {
+        @apply mx-auto lg:max-w-[1400px] md:max-lg:max-w-172 xl:px-20 sm:px-6.5 px-4;
       }
       .hr-neu-shadow {
-        @apply border-none h-0.5 opacity-10;
-        background-color: var(--color-pr-500);
+        @apply border-none h-0.5 opacity-60;
+        background-color: var(--color-pr-200);
         box-shadow: var(--shadow-hr-neumorphic);
       }
     .no-scrollbar::-webkit-scrollbar {

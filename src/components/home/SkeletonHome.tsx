@@ -6,7 +6,7 @@ import { staggerContainer, fadeUpItem } from "@/utils/animation/index";
 export default function SkeletonHome(): JSX.Element {
     return (
         <motion.main
-            className="layout-container mt-20"
+            className="section-layout mt-20"
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
