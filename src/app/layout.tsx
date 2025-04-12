@@ -40,7 +40,7 @@ export default function RootLayout({
                     content="Specialty Coffee Guide"
                 />
             </head>
-            <body className="overflow-x-hidden">
+            <body>
                 <div
                     className="min-h-screen bg-cover bg-no-repeat bg-center"
                     style={{

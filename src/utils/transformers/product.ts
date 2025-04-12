@@ -11,7 +11,6 @@ interface Attributes {
 
 export function transformProduct(raw: any): Product {
     const provenance = raw.coffee_provenance?.[0] || {};
-    console.log("TRANSFORMING VARIETALS", provenance);
 
     const attributes: Attributes = {
         is_organic: raw.is_organic,

@@ -46,8 +46,6 @@ export default function ProductPage({
     if (!product) return <p>Product not found</p>;
     const flavors = product.flavours.join(" • ");
 
-    console.log("LPPKG", product.lowest_price_per_kg);
-
     return (
         <>
             {/* Dynamic product metadata */}

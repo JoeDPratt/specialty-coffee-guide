@@ -21,8 +21,12 @@ export default function Header() {
             ([entry]) => {
                 // entry.isIntersecting will be true if the sentinel is in view.
                 setIsScrolled(!entry.isIntersecting)
+                console.log("Scrolling:", !entry.isIntersecting)
             },
-            { threshold: 1 } // The callback fires when the sentinel is completely in/out of view.
+            {
+                threshold: 1,
+                // rootMargin: "14px 0px 0px 0px"
+            }
         )
 
         if (sentinelRef.current) {
@@ -37,7 +41,7 @@ export default function Header() {
     return (
         <>
             {/* Sentinel to check if page is at top */}
-            <div ref={sentinelRef} className="absolute top-3.5 h-6 w-full pointer-events-none" />
+            <div ref={sentinelRef} className="absolute top-4 h-1 w-full pointer-events-none" />
 
             <motion.header
                 className={`flex justify-between gap-6 px-6 top-0 sticky z-100 transition-colors duration-600 ${!isSearchOpen && !isScrolled ? 'bg-transparent py-6 items-center' : 'bg-pr-900 py-3 mb-4 items-start'}`}
