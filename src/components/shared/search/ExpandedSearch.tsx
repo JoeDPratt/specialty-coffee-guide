@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import SearchButton from '../buttons/SearchButton';
 import { motion } from 'framer-motion'
+import { FilterRow } from '@/components/search/FilterRow';
 
 export default function ExpandedSearch() {
     const router = useRouter();
@@ -22,10 +23,10 @@ export default function ExpandedSearch() {
     };
 
     return (
-        <div className="p-6 flex flex-col flex-1 gap-2 items-center">
+        <div className="flex flex-col flex-1 gap-4 items-center -mt-10 pb-10">
             <h2 className="text-xl text-white text-center font-sofia-sans font-semibold">Search for coffees, bean varietals or flavours:</h2>
             <motion.div
-                className="flex w-full max-w-[700px] items-center bg-white border-2 border-white rounded-full shadow-md"
+                className="flex w-full max-w-[840px] items-center bg-white border-2 border-white rounded-full shadow-md"
                 layoutId="searchField"
             >
                 <input
@@ -42,8 +43,7 @@ export default function ExpandedSearch() {
             </motion.div>
             <div className="flex gap-2 text-white text-center">
                 {/* Example filters */}
-                <button onClick={() => setFilters({ roast: 'light' })}>Light Roast</button>
-                <button onClick={() => setFilters({ roast: 'dark' })}>Dark Roast</button>
+                <FilterRow />
             </div>
         </div>
     );

@@ -61,6 +61,7 @@ export default function RootLayout({
                         <span style={sofiaSemiCondensed.style}>Sofia Semi Condensed</span>
                     </div>
                     <Header />
+
                     <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
                 </div>
             </body>

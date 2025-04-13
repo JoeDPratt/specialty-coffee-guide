@@ -1,4 +1,4 @@
-import SCALogo from "@/../public/icons/sca-logo.svg";
+import SCALogo from "@/components/icons/sca-logo.svg";
 // import Wreath from "@/../public/images/wreath.svg";
 import SCGLogoMark from "@/../public/images/scg-logomark-red.svg";
 import type { JSX } from "react";

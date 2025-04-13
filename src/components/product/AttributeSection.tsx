@@ -1,10 +1,10 @@
 import type { CoffeeAttributes } from "@/types/product";
 import type { JSX } from "react";
-import OrganicIcon from "@public/icons/icon-organic.svg";
-import FairtradeIcon from "@public/icons/icon-fairtrade.svg";
-import DecafIcon from "@public/icons/icon-decaf.svg";
-import MycoIcon from "@public/icons/icon-myco-free.svg";
-import SingleOriginIcon from "@public/icons/icon-single-origin.svg";
+import OrganicIcon from "@/components/icons/icon-organic.svg";
+import FairtradeIcon from "@/components/icons/icon-fairtrade.svg";
+import DecafIcon from "@/components/icons/icon-decaf.svg";
+import MycoIcon from "@/components/icons/icon-myco-free.svg";
+import SingleOriginIcon from "@/components/icons/icon-single-origin.svg";
 
 interface AttributeItemProps {
     flagName: string;

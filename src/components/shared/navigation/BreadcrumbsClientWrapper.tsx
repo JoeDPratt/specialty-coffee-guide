@@ -23,9 +23,9 @@ export function BreadcrumbsClientWrapper({ crumbs, className }: Props) {
     return (
 
         <motion.div
-            className={`px-6 z-20 sticky transition-colors duration-900 shadow-sm ${!isSearchOpen && isScrolled ? 'bg-pr-200 text-pr-800 top-20' : 'opacity-0 pointer-events-none'}`}
+            className={`px-6 z-20 sticky transition-colors duration-300 shadow-sm ${!isSearchOpen && isScrolled ? 'bg-pr-200 text-pr-800 top-20' : 'opacity-0 pointer-events-none'}`}
             layout="preserve-aspect"
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3 }}
         >
             <Breadcrumbs crumbs={crumbs} />
         </motion.div>

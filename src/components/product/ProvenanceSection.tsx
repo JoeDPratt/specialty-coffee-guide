@@ -1,11 +1,11 @@
 import type { Altitude, Provenance } from "@/types/product";
 import type { JSX } from "react";
-import CountryIcon from "@public/icons/icon-countries.svg";
-import RegionIcon from "@public/icons/icon-regions.svg";
-import ProducerIcon from "@public/icons/icon-producers.svg";
-import ProcessIcon from "@public/icons/icon-processes.svg";
-import AltitudeIcon from "@public/icons/icon-altitude.svg";
-import VarietalIcon from "@public/icons/icon-varietals.svg";
+import CountryIcon from "@/components/icons/icon-countries.svg";
+import RegionIcon from "@/components/icons/icon-regions.svg";
+import ProducerIcon from "@/components/icons/icon-producers.svg";
+import ProcessIcon from "@/components/icons/icon-processes.svg";
+import AltitudeIcon from "@/components/icons/icon-altitude.svg";
+import VarietalIcon from "@/components/icons/icon-varietals.svg";
 
 type ProvenanceLabel = keyof Provenance;
 
