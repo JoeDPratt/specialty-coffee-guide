@@ -25,6 +25,18 @@ export default function ExpandedDesktopSearch() {
         inputRef.current?.focus()
     }, [])
 
+    // Close the search overlay
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                closeSearch()
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyDown)
+        return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [closeSearch])
+
     const handleSearch = () => {
         setQuery(localQuery);
         // optional: set filters here
