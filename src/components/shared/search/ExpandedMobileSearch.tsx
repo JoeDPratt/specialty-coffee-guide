@@ -1,7 +1,7 @@
 'use client'
 import { useSearchStore } from '@/stores/useSearchStore';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import SearchButton from '@/components/shared/buttons/SearchButton';
 import { motion } from 'framer-motion'
 import { FilterRow } from '@/components/search/FilterRow';
@@ -13,10 +13,16 @@ export default function ExpandedMobileSearch() {
     const toggleSearch = useSearchStore((s) => s.toggleSearch);
     const query = useSearchStore((s) => s.query);
     const setQuery = useSearchStore((s) => s.setQuery);
-    const setFilters = useSearchStore((s) => s.setFilters);
     const closeSearch = useSearchStore((s) => s.closeSearch);
 
     const [localQuery, setLocalQuery] = useState(query);
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    // 👇 Auto-focus when the expanded search mounts
+    useEffect(() => {
+        inputRef.current?.focus()
+    }, [])
 
     const handleSearch = () => {
         setQuery(localQuery);
@@ -33,9 +39,10 @@ export default function ExpandedMobileSearch() {
                 layoutId="searchField"
             >
                 <input
+                    ref={inputRef}
                     type="text"
                     role="search"
-                    className=" font-sofia-sans text-lg text-left px-5 pb-2 pt-3 flex-1 outline-0 cursor-text"
+                    className=" font-sofia-sans text-lg text-left px-5 pb-2 pt-3 flex-1 outline-0 cursor-text placeholder:text-pr-900/60"
                     value={localQuery}
                     onChange={(e) => setLocalQuery(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}

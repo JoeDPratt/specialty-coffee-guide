@@ -30,9 +30,10 @@ export function Breadcrumbs({
                                 <>
                                     <Link
                                         href={item.href}
-                                        className="hover:underline font-sofia-sans text-base font-normal"
+                                        className="inline-flex items-center hover:underline font-sofia-sans text-base font-normal"
                                     >
                                         {item.label}
+
                                     </Link>
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </>

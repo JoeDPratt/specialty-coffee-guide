@@ -41,7 +41,7 @@ export default function HomePage({
             >
                 {/* Background + Content Layer */}
                 <div
-                    className="absolute inset-0 -top-50 -z-10 opacity-90"
+                    className="absolute inset-0 -top-50 z-0 opacity-90"
                     style={{
                         backgroundImage: `url('/images/latte-coffee-grainy.webp')`,
                         backgroundPosition: 'top center',

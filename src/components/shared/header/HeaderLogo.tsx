@@ -13,7 +13,7 @@ export function HeaderLogo({ isCompact, isSearchOpen, className }: HeaderLogoPro
     const showSmallLogo = isSearchOpen || isCompact
 
     return (
-        <div className={cn("flex-shrink-0", className)}>
+        <div className={cn("", className)}>
             <Link href="/">
                 {showSmallLogo ? (
                     <SCGLogoSmall className="h-12 md:h-14 w-auto" />

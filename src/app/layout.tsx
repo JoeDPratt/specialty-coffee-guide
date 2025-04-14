@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
 import Header from "@/components/shared/header/Header";
+import { BreakpointInit } from "@/components/shared/navigation/BreakpointInit";
 export const dynamic = "force-dynamic";
 import {
     Teko,
@@ -60,6 +61,7 @@ export default function RootLayout({
                         <span style={sofiaCondensed.style}>Sofia Condensed</span>
                         <span style={sofiaSemiCondensed.style}>Sofia Semi Condensed</span>
                     </div>
+                    <BreakpointInit />
                     <Header />
 
                     <ReactQueryClientProvider>{children}</ReactQueryClientProvider>

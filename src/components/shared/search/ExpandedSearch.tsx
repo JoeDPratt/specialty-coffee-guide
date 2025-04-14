@@ -2,10 +2,10 @@
 import ExpandedDesktopSearch from './ExpandedDesktopSearch';
 import ExpandedMobileSearch from './ExpandedMobileSearch';
 
-import { useIsMobile } from '@/hooks/useIsMobile';
+import { useBreakpointStore } from '@/stores/useBreakpointStore';
 
 export default function ExpandedSearch() {
-    const isMobile = useIsMobile();
+    const isMobile = useBreakpointStore((s) => s.isMd);
 
     return isMobile ? <ExpandedMobileSearch /> : <ExpandedDesktopSearch />;
 }

@@ -5,6 +5,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/16/solid'
 import SearchButton from '@/components/shared/buttons/SearchButton'
 import { cn } from '@/utils/classes/merge'
 import { useSearchStore } from '@/stores/useSearchStore'
+import { useBreakpointStore } from '@/stores/useBreakpointStore'
 
 type HeaderSearchButtonProps = {
     isScrolled: boolean;
@@ -12,7 +13,8 @@ type HeaderSearchButtonProps = {
 }
 
 export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButtonProps) {
-    const toggleSearch = useSearchStore((s) => s.toggleSearch)
+    const toggleSearch = useSearchStore((s) => s.toggleSearch);
+    const isBase = useBreakpointStore((s) => s.isMd);
 
     return (
         <div className={cn(
@@ -23,10 +25,10 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
             <motion.div
                 className={cn(
                     "flex items-center min-w-max bg-white border-2 border-white rounded-full shadow-sm",
-                    isScrolled ? "w-auto" : "xs:max-sm:max-w-min",
+                    isScrolled ? "w-auto" : "sm:max-md:max-w-min",
                     "group-hover:bg-white/90"
                 )}
-                layoutId="searchField"
+                {...(!isBase && { layoutId: "searchField" })}
             >
                 <button
                     role="search"
