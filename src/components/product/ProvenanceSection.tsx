@@ -6,6 +6,7 @@ import ProducerIcon from "@/components/icons/icon-producers.svg";
 import ProcessIcon from "@/components/icons/icon-processes.svg";
 import AltitudeIcon from "@/components/icons/icon-altitude.svg";
 import VarietalIcon from "@/components/icons/icon-varietals.svg";
+import { setProvenceLabelAndValue } from "@/utils/string/setProvenceString";
 
 type ProvenanceLabel = keyof Provenance;
 
@@ -42,27 +43,9 @@ const iconMap: Record<string, React.ComponentType<IconProps>> = {
 };
 
 function ProvenanceItem({ label, value }: ProvenanceItemProps): JSX.Element {
-    const isAltitude = label === "altitude";
 
-    let isActive: boolean;
-    let valueString: string;
-    let displayLabel: string;
     const Icon = iconMap[label];
-
-    if (isAltitude) {
-        const altitude = value as Altitude;
-        isActive =
-            typeof altitude?.min === "number" && typeof altitude?.max === "number";
-        valueString = isActive ? `${altitude.min} - ${altitude.max}` : "-";
-        displayLabel = labelDisplayNames[label][0]; // no plural needed
-    } else {
-        const values = value as string[];
-        isActive = values.length > 0;
-        valueString =
-            typeof values[0] === "number" ? values.join(" - ") : values.join(", ");
-        const [singular, plural] = labelDisplayNames[label];
-        displayLabel = values.length < 2 ? singular : (plural ?? singular);
-    }
+    const { valueString, displayLabel, isActive } = setProvenceLabelAndValue({ label, value, labelDisplayNames });
 
     return (
         <div

@@ -75,17 +75,17 @@
 
 @layer base {
     h1 {
-      font-family: var(--font-teko), sans-serif;
+      font-family: var(--font-teko), 'Courier New', Courier, monospace;
       @apply text-5xl dark:text-white font-medium;
     }
   
     h2 {
-      font-family: var(--font-teko), sans-serif;
+      font-family: var(--font-teko), 'Courier New', Courier, monospace;
       @apply text-4xl dark:text-white font-medium mb-2;
     }
   
     h3 {
-      font-family: var(--font-teko), sans-serif;
+      font-family: var(--font-teko), 'Courier New', Courier, monospace;
       @apply text-3xl dark:text-white font-medium mb-2;
     }
   

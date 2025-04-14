@@ -10,10 +10,10 @@ export default function SearchButton({
     return (
         <button
             onClick={onClick}
-            className={`${className} border-2 border-white bg-pr-500 px-2 hover:bg-pr-400 transition-all duration-200 cursor-pointer group`}
+            className={`${className} bg-pr-500 px-2.5 hover:bg-pr-400 transition-all duration-200 cursor-pointer group`}
             aria-label={"Search Button"}
         >
-            <MagnifyingGlassIcon className="w-6 h-6 m-1 text-white group-hover:animate-pulse" />
+            <MagnifyingGlassIcon className="w-6 h-6 text-white group-hover:animate-pulse" />
         </button>
     );
 }

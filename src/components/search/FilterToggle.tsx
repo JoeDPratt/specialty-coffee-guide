@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { cn } from "@/utils/classes/merge"
-import React, { ReactElement, } from "react"
+import React, { ReactElement } from "react"
+import { useSearchStore } from "@/stores/useSearchStore"
 
 type FilterToggleProps = {
     label: string;
     icon?: ReactElement;
-    selected: boolean;
-    onClick: () => void;
+    filterKey: string; // <- added key
 }
 
 const accentColorMap: Record<string, string> = {
@@ -19,16 +19,27 @@ const accentColorMap: Record<string, string> = {
 export function FilterToggle({
     label,
     icon,
-    selected,
-    onClick,
+    filterKey,
 }: FilterToggleProps) {
+    const filters = useSearchStore((s) => s.filters)
+    const setFilters = useSearchStore((s) => s.setFilters)
+
+    const selected = filters[filterKey] === "true"
+
+    const toggle = () => {
+        setFilters({
+            ...filters,
+            [filterKey]: selected ? "" : "true"
+        })
+    }
+
     const accent = accentColorMap[label] ?? "var(--color-pr-700)"
 
     return (
         <Button
-            onClick={onClick}
+            onClick={toggle}
             className={cn(
-                "rounded-full pl-3 pr-4 py-2 text-lg leading-tight flex items-center gap-2 border transition-colors duration-200 cursor-pointer",
+                "rounded-full pl-3 pr-5 py-2 text-lg leading-tight flex items-center gap-1.5 border transition-colors duration-200 cursor-pointer",
                 "h-auto min-h-10",
                 selected
                     ? "text-white [border-color:var(--accent-color)] [background-color:var(--accent-color)]"

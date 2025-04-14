@@ -15,7 +15,12 @@ type SearchState = {
 export const useSearchStore = create<SearchState>((set) => ({
     isSearchOpen: false,
     query: '',
-    filters: {},
+    filters: {
+        organic: "",
+        decaf: "",
+        mycotoxinFree: "",
+        singleOrigin: "",
+    },
     openSearch: () => set({ isSearchOpen: true }),
     closeSearch: () => set({ isSearchOpen: false }),
     toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
