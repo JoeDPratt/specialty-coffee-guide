@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSearchStore } from '@/stores/useSearchStore';
 import { useRouter } from 'next/navigation';
+import { serializeQueryParams } from '@/utils/navigation/serializeQueryParams';
 
 export function useSearchLogic() {
     const router = useRouter();
@@ -30,15 +31,13 @@ export function useSearchLogic() {
         setQuery(localQuery);
         closeSearch();
 
-        const activeFilters = Object.entries(filters)
-            .filter(([_, value]) => !!value)
-            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-            .join('&');
+        const queryObject = {
+            q: localQuery.trim() || undefined,
+            ...filters,
+        };
 
-        const searchTerm = localQuery.trim() ? `q=${encodeURIComponent(localQuery)}` : '';
-        const combinedQuery = [searchTerm, activeFilters].filter(Boolean).join('&');
-
-        router.push(`/search?${combinedQuery}`);
+        const queryString = serializeQueryParams(queryObject);
+        router.push(`/search?${queryString}`);
     };
 
     return {

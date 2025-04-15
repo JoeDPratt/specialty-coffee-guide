@@ -1,12 +1,8 @@
-// /lib/db/products.ts
-
 import { cache } from "react"; // Import cache from React
 import { createClient } from "@/lib/supabase/server";
 import type { Product } from "@/types/product";
-import {
-    transformCardProduct,
-    transformProduct,
-} from "@/utils/transformers/product";
+import { transformProduct } from "@/utils/transformers/product";
+import { RawProduct } from "@/types/db-returns";
 
 export const getFullProductBySlug = cache(
     async (slug: string): Promise<Product | null> => {
@@ -39,7 +35,7 @@ export const getFullProductBySlug = cache(
             .eq("slug", slug)
             .eq("is_published", true)
             .eq("is_deleted", false)
-            .single();
+            .single<RawProduct>();
 
         if (error) {
             console.error("Slug Error in getFullProductBySlug:", error); // Log the actual error
@@ -56,58 +52,3 @@ export const getFullProductBySlug = cache(
         return transformProduct(data);
     },
 );
-
-export const getProductsByRoasterSlug = cache(
-    async (roasterSlug: string, limit = 4): Promise<any[]> => {
-        const supabase = await createClient();
-
-        const { data, error } = await supabase
-            .from("coffee_products")
-            .select(
-                `
-            product_name, slug, lowest_price_per_kg, is_organic, is_decaf, is_lowcaf, is_mycotoxin_tested, sca_cup_score, search_flavours, 
-            product_images ( image_url, alt_text, is_primary ),
-            coffee_roasters!inner ( name, slug, 
-                roaster_images ( image_url, alt_text, logo_layout, is_primary ))
-        `,
-            )
-            .eq("is_published", true)
-            .eq("is_deleted", false)
-            .eq("coffee_roasters.slug", roasterSlug)
-            .limit(limit);
-
-        if (error) {
-            console.error("Error in getProductsByRoasterSlug:", error);
-            return [];
-        }
-
-        const transformedProduct = data.map(transformCardProduct);
-
-        return transformedProduct;
-    },
-);
-
-export async function getProductImages(): Promise<any | null> {
-    const supabase = await createClient();
-    const { data } = await supabase
-        .from("product_images")
-        .select("id, image_url, alt_text, is_primary, logo_layout");
-
-    console.log("All product images:", data);
-
-    console.log("IMAGES", data);
-    return data;
-}
-
-// export async function getCardProducts(): Promise<ProductCard[]> {
-//   const supabase = await createClient()
-
-//   const { data, error } = await supabase
-//     .from('coffee_products')
-//     .select(`slug, product_name, product_images(image_url, alt_text), product_variants(price, currency)`)
-//     .eq('is_published', true)
-
-//   if (!data || error) return []
-
-//   return data.map(transformProductCard)
-// }

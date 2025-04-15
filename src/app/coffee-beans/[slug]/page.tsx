@@ -4,7 +4,7 @@ import {
     QueryClient,
 } from "@tanstack/react-query";
 import ProductPage from "@/components/product/ProductPage";
-import { getFullProductBySlug } from "@/lib/queries/products";
+import { getFullProductBySlug } from "@/lib/queries/products/getFullProductBySlug";
 import { getBreadcrumbsFromPath } from "@/utils/navigation/breadcrumbs";
 import { BreadcrumbStructuredData } from "@/components/shared/navigation/BreadcrumbStructuredData";
 import { notFound } from "next/navigation";

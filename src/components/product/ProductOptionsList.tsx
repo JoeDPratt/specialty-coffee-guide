@@ -3,7 +3,7 @@ import Pouch from "@public/images/coffee-pouch-2.svg";
 import type { JSX } from "react";
 
 interface productOptionsListProps {
-    lowestPricePerKg: number;
+    lowestPricePerKg: number | null;
     productOptions: ProductVariant[];
     url: string;
 }
@@ -19,14 +19,14 @@ function ProductOption({
 }): JSX.Element {
     const currency = option.currency === "GBP" ? "£" : "$";
     const price = option.price || 0;
-    const weight = option.weight || 0;
-    const weightUnit = option.weight >= 1000 ? "kg" : "g";
-    const displayWeight = `${option.weight >= 1000 ? weight / 1000 : weight}`;
+    const weight = option.weight ?? 0;
+    const weightUnit = weight >= 1000 ? "kg" : "g";
+    const displayWeight = `${weight >= 1000 ? weight / 1000 : weight}`;
     const displayPrice = `${currency}${price.toFixed(2)}`;
-    const perKgValue = option.price_per_kg;
-    const perKgRounded = perKgValue.toFixed(2);
+    const perKgValue = option.price_per_kg ?? null;
+    const perKgRounded = perKgValue && perKgValue.toFixed(2);
     const displayPerKg = `${currency}${perKgRounded} /kg`;
-    const isBestValue = lowestPricePerKg >= option.price_per_kg;
+    const isBestValue = perKgValue && lowestPricePerKg >= perKgValue;
 
     const ariaLabel = `Buy ${displayWeight}${weightUnit} for ${displayPrice}. Price per kilogram is ${perKgRounded}${currency}`;
 
@@ -86,7 +86,7 @@ export default function ProductOptionList({
                     <ProductOption
                         option={option}
                         url={url}
-                        lowestPricePerKg={lowestPricePerKg}
+                        lowestPricePerKg={lowestPricePerKg ?? 0}
                         key={(option.price || 0) + index}
                     />
                 ))}

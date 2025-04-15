@@ -15,7 +15,6 @@ export default function Header() {
     const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
     const setIsScrolled = useStickyStore((state) => state.setIsScrolled);
     const isScrolled = useStickyStore((state) => state.isScrolled);
-    const toggleSearch = useSearchStore((s) => s.toggleSearch)
     const sentinelRef = useRef<HTMLDivElement>(null)
     const isHeaderBgVisible = isSearchOpen || isScrolled;
 

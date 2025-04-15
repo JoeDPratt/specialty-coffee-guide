@@ -1,10 +1,12 @@
+
+
 export interface ProductVariant {
-    weight: number;
-    price_per_kg: number;
+    weight: number | null;
+    price_per_kg: number | null;
     price: number | null;
-    currency: string | null;
-    discount_percent: string | null;
-    is_soldout: boolean;
+    currency: string;
+    discount_percent: number | null;
+    is_instock: boolean;
 }
 
 export type RoastLevel =
@@ -88,7 +90,7 @@ export interface Product {
     meta_title: string;
     meta_description: string;
     schema: string;
-    lowest_price_per_kg: number;
+    lowest_price_per_kg: number | null;
 }
 
 export interface ProductCard {
@@ -107,5 +109,5 @@ export interface ProductCard {
         alt_text: string;
         logo_layout: LogoLayout;
     };
-    likes_count?: number;
+    likes_count?: number | null;
 }
