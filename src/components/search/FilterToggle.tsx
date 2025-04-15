@@ -23,7 +23,6 @@ export function FilterToggle({
 }: FilterToggleProps) {
     const filters = useSearchStore((s) => s.filters)
     const setFilters = useSearchStore((s) => s.setFilters)
-
     const selected = filters[filterKey] === "true"
 
     const toggle = () => {

@@ -44,14 +44,12 @@ export const getFullProductBySlug = cache(
         if (error) {
             console.error("Slug Error in getFullProductBySlug:", error); // Log the actual error
             // Depending on the error, you might want to throw it or return null
-            // Supabase often returns an error *and* null data for .single() not found
             if (error.code === "PGRST116") {
                 // Code for "single row not found"
                 return null;
             }
             // For other errors, maybe re-throw or handle differently
-            // throw error;
-            return null; // Or return null for simplicity
+            return null;
         }
         if (!data) return null;
 

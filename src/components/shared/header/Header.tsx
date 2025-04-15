@@ -86,7 +86,7 @@ export default function Header() {
             {isSearchOpen && (
                 <motion.div
                     className={cn(
-                        "fixed inset-x-0 top-20 z-30 transition-colors duration-300 ease-out",
+                        "fixed inset-x-0 top-0 md:top-20 z-30 transition-colors duration-300 ease-out",
                         isHeaderBgVisible ? "bg-pr-900" : "bg-transparent"
                     )}
                     initial={{ opacity: 0 }}

@@ -10,22 +10,22 @@ export function FilterRow() {
         <div className="flex flex-wrap gap-3">
             <FilterToggle
                 label="Organic"
-                filterKey="organic"
+                filterKey="is_organic"
                 icon={<ScalableIcon icon={<Organic />} size={28} />}
             />
             <FilterToggle
                 label="Single Origin"
-                filterKey="singleOrigin"
+                filterKey="is_single_origin"
                 icon={<ScalableIcon icon={<SingleOrigin />} size={28} />}
             />
             <FilterToggle
                 label="Decaf / Low Caf"
-                filterKey="decaf"
+                filterKey="is_decaf"
                 icon={<ScalableIcon icon={<Decaf />} size={28} />}
             />
             <FilterToggle
                 label="Mycotoxin Free"
-                filterKey="mycotoxinFree"
+                filterKey="is_mycotoxin_free"
                 icon={<ScalableIcon icon={<MycoFree />} size={28} />}
             />
         </div>

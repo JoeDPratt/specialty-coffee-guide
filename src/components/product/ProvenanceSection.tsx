@@ -62,7 +62,7 @@ function ProvenanceItem({ label, value }: ProvenanceItemProps): JSX.Element {
                 {isActive ? (
                     <div className="font-medium leading-6">{valueString}</div>
                 ) : (
-                    <div className="font-medium text-pr-400">
+                    <div className="font-medium text-pr-800/50">
                         <span className="sr-only">Not specified</span>
                         <span aria-hidden="true">-</span>
                     </div>

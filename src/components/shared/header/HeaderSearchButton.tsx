@@ -14,7 +14,7 @@ type HeaderSearchButtonProps = {
 
 export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButtonProps) {
     const toggleSearch = useSearchStore((s) => s.toggleSearch);
-    const isBase = useBreakpointStore((s) => s.isMd);
+    const isXs = useBreakpointStore((s) => s.isXs);
 
     return (
         <div className={cn(
@@ -28,7 +28,7 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
                     isScrolled ? "w-auto" : "sm:max-md:max-w-min",
                     "group-hover:bg-white/90"
                 )}
-                {...(!isBase && { layoutId: "searchField" })}
+                {...(!isXs && { layoutId: "searchField" })}
             >
                 <button
                     role="search"
