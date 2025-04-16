@@ -37,7 +37,7 @@ export const getSearchResults = cache(
             });
         }
         if (params.is_organic) query = query.eq('is_organic', true);
-        if (params.is_decaf) query = query.eq('is_decaf', true);
+        if (params.is_decaf) query = query.or('is_decaf.eq.true,is_lowcaf.eq.true');
         if (params.is_mycotoxin_free) query = query.eq('is_mycotoxin_tested', true);
         if (params.is_single_origin) query = query.eq('is_single_origin', true);
 

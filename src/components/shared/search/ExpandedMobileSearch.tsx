@@ -30,7 +30,8 @@ export default function ExpandedMobileSearch() {
             >
                 <input
                     ref={inputRef}
-                    type="text"
+                    type="search"
+                    enterKeyHint="search"
                     role="search"
                     className=" font-sofia-sans text-lg text-left px-5 pb-2 pt-3 flex-1 outline-0 cursor-text placeholder:text-pr-900/60"
                     value={localQuery}
@@ -55,7 +56,7 @@ export default function ExpandedMobileSearch() {
                     label={"SEARCH"}
                     className={"flex-1 justify-center text-xl"}
                     icon={<MagnifyingGlassIcon className="w-7 h-7 mb-0.75 text-white group-hover:animate-pulse" />}
-                    onClick={toggleSearch}
+                    onClick={handleSearch}
                     ariaLabel="Search Button"
                 ></IconButton>
             </motion.div>

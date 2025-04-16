@@ -33,9 +33,10 @@ export default function ExpandedDesktopSearch() {
                 >
                     <input
                         ref={inputRef}
-                        type="text"
                         role="search"
-                        className=" font-sofia-sans text-lg text-left px-5 pb-2.25 pt-2.75 flex-1 outline-0 cursor-pointer placeholder:text-pr-900/60"
+                        type="search"
+                        enterKeyHint="search"
+                        className=" font-sofia-sans text-lg text-left px-5 pb-2.25 pt-2.75 flex-1 outline-0 cursor-text placeholder:text-pr-900/60"
                         value={localQuery}
                         onChange={(e) => setLocalQuery(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
