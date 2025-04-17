@@ -145,7 +145,7 @@ export default function ProductPage({
 
                     {/* LEFT COLUMN: Product image */}
                     <motion.div
-                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-pr-100/70 sm:p-6 p-4 border-1 border-white/30 rounded-md"
+                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-card-200 sm:p-6 p-4 border-1 border-card-100 rounded-md"
                         variants={fadeUpItem}
                     >
                         <motion.div

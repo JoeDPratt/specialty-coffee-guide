@@ -13,6 +13,8 @@ import AttributeSection from "@/components/product/AttributeSection";
 import RoastLabel from "@/components/shared/product/RoastLabel";
 import BestValueTag from "@/components/shared/product/BestValueTag";
 import CupScoreBadge from "@/components/shared/product/CupScoreBadge";
+import { useBreakpointStore } from '@/stores/useBreakpointStore'
+import { cn } from "@/utils/classes/merge";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -28,32 +30,30 @@ export default function ProductCard({
         flavours,
         lowest_price_per_kg,
         roaster,
-        likes_count = 190,
         attributes,
         roasts,
         sca_cup_score
     } = product;
 
+    const isSm = useBreakpointStore((s) => s.isSm)
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
     const blurredImage = getBlurURL(imageUrl);
     const pricePerKg = lowest_price_per_kg
         ? `£${lowest_price_per_kg.toFixed(2)}`
         : null;
     const flavourText = flavours?.join(" · ");
-    const cup_score = 90
-    console.log("CUP SCORE", cup_score);
     const isBestValue = false // Add logic for best value
 
     return (
         <Link
             href={getProductPath(slug)}
-            className="group flex flex-col h-full bg-card-200 hover:shadow-xl transition-all overflow-hidden border-1 border-card-100  rounded-md"
+            className="group flex flex-col h-full bg-card-100 hover:shadow-xl transition-all overflow-hidden border-1 border-card-100  rounded-md"
         >
             {/* Image */}
             <motion.div
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
-                className="relative w-full aspect-[1/1] bg-card-200 border-8 border-card-200"
+                className="relative w-full aspect-[1/1] bg-card-100 border-8 border-card-100"
             >
                 <Image
                     loader={cloudinaryLoader}
@@ -68,7 +68,10 @@ export default function ProductCard({
             </motion.div>
 
             {/* Text Content */}
-            <div className="px-6 pt-0 flex flex-col flex-grow overflow-hidden min-h-45">
+            <div className={cn(
+                "px-6 pt-0 flex flex-col flex-grow overflow-hidden",
+                isSm ? "mb-9" : "min-h-45"
+            )}>
 
                 {/* Product name */}
                 <h3 className="mt-2.75 mb-0 text-3xl font-medium text-pr-900 leading-7 tracking-wide line-clamp-2">
@@ -89,7 +92,7 @@ export default function ProductCard({
                 )}
             </div>
             {/* Comparison section */}
-            <div className="bg-card-100 px-6 py-2">
+            <div className="px-6 py-2">
 
                 {/* Attriibutes and tags */}
                 <div className="flex justify-between items-center mt-1">
@@ -100,12 +103,12 @@ export default function ProductCard({
 
                 {/* Cup Score Price */}
                 <div className="flex justify-between items-baseline">
-                    <CupScoreBadge score={cup_score} variant={"card"} />
+                    <CupScoreBadge score={sca_cup_score} variant={"card"} />
 
                     {pricePerKg && (
                         <div className="flex justify-between items-baseline-last">
                             <div className="pt-1 text-right text-sm font-medium text-pr-800">
-                                from <span className="text-2xl font-bold">{pricePerKg}</span> /kg
+                                from <span className="text-3xl font-normal">{pricePerKg}</span> /kg
                             </div>
                         </div>
                     )

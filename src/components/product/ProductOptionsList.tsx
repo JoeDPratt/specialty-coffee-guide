@@ -41,7 +41,7 @@ function ProductOption({
             role="listitem"
         >
             {/* <div className="group shadow-b-neumorphic hover:scale-101 flex flex-row border-pr-300 border-2 items-center hover:shadow-none pt-6 pb-2.5 px-3 xs:pt-6 xs:pb-5.5 xs:px-6 font-sofia-sans font-normal gap-10"> */}
-            <div className="group flex flex-col items-center bg-pr-100/70 hover:shadow-none font-sofia-sans font-normal  px-4 py-10 gap-4 border-1 border-white/30 hover:border-white hover:bg-pr-300/30 transition-colors duration-150 ease-in-out rounded-md">
+            <div className="group flex flex-col items-center bg-card-200 hover:shadow-none font-sofia-sans font-normal  px-4 py-10 gap-4 border-1 border-card-100 hover:border-white hover:bg-pr-300/30 transition-colors duration-150 ease-in-out rounded-md">
                 <div className="relative w-30 aspect-[3/4] shrink-0 group-hover:scale-105">
                     <Pouch className="w-full h-full object-cover fill-pr-700" />
 
