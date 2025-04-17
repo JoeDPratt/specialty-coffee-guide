@@ -1,6 +1,7 @@
 import SCALogo from "@/components/icons/sca-logo.svg";
+import { cn } from "@/utils/classes/merge";
 // import Wreath from "@/../public/images/wreath.svg";
-import SCGLogoMark from "@/../public/images/scg-logomark-red.svg";
+import SCGLogoMark from "@public/images/scg-logomark-red.svg";
 import type { JSX } from "react";
 
 interface CupScoreBadgeProps {
@@ -14,9 +15,32 @@ export default function CupScoreBadge({
     className,
     variant = "default",
 }: CupScoreBadgeProps): JSX.Element | null {
-    if (!score) return null;
 
-    if (variant === "default") {
+    const isScore: boolean = Boolean(score)
+
+    if (variant === "card") {
+        return (
+            <div className={`${className} w-auto`}>
+                <div className=" bg-card-200 text-center flex flex-row gap-2 items-center mt-1.5 mb-2.5 pt-2 pb-1 max-h-9 px-2 max-w-max rounded-sm">
+                    <SCALogo
+                        role="img"
+                        aria-label="Specialty Coffee Association cup score logo"
+                        className={cn(
+                            "h-6 mb-1.5 fill-pr-900",
+                            isScore ? "opacity-100" : "opacity-30"
+                        )}
+                    />
+                    <div className={cn(
+                        "font-teko text-[32px] tracking-wider leading-8 mt-0.25 text-pr-900",
+                        isScore ? "opacity-100 font-semibold" : "opacity-30 font-light"
+                    )}>
+                        {isScore ? score : "- -"}
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        if (!score) return null;
         return (
             <div className={`${className} w-auto`}>
                 <div className="relative">
@@ -38,7 +62,6 @@ export default function CupScoreBadge({
                 </div>
             </div>
         );
-    }
 
-    return null;
+    }
 }

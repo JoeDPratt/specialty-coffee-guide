@@ -5,6 +5,7 @@ import FairtradeIcon from "@/components/icons/icon-fairtrade.svg";
 import DecafIcon from "@/components/icons/icon-decaf.svg";
 import MycoIcon from "@/components/icons/icon-myco-free.svg";
 import SingleOriginIcon from "@/components/icons/icon-single-origin.svg";
+import { cn } from "@/utils/classes/merge";
 
 interface AttributeItemProps {
     flagName: string;
@@ -13,6 +14,8 @@ interface AttributeItemProps {
 
 interface AttributeSectionProps {
     attributeData: CoffeeAttributes;
+    variant?: string;
+    className?: string;
 }
 
 interface IconProps {
@@ -65,7 +68,7 @@ const labelColorMap: Record<string, LabelConfig> = {
     },
 };
 
-function AttributeItem({
+function AttributeItemLabelled({
     flagName,
     isActive = false,
 }: AttributeItemProps): JSX.Element {
@@ -104,25 +107,67 @@ function AttributeItem({
     );
 }
 
+function AttributeItemIcon({
+    flagName,
+    isActive = false,
+}: AttributeItemProps): JSX.Element {
+    const {
+        icon: Icon,
+        iconColor: iconColor,
+    } = labelColorMap[flagName] || {
+        bg: "bg-green-400",
+    };
+
+    return (
+        <div>
+            <Icon
+                className={`w-7 h7 ${isActive ? iconColor : "fill-pr-800 opacity-25"}`}
+            />
+        </div>
+    );
+}
+
 export default function AttributeSection({
     attributeData,
+    variant = "default",
+    className = ""
 }: AttributeSectionProps): JSX.Element {
     const entries = Object.entries(attributeData || {});
 
-    return (
-        <div
-            className="font-sofia-sans-condensed tracking-wide font-medium lg:pt-1.25 -mt-1.75 lg:mt-0"
-            role="region"
-            aria-labelledby="attribute-section-heading"
-        >
-            <h3 id="attribute-section-heading" className="sr-only">
-                Product attributes
-            </h3>
-            <div className="w-full flex flex-wrap xs:justify-between" role="list">
+    if (variant === "icon") {
+        return (
+            <div
+                className={cn(
+                    "flex w-max gap-2 p-2",
+                    className
+                )}
+                role="region"
+                aria-labelledby="card-coffee-attributes"
+            >
                 {entries.map(([key, value]) => (
-                    <AttributeItem key={key} flagName={key} isActive={Boolean(value)} />
+                    <AttributeItemIcon key={key} flagName={key} isActive={Boolean(value)} />
                 ))}
             </div>
-        </div>
-    );
+
+        );
+    } else {
+        return (
+            <div
+                className={cn(
+                    "font-sofia-sans-condensed tracking-wide font-medium lg:pt-1.25 -mt-1.75 lg:mt-0",
+                    className)}
+                role="region"
+                aria-labelledby="attribute-section-heading"
+            >
+                <h3 id="attribute-section-heading" className="sr-only">
+                    Product attributes
+                </h3>
+                <div className="w-full flex flex-wrap xs:justify-between" role="list">
+                    {entries.map(([key, value]) => (
+                        <AttributeItemLabelled key={key} flagName={key} isActive={Boolean(value)} />
+                    ))}
+                </div>
+            </div>
+        );
+    }
 }

@@ -9,6 +9,10 @@ import { getProductPath } from "@/utils/navigation/paths";
 import { motion } from "framer-motion";
 import { subtleSpring } from "@/utils/animation";
 import { HeartIcon } from "@heroicons/react/16/solid";
+import AttributeSection from "@/components/product/AttributeSection";
+import RoastLabel from "@/components/shared/product/RoastLabel";
+import BestValueTag from "@/components/shared/product/BestValueTag";
+import CupScoreBadge from "@/components/shared/product/CupScoreBadge";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -25,6 +29,9 @@ export default function ProductCard({
         lowest_price_per_kg,
         roaster,
         likes_count = 190,
+        attributes,
+        roasts,
+        sca_cup_score
     } = product;
 
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
@@ -33,17 +40,20 @@ export default function ProductCard({
         ? `£${lowest_price_per_kg.toFixed(2)}`
         : null;
     const flavourText = flavours?.join(" · ");
+    const cup_score = 90
+    console.log("CUP SCORE", cup_score);
+    const isBestValue = false // Add logic for best value
 
     return (
         <Link
             href={getProductPath(slug)}
-            className="group flex flex-col h-full bg-pr-100 hover:shadow-xl transition-all overflow-hidden border-2 border-pr-300 shadow-b-neumorphic rounded-md"
+            className="group flex flex-col h-full bg-card-200 hover:shadow-xl transition-all overflow-hidden border-1 border-card-100  rounded-md"
         >
             {/* Image */}
             <motion.div
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
-                className="relative w-full aspect-[1/1] bg-pr-100 border-16 border-pr-100"
+                className="relative w-full aspect-[1/1] bg-card-200 border-8 border-card-200"
             >
                 <Image
                     loader={cloudinaryLoader}
@@ -57,43 +67,52 @@ export default function ProductCard({
                 />
             </motion.div>
 
-            {/* Content */}
-            <div className="px-6 pt-0 flex flex-col flex-grow overflow-hidden">
-                {/* Roaster + likes */}
-                <div>{roaster.name}</div>
+            {/* Text Content */}
+            <div className="px-6 pt-0 flex flex-col flex-grow overflow-hidden min-h-45">
 
                 {/* Product name */}
-                <h3 className="mt-4 -mb-1 text-3xl font-medium text-pr-900 leading-7 tracking-wide line-clamp-2">
+                <h3 className="mt-2.75 mb-0 text-3xl font-medium text-pr-900 leading-7 tracking-wide line-clamp-2">
                     {product_name.toUpperCase()}
                 </h3>
 
+                {/* Roaster + likes */}
+                <div className="text-base">{roaster.name}</div>
+
                 {/* Flavours */}
                 {flavourText && (
-                    <p className="text-base font-light text-pr-800">{flavourText}</p>
+                    <div className="text-base font-light text-pr-800 mt-0.25 mb-1.25">{flavourText}</div>
                 )}
 
-                {/* Tags (optional icons) */}
-                {/* <div className="flex gap-2 pt-2">
-                    <OrganicIcon />
-                    <LowCafIcon />
-                    <TestedIcon />
-                </div> */}
-
-                {/* Price */}
-                {pricePerKg && (
-                    <div className="flex justify-between items-baseline-last">
-                        {likes_count != null && (
-                            <div className=" text-sm flex items-center gap-0.5">
-                                <HeartIcon className="h-8 text-pr-500 mb-1" />
-                                <span className="text-pr-800 text-lg">{likes_count}</span>
-                            </div>
-                        )}
-                        <div className="pt-1 text-right text-sm font-medium text-pr-800">
-                            from <span className="text-2xl font-bold">{pricePerKg}</span> /kg
-                        </div>
-                    </div>
+                {/* Roasts */}
+                {roasts && (
+                    <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"outline"} />
                 )}
             </div>
+            {/* Comparison section */}
+            <div className="bg-card-100 px-6 py-2">
+
+                {/* Attriibutes and tags */}
+                <div className="flex justify-between items-center mt-1">
+                    {/* Tags (optional icons) */}
+                    <AttributeSection attributeData={attributes} variant={"icon"} className={"-ml-2 gap-3"} />
+                    {isBestValue && <BestValueTag />}
+                </div>
+
+                {/* Cup Score Price */}
+                <div className="flex justify-between items-baseline">
+                    <CupScoreBadge score={cup_score} variant={"card"} />
+
+                    {pricePerKg && (
+                        <div className="flex justify-between items-baseline-last">
+                            <div className="pt-1 text-right text-sm font-medium text-pr-800">
+                                from <span className="text-2xl font-bold">{pricePerKg}</span> /kg
+                            </div>
+                        </div>
+                    )
+                    }
+                </div>
+            </div>
+
         </Link>
     );
 }

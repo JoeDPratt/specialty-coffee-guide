@@ -41,11 +41,11 @@ export interface Brewing {
 }
 
 export interface CoffeeAttributes {
-    is_organic: boolean | null;
-    is_fairtrade: boolean | null;
+    is_organic?: boolean | null;
+    is_fairtrade?: boolean | null;
     is_decaf?: boolean;
     is_lowcaf?: boolean;
-    is_mycotoxin_free: boolean | null;
+    is_mycotoxin_free?: boolean | null;
     is_single_origin?: boolean | null;
 }
 
@@ -102,6 +102,9 @@ export interface ProductCard {
         alt_text: string;
     }[];
     lowest_price_per_kg: number | null;
+    attributes: CoffeeAttributes;
+    roasts: RoastLevel[];
+    sca_cup_score: number | null;
     roaster: {
         name: string;
         slug: string;

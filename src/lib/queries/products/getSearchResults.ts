@@ -20,7 +20,7 @@ export const getSearchResults = cache(
             .select(`
         product_name, slug, lowest_price_per_kg,
         is_organic, is_decaf, is_lowcaf, is_mycotoxin_tested, sca_cup_score,
-        search_flavours,
+        search_flavours, is_single_origin, search_roasts,
         product_images ( image_url, alt_text, is_primary ),
         coffee_roaster:coffee_roasters!inner (
           name, slug,

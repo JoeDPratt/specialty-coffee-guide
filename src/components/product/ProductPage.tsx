@@ -121,7 +121,7 @@ export default function ProductPage({
 
                         <div
                             id="roast-flavours"
-                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-lg text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3"
+                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-xl text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3"
                         >
                             {flavors}
                         </div>
@@ -145,7 +145,7 @@ export default function ProductPage({
 
                     {/* LEFT COLUMN: Product image */}
                     <motion.div
-                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-pr-100 sm:p-6 p-4 border-1 shadow-b-neumorphic border-pr-300/80 rounded-md"
+                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-pr-100/70 sm:p-6 p-4 border-1 border-white/30 rounded-md"
                         variants={fadeUpItem}
                     >
                         <motion.div

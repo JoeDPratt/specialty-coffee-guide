@@ -34,7 +34,7 @@ export default function HomePage({
     const roasterName = products?.[0]?.roaster?.name ?? "Featured Roaster";
 
     return (
-        <main>
+        <main className="pb-50">
             <motion.div
                 className="flex flex-col z-1 relative w-full items-center justify-center gap-4 h-130"
                 variants={fadeUpItem}
@@ -53,7 +53,7 @@ export default function HomePage({
             <div className="px-6 mt-20" >
                 <h2>Specialty Coffee by {roasterName}</h2>
                 <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6"
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"

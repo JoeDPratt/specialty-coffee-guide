@@ -78,8 +78,10 @@ export type RawProductCard = Pick<
     | 'is_decaf'
     | 'is_lowcaf'
     | 'is_mycotoxin_tested'
+    | 'is_single_origin'
     | 'sca_cup_score'
     | 'search_flavours'
+    | 'search_roasts'
 > & {
     product_images: ProductImageForCard[];
     coffee_roaster: RoasterForCard & {

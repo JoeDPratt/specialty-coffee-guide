@@ -1,6 +1,7 @@
 import type { ProductVariant } from "@/types/product";
 import Pouch from "@public/images/coffee-pouch-2.svg";
 import type { JSX } from "react";
+import BestValueTag from "../shared/product/BestValueTag";
 
 interface productOptionsListProps {
     lowestPricePerKg: number | null;
@@ -40,16 +41,12 @@ function ProductOption({
             role="listitem"
         >
             {/* <div className="group shadow-b-neumorphic hover:scale-101 flex flex-row border-pr-300 border-2 items-center hover:shadow-none pt-6 pb-2.5 px-3 xs:pt-6 xs:pb-5.5 xs:px-6 font-sofia-sans font-normal gap-10"> */}
-            <div className="group flex flex-col items-center bg-pr-100 hover:shadow-none shadow-b-neumorphic font-sofia-sans font-normal  px-4 py-10 gap-4 border-1 border-pr-300/80 hover:border-pr-300 hover:bg-pr-300/70 transition-colors duration-150 ease-in-out rounded-md">
+            <div className="group flex flex-col items-center bg-pr-100/70 hover:shadow-none font-sofia-sans font-normal  px-4 py-10 gap-4 border-1 border-white/30 hover:border-white hover:bg-pr-300/30 transition-colors duration-150 ease-in-out rounded-md">
                 <div className="relative w-30 aspect-[3/4] shrink-0 group-hover:scale-105">
                     <Pouch className="w-full h-full object-cover fill-pr-700" />
 
                     <div className="absolute inset-0 flex flex-col items-center justify-end mb-10 gap-3.5">
-                        {isBestValue && (
-                            <div className="bg-pr-400 text-white text-base rounded-full border-2 border-white pt-0.5 px-2">
-                                BEST VALUE
-                            </div>
-                        )}
+                        {isBestValue && <BestValueTag />}
                         <div className="text-center leading-none text-3xl text-white">
                             {displayWeight}
                             <span className="text-base">{weightUnit}</span>

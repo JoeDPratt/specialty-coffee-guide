@@ -35,7 +35,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
                 : baseHeight;
 
     const containerStyle = { height: `${adjustedHeight}px` };
-    const defaultContainerClass = `relative flex bg-pr-100 border-4 border-white pb-4 pt-5 px-6 rounded-sm items-center`;
+    const defaultContainerClass = `relative flex bg-pr-100/80 border-1 border-white/30 pb-4 pt-5 px-6 rounded-xs items-center`;
 
     if (isSvg) {
         return (

@@ -127,6 +127,22 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
         (img: RoasterImageForCard) => img.is_primary,
     );
 
+    const attributes: CoffeeAttributes = {
+        is_organic: raw.is_organic,
+        is_single_origin: raw.is_single_origin,
+        is_mycotoxin_free: raw.is_mycotoxin_tested,
+    };
+
+    if (raw.is_lowcaf) {
+        attributes.is_lowcaf = raw.is_lowcaf ?? false;
+    } else {
+        attributes.is_decaf = raw.is_decaf ?? false;
+    }
+
+    const cardRoasts: RoastLevel[] = (raw.search_roasts ?? [])
+        .map(r => r.toLowerCase().trim())
+        .filter((r): r is RoastLevel => validRoastLevels.includes(r as RoastLevel));
+
     return {
         slug: raw.slug,
         product_name: raw.product_name,
@@ -136,6 +152,9 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
             alt_text: img.alt_text ?? "Product image",
         })),
         lowest_price_per_kg: raw.lowest_price_per_kg ?? null,
+        attributes,
+        roasts: cardRoasts,
+        sca_cup_score: raw.sca_cup_score,
         roaster: {
             name: roaster.name,
             slug: roaster.slug,

@@ -29,7 +29,7 @@ export default function ExpandedMobileSearch() {
                 layoutId="searchField"
             >
                 <input
-                    ref={inputRef}
+                    // ref={inputRef} // No autofocus on mobile to show full search page
                     type="search"
                     enterKeyHint="search"
                     role="search"
@@ -55,7 +55,7 @@ export default function ExpandedMobileSearch() {
                 <IconButton
                     label={"SEARCH"}
                     className={"flex-1 justify-center text-xl"}
-                    icon={<MagnifyingGlassIcon className="w-7 h-7 mb-0.75 text-white group-hover:animate-pulse" />}
+                    icon={<MagnifyingGlassIcon className="w-6 h-6 mb-0.75 text-white group-hover:animate-pulse" />}
                     onClick={handleSearch}
                     ariaLabel="Search Button"
                 ></IconButton>

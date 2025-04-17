@@ -24,7 +24,10 @@
     --color-pr-600: rgb(154, 20, 6);
     --color-pr-700: rgb(64, 6, 0);
     --color-pr-800: rgb(27, 7, 5);
-    --color-pr-900: rgb(24, 10, 8); 
+    --color-pr-900: rgb(24, 10, 8);
+
+    --color-card-100: rgb(250, 246, 246);
+    --color-card-200: rgb(245, 237, 237);
 
     --color-sc-400: rgb(104, 153, 94);
     --color-sc-500: rgb(79, 116, 71);
