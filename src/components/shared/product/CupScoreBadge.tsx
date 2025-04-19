@@ -21,18 +21,18 @@ export default function CupScoreBadge({
     if (variant === "card") {
         return (
             <div className={`${className} w-auto`}>
-                <div className={cn("text-center flex flex-row gap-2 items-center pt-0.75 px-1.75 max-w-max rounded-sm",
+                <div className={cn("text-center flex flex-row gap-1.5 items-center pt-1.5 pb-0.75 px-2 max-w-max rounded-sm",
                     isScore ? "bg-card-100" : "bg-card-200")}>
                     <SCALogo
                         role="img"
                         aria-label="Specialty Coffee Association cup score logo"
                         className={cn(
-                            "h-6 mb-1.5 fill-pr-900",
+                            "h-5.5 mb-0.5 ml-0.5 fill-pr-900",
                             isScore ? "opacity-100" : "opacity-30"
                         )}
                     />
                     <div className={cn(
-                        "font-teko text-[32px] tracking-wider leading-8 mt-0.25 text-pr-900",
+                        "font-teko text-[31px] tracking-wider leading-6 pt-0.75 text-pr-900",
                         isScore ? "opacity-100 font-bold" : "opacity-30 font-light"
                     )}>
                         {isScore ? score : "- -"}

@@ -42,7 +42,7 @@ export default function ProductCard({
         ? `£${lowest_price_per_kg.toFixed(2)}`
         : null;
     const flavourText = flavours?.join(" · ");
-    const isBestValue = false // Add logic for best value
+    const isBestValue = true // Add logic for best value
 
     return (
         <Link
@@ -113,7 +113,7 @@ export default function ProductCard({
                     {pricePerKg && (
                         <div className="flex flex-col items-end text-right">
                             <div className="pt-1 font-medium text-pr-800 -mb-1">
-                                <span className="text-3xl font-semibold">£12.50</span>
+                                <span className="text-3xl font-bold">£12.50</span>
                             </div>
                             <div className="text-base font-light">250g - {pricePerKg} /kg</div>
                         </div>
