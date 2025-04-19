@@ -42,7 +42,7 @@ export default function ProductCard({
         ? `£${lowest_price_per_kg.toFixed(2)}`
         : null;
     const flavourText = flavours?.join(" · ");
-    const isBestValue = false // Add logic for best value
+    const isBestValue = true // Add logic for best value
 
     return (
         <Link
@@ -53,7 +53,7 @@ export default function ProductCard({
             <motion.div
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
-                className="relative w-full aspect-[1/1] bg-card-100"
+                className="relative w-full aspect-[1/1] bg-card-100 mb-3"
             >
                 <Image
                     loader={cloudinaryLoader}
@@ -67,16 +67,9 @@ export default function ProductCard({
                 />
             </motion.div>
 
-            {/* Attriibutes and tags */}
-            <div className="flex justify-between items-center gap-2 px-4 sm:px-6 bg-card-200">
-                {/* Tags (optional icons) */}
-                <AttributeSection attributeData={attributes} variant={"icon"} className={"-ml-3 gap-2 sm:gap-4"} />
-                <CupScoreBadge score={90} variant={"card"} />
-            </div>
-
             {/* Text Content */}
             <div className={cn(
-                "px-4 sm:px-6 pt-4 flex flex-col flex-grow overflow-hidden",
+                "px-4 sm:px-6 pt-0 flex flex-col flex-grow overflow-hidden",
                 isSm ? "mb-9" : "min-h-45"
             )}>
 
@@ -99,21 +92,24 @@ export default function ProductCard({
                 )}
             </div>
             {/* Comparison section */}
-            <div className="px-4 sm:px-6 pt-2 pb-4">
+            <div className="px-6 pt-2 pb-4">
+
+                {/* Attriibutes and tags */}
+                <div className="flex justify-start items-start mt-1 gap-2">
+                    {/* Tags (optional icons) */}
+                    <CupScoreBadge score={sca_cup_score} variant={"card"} />
+                    <AttributeSection attributeData={attributes} variant={"icon"} className={"-mr-2 gap-3"} iconSize={"lg"} />
+
+                </div>
 
                 {/* Cup Score Price */}
-                <div className="flex justify-between items-end">
+                <div className="flex justify-between items-start">
 
-                    <div className={cn("pb-1.75",
-                        !isBestValue && "opacity-0"
-                    )}
-                    >
-                        <BestValueTag />
-                    </div>
+                    {isBestValue && <BestValueTag />}
                     {pricePerKg && (
                         <div className="flex flex-col items-end text-right">
                             <div className="pt-1 font-medium text-pr-800 -mb-1">
-                                <span className="text-3xl font-semibold">£12.50</span>
+                                <span className="text-3xl font-normal">£12.50</span>
                             </div>
                             <div className="text-base font-light">250g - {pricePerKg} /kg</div>
                         </div>

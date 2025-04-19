@@ -10,12 +10,14 @@ import { cn } from "@/utils/classes/merge";
 interface AttributeItemProps {
     flagName: string;
     isActive?: boolean;
+    iconSize?: string;
 }
 
 interface AttributeSectionProps {
     attributeData: CoffeeAttributes;
     variant?: string;
     className?: string;
+    iconSize?: string;
 }
 
 interface IconProps {
@@ -110,6 +112,7 @@ function AttributeItemLabelled({
 function AttributeItemIcon({
     flagName,
     isActive = false,
+    iconSize = "base"
 }: AttributeItemProps): JSX.Element {
     const {
         icon: Icon,
@@ -118,10 +121,18 @@ function AttributeItemIcon({
         bg: "bg-green-400",
     };
 
+    const iconSizeMap: Record<string, string> = {
+        base: "w-7 h-7",
+        lg: "w-9 h-9"
+    }
+
     return (
-        <div>
+        <div className={cn("p-1", isActive ? "bg-card-100 rounded-sm" : "bg-transparent")}>
             <Icon
-                className={`w-7 h7 ${isActive ? iconColor : "fill-pr-800 opacity-25"}`}
+                className={cn(
+                    iconSizeMap[iconSize],
+                    isActive ? iconColor : "fill-pr-800 opacity-25"
+                )}
             />
         </div>
     );
@@ -130,7 +141,8 @@ function AttributeItemIcon({
 export default function AttributeSection({
     attributeData,
     variant = "default",
-    className = ""
+    className = "",
+    iconSize = "base"
 }: AttributeSectionProps): JSX.Element {
     const entries = Object.entries(attributeData || {});
 
@@ -145,7 +157,7 @@ export default function AttributeSection({
                 aria-labelledby="card-coffee-attributes"
             >
                 {entries.map(([key, value]) => (
-                    <AttributeItemIcon key={key} flagName={key} isActive={Boolean(value)} />
+                    <AttributeItemIcon key={key} flagName={key} isActive={Boolean(value)} iconSize={iconSize} />
                 ))}
             </div>
 
