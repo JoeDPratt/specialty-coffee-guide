@@ -112,5 +112,11 @@ export interface ProductCard {
         alt_text: string;
         logo_layout: LogoLayout;
     };
+    product_variants?: {
+        weight: number | null;
+        price: number | null;
+        price_per_kg: number | null;
+        currency: string;
+    }[];
     likes_count?: number | null;
 }

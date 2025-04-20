@@ -127,6 +127,13 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
         (img: RoasterImageForCard) => img.is_primary,
     );
 
+    const variants = (raw.product_variants ?? []).map((v) => ({
+        weight: v.weight ?? null,
+        price: v.price ?? null,
+        price_per_kg: v.price_per_kg ?? null,
+        currency: v.currency ?? "",
+    }));
+
     const attributes: CoffeeAttributes = {
         is_organic: raw.is_organic,
         is_single_origin: raw.is_single_origin,
@@ -162,5 +169,6 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
             alt_text: primaryLogo?.alt_text ?? "Roaster logo",
             logo_layout: primaryLogo?.logo_layout ?? "wide", // or type-safe default
         },
+        product_variants: variants,
     };
 }

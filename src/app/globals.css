@@ -39,10 +39,17 @@
     --color-brown-500: #6D402D;
     --color-brown-400: #7A4C38;
 
-    --color-green-400: #1DA832;
-    --color-blue-400: #1D4BA8;
-    --color-aqua-400: #1D8FA8;
-    --color-orange-400: #A8621D;
+    /* Icon colors */
+    --color-green-100: rgb(246, 255, 247);
+    --color-green-400: rgb(13, 198, 31);
+    --color-blue-100: rgb(242, 247, 255);
+    --color-blue-400: rgb(13, 126, 233);
+    --color-aqua-100: rgb(241, 254, 255);
+    --color-aqua-400: rgb(18, 205, 215);
+    --color-orange-100: rgb(255, 249, 240);
+    --color-orange-400: rgb(246, 150, 9);
+    --color-tan-100: rgb(255, 247, 241);
+    --color-tan-400: rgb(157, 93, 41);
 
     /* Breakpoints */
     --container-sm: 500px;
@@ -106,18 +113,22 @@
  @layer utilities {
     .section-layout {
         @apply mx-auto lg:max-w-[1400px] md:max-lg:max-w-172 xl:px-20 sm:px-6.5 px-4;
-      }
-      .hr-neu-shadow {
+    }
+    .hr-neu-shadow {
         @apply border-none h-0.5 opacity-60;
         background-color: var(--color-pr-200);
         box-shadow: var(--shadow-hr-neumorphic);
-      }
+    }
+    .tooltip-base {
+        font-family: var(--font-sofia-sans), sans-serif;
+        @apply bg-pr-900 text-white dark:bg-pr-100 dark:text-pr-900 shadow-md max-w-50 text-base px-4 pt-3 pb-4 z-500;
+    }
     .no-scrollbar::-webkit-scrollbar {
-      display: none;
+        display: none;
     }
     .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     /* Fonts */
     .font-teko {

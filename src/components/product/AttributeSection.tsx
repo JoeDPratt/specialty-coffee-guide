@@ -6,135 +6,172 @@ import DecafIcon from "@/components/icons/icon-decaf.svg";
 import MycoIcon from "@/components/icons/icon-myco-free.svg";
 import SingleOriginIcon from "@/components/icons/icon-single-origin.svg";
 import { cn } from "@/utils/classes/merge";
+import {
+    Tooltip,
+    TooltipTrigger,
 
-interface AttributeItemProps {
-    flagName: string;
-    isActive?: boolean;
-    iconSize?: string;
-}
-
-interface AttributeSectionProps {
-    attributeData: CoffeeAttributes;
-    variant?: string;
-    className?: string;
-    iconSize?: string;
-}
+} from "@/components/ui/tooltip";
+import { AttributeTooltip } from "@/components/tooltips/AttributeTooltip";
 
 interface IconProps {
     className?: string;
 }
 
+interface AttributeItemIconProps {
+    flagName: keyof typeof attributeConfig;
+    isActive?: boolean;
+    iconSize?: "base" | "lg";
+}
+
+interface AttributeItemLabelledProps {
+    flagName: keyof typeof attributeConfig;
+    isActive?: boolean;
+}
+
+
+interface AttributeSectionProps {
+    attributeData: CoffeeAttributes;
+    variant?: "default" | "icon";
+    className?: string;
+    iconSize?: "base" | "lg";
+}
+
 type LabelConfig = {
     label: string | JSX.Element;
-    bgColor: string;
+    bgClass?: string;
     icon: React.ComponentType<IconProps>;
-    iconColor: string;
+    iconColorClass: string;
+    description: string;
 };
 
-const labelColorMap: Record<string, LabelConfig> = {
+type Variant = "default" | "icon";
+
+const attributeConfig: Record<keyof CoffeeAttributes, LabelConfig> = {
     is_organic: {
-        label: "ORGANIC",
-        bgColor: "bg-green-400",
+        label: "Organic",
+        bgClass: "bg-green-100",
         icon: OrganicIcon,
-        iconColor: "fill-green-400",
+        iconColorClass: "fill-green-400",
+        description: "Certified organic beans grown without synthetic fertilizers or pesticides.",
     },
     is_mycotoxin_free: {
-        label: "MYCO FREE",
-        bgColor: "bg-teal-400",
+        label: "Myco Free",
+        bgClass: "bg-teal-100",
         icon: MycoIcon,
-        iconColor: "fill-teal-400",
+        iconColorClass: "fill-teal-400",
+        description: "Tested free from mycotoxins.",
     },
     is_fairtrade: {
-        label: "FAIRTRADE",
-        bgColor: "bg-brown-400",
+        label: "Fairtrade",
+        bgClass: "bg-tan-100",
         icon: FairtradeIcon,
-        iconColor: "fill-brown-400",
+        iconColorClass: "fill-tan-400",
+        description: "Supports fair prices and safe working conditions for farmers.",
     },
     is_decaf: {
-        label: "DECAF",
-        bgColor: "bg-blue-400",
+        label: "Decaf",
+        bgClass: "bg-blue-100",
         icon: DecafIcon,
-        iconColor: "fill-blue-400",
+        iconColorClass: "fill-blue-400",
+        description: "Coffee with most of the caffeine removed through water processing.",
     },
     is_lowcaf: {
-        label: "LOW CAFF",
-        bgColor: "bg-blue-400",
+        label: "Low Caf",
+        bgClass: "bg-blue-100",
         icon: DecafIcon,
-        iconColor: "fill-blue-400",
+        iconColorClass: "fill-blue-400",
+        description: "Reduced caffeine content but still maintains some natural energy.",
     },
     is_single_origin: {
-        label: "SINGLE ORIGIN",
-        bgColor: "bg-orange-400",
+        label: "Single Origin",
+        bgClass: "bg-orange-100",
         icon: SingleOriginIcon,
-        iconColor: "fill-orange-400",
+        iconColorClass: "fill-orange-400",
+        description: "Beans sourced from a single region or farm.",
     },
 };
+
+const iconSizeMap = {
+    base: "w-7 h-7",
+    lg: "w-9 h-9"
+}
 
 function AttributeItemLabelled({
     flagName,
     isActive = false,
-}: AttributeItemProps): JSX.Element {
+}: AttributeItemLabelledProps): JSX.Element {
     const {
-        label: labelText,
+        label,
+        description,
         icon: Icon,
-        iconColor: iconColor,
-    } = labelColorMap[flagName] || {
-        label: "ORGANIC",
-        bg: "bg-green-400",
-    };
+        iconColorClass,
+    } = attributeConfig[flagName];
 
     return (
-        <div className={`flex w-1/2 xs:w-auto`}>
-            <div
-                className={`@sm:w-max xs:w-min py-2 flex flex-row xs:flex-col gap-1 xs:gap-2 items-center`}
-                role="listitem"
-                aria-label={`${labelText} attribute is ${isActive ? "active" : "inactive"}`}
-            >
-                <div className="w-10 shrink-0 items-center xs:align-top align-middle">
-                    <Icon
-                        className={`w-full h-auto object-cover ${isActive ? iconColor : "fill-pr-800 opacity-25"}`}
-                    />
+        <Tooltip>
+            <TooltipTrigger asChild >
+                <div className="flex w-1/2 xs:w-auto">
+                    <div
+                        className="@sm:w-max xs:w-min py-2 flex flex-row xs:flex-col gap-1 xs:gap-2 items-center"
+                        role="listitem"
+                        aria-label={`${label} attribute is ${isActive ? "active" : "inactive"}`}
+                    >
+                        <div className="w-10 shrink-0 items-center xs:align-top align-middle">
+                            <Icon
+                                className={cn("w-full h-auto object-cover",
+                                    isActive ? iconColorClass : "fill-pr-800 opacity-25"
+                                )}
+                            />
+                        </div>
+                        <hr className="hidden xs:block hr-neu-shadow w-0 xs:w-10 mb-1.25 mt-0.25" />
+                        <div
+                            className={`${!isActive && "opacity-25"
+                                } text-pr-800 dark:text-white xs:text-center text-base leading-4 -mt-0.25 uppercase`}
+                        >
+                            {label}
+                            <span className="sr-only">
+                                {isActive ? " (active)" : " (inactive)"}
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <hr className="hidden xs:block hr-neu-shadow w-0 xs:w-10 mb-1.25 mt-0.25"></hr>
-                <div
-                    className={`${!isActive && "opacity-25"} text-pr-800 dark:text-white xs:text-center text-base leading-4 -mt-0.25`}
-                >
-                    {labelText}
-                    <span className="sr-only">
-                        {isActive ? " (active)" : " (inactive)"}
-                    </span>
-                </div>
-            </div>
-        </div>
+            </TooltipTrigger>
+            <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
+        </Tooltip>
     );
 }
 
 function AttributeItemIcon({
     flagName,
     isActive = false,
-    iconSize = "base"
-}: AttributeItemProps): JSX.Element {
-    const {
-        icon: Icon,
-        iconColor: iconColor,
-    } = labelColorMap[flagName] || {
-        bg: "bg-green-400",
-    };
-
-    const iconSizeMap: Record<string, string> = {
-        base: "w-7 h-7",
-        lg: "w-9 h-9"
-    }
+    iconSize = "base",
+}: AttributeItemIconProps): JSX.Element {
+    const { label, description, icon: Icon, iconColorClass } = attributeConfig[flagName];
 
     return (
-        <div className={cn("p-1", isActive ? "bg-card-100 rounded-sm" : "bg-transparent")}>
-            <Icon
-                className={cn(
-                    iconSizeMap[iconSize],
-                    isActive ? iconColor : "fill-pr-800 opacity-25"
-                )}
-            />
-        </div>
+        <Tooltip>
+            <TooltipTrigger asChild >
+                <div
+                    className={cn(
+                        "p-1",
+                        isActive
+                            ? "bg-white rounded-sm shadow-xs"
+                            : "bg-transparent"
+                    )}
+                    aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
+                >
+                    <Icon
+                        className={cn(
+                            iconSizeMap[iconSize],
+                            isActive
+                                ? iconColorClass
+                                : "fill-pr-800 opacity-25"
+                        )}
+                    />
+                </div>
+            </TooltipTrigger>
+            <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
+        </Tooltip>
     );
 }
 
@@ -144,42 +181,50 @@ export default function AttributeSection({
     className = "",
     iconSize = "base"
 }: AttributeSectionProps): JSX.Element {
-    const entries = Object.entries(attributeData || {});
+    const entries = (Object.keys(attributeData) as (keyof CoffeeAttributes)[])
+        .filter((key) => attributeConfig[key])
+        .map((key) => [key, attributeData[key]] as const);
 
     if (variant === "icon") {
         return (
-            <div
-                className={cn(
-                    "flex w-max gap-2 p-2",
-                    className
-                )}
-                role="region"
-                aria-labelledby="card-coffee-attributes"
-            >
-                {entries.map(([key, value]) => (
-                    <AttributeItemIcon key={key} flagName={key} isActive={Boolean(value)} iconSize={iconSize} />
-                ))}
-            </div>
 
-        );
-    } else {
-        return (
             <div
-                className={cn(
-                    "font-sofia-sans-condensed tracking-wide font-medium lg:pt-1.25 -mt-1.75 lg:mt-0",
-                    className)}
+                className={cn("flex w-max gap-2 p-2", className)}
                 role="region"
-                aria-labelledby="attribute-section-heading"
+                aria-label="Coffee attribute icons"
             >
-                <h3 id="attribute-section-heading" className="sr-only">
-                    Product attributes
-                </h3>
-                <div className="w-full flex flex-wrap xs:justify-between" role="list">
-                    {entries.map(([key, value]) => (
-                        <AttributeItemLabelled key={key} flagName={key} isActive={Boolean(value)} />
-                    ))}
-                </div>
+                {entries.map(([flagName, isActive]) => (
+                    <AttributeItemIcon
+                        key={flagName}
+                        flagName={flagName}
+                        isActive={isActive ?? false}
+                        iconSize={iconSize}
+                    />
+                ))}
             </div>
         );
     }
+
+    return (
+        <div
+            className={cn(
+                "font-sofia-sans-condensed tracking-wide font-medium lg:pt-1.25 -mt-1.75 lg:mt-0",
+                className
+            )}
+            role="region"
+            aria-label="Product attributes"
+        >
+            <h3 className="sr-only">Product attributes</h3>
+            <div className="w-full flex flex-wrap xs:justify-between" role="list">
+                {entries.map(([flagName, isActive]) => (
+                    <AttributeItemLabelled
+                        key={flagName}
+                        flagName={flagName}
+                        isActive={isActive ?? false}
+                    />
+                ))}
+            </div>
+        </div>
+
+    );
 }

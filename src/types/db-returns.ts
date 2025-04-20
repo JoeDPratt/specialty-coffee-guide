@@ -27,6 +27,11 @@ export type ProductImageForCard = Pick<
     'image_url' | 'alt_text' | 'is_primary'
 >;
 
+export type ProductVariantForCard = Pick<
+    ProductVariant,
+    'weight' | 'price' | 'currency' | 'price_per_kg'
+>;
+
 export type RoasterForCard = Pick<
     Roaster,
     'name' | 'slug'
@@ -84,6 +89,7 @@ export type RawProductCard = Pick<
     | 'search_roasts'
 > & {
     product_images: ProductImageForCard[];
+    product_variants: ProductVariantForCard[];
     coffee_roaster: RoasterForCard & {
         roaster_images: RoasterImageForCard[];
     };
