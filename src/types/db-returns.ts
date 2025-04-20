@@ -29,7 +29,7 @@ export type ProductImageForCard = Pick<
 
 export type ProductVariantForCard = Pick<
     ProductVariant,
-    'weight' | 'price' | 'currency' | 'price_per_kg'
+    'weight' | 'price' | 'currency' | 'price_per_kg' | 'is_instock'
 >;
 
 export type RoasterForCard = Pick<

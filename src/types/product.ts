@@ -5,8 +5,8 @@ export interface ProductVariant {
     price_per_kg: number | null;
     price: number | null;
     currency: string;
-    discount_percent: number | null;
-    is_instock: boolean;
+    discount_percent?: number | null;
+    is_instock?: boolean;
 }
 
 export type RoastLevel =
@@ -112,11 +112,6 @@ export interface ProductCard {
         alt_text: string;
         logo_layout: LogoLayout;
     };
-    product_variants?: {
-        weight: number | null;
-        price: number | null;
-        price_per_kg: number | null;
-        currency: string;
-    }[];
+    product_variants?: ProductVariant[];
     likes_count?: number | null;
 }

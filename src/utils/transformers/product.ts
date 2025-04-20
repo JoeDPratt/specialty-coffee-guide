@@ -132,6 +132,7 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
         price: v.price ?? null,
         price_per_kg: v.price_per_kg ?? null,
         currency: v.currency ?? "",
+        is_instock: v.is_instock ?? false
     }));
 
     const attributes: CoffeeAttributes = {
