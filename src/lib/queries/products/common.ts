@@ -1,7 +1,7 @@
 // lib/db/products/common.ts
 import { createClient } from "@/lib/supabase/server";
 import { ProductVariant } from "@/types/aliases";
-import { RawProductCard } from "@/types/db-returns";
+import { ProductVariantForCard, RawProductCard } from "@/types/db-returns";
 import { Database } from "@/types/supabase";
 import { transformProductCard } from "@/utils/transformers/product";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -20,7 +20,8 @@ export const PRODUCT_CARD_SELECT = `
     weight,
     price,
     currency,
-    price_per_kg
+    price_per_kg,
+    is_instock
   )
 `;
 
@@ -33,9 +34,9 @@ export function baseProductCardQuery(client: SupabaseClient<Database>) {
         .eq("is_deleted", false);
 }
 
-// flatten the returned array and apply your transformer
+// flatten the returned array and apply transformer
 export function cleanAndTransform(
-    rows: (RawProductCard & { product_variants?: ProductVariant[] })[] | null
+    rows: (RawProductCard & { product_variants?: ProductVariantForCard[] })[] | null
 ): ReturnType<typeof transformProductCard>[] {
     const cleaned: RawProductCard[] = (rows ?? []).map((item) => ({
         ...item,
@@ -46,7 +47,7 @@ export function cleanAndTransform(
     return cleaned.map(transformProductCard);
 }
 
-// 1d) helper to get a client + run your query
+// helper to get a client + run query
 export async function fetchProductCards(modifier: (q: ReturnType<typeof baseProductCardQuery>) => ReturnType<typeof baseProductCardQuery>) {
     const supabase = await createClient();
     const { data, error } = await modifier(baseProductCardQuery(supabase));
