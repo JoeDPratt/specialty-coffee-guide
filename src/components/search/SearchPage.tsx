@@ -8,6 +8,8 @@ import { useSearchResults } from '@/hooks/useSearchResults';
 import { fadeUpItem, staggerContainer } from '@/utils/animation';
 import { motion } from "framer-motion";
 import ProductCard from "@/components/shared/product/ProductCard";
+import { cn } from '@/utils/classes/merge';
+import ProductListItem from '../shared/product/ProductListItem';
 
 
 export default function SearchPage({
@@ -40,25 +42,42 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
     if (isLoading) return <div>Loading...</div>;
     if (!data?.length) return <div>No results</div>;
 
+    const resultsView = "list"
+
     return (
-        <div className="px-3 sm:px-6 mt-20 pb-50" >
-            <h2>{data.length} search result{data.length === 1 ? "" : "s"}</h2>
-            <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-                variants={staggerContainer}
-                initial="hidden"
-                animate="visible"
-            >
-                {data?.map((product) => (
-                    <motion.div
-                        key={product.slug}
-                        variants={fadeUpItem}
-                        className="flex flex-col h-full"
-                    >
-                        <ProductCard product={product} />
-                    </motion.div>
-                ))}
-            </motion.div>
+        <div className={cn(
+            "flex flex-col sm:flex-row flex-nowrap",
+            "mt-20 pb-50 max-w-[1920px] mx-auto",
+            "px-3 md:px-4 lg:px-6",
+            "gap-3 sm:gap-6")} >
+            <div className="hidden lg:flex flex-col w-full lg:w-1/4 bg-card-100 rounded-md p-10 h-max">
+                Filter section
+            </div>
+            <div className="@container/grid flex flex-col flex-1">
+                <h2>{data.length} search result{data.length === 1 ? "" : "s"}</h2>
+                <motion.div
+                    className={cn(
+                        resultsView === "list"
+                            ? "gap-4 flex flex-col"
+                            : "gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4"
+                    )}
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    {data?.map((product) => (
+                        <motion.div
+                            key={product.slug}
+                            variants={fadeUpItem}
+                            className="flex flex-col h-full"
+                        >
+                            {resultsView === "list"
+                                ? <ProductListItem product={product} />
+                                : <ProductCard product={product} />}
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </div>
         </div>
 
     );

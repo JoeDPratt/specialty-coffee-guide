@@ -9,7 +9,6 @@ import { cn } from "@/utils/classes/merge";
 import {
     Tooltip,
     TooltipTrigger,
-
 } from "@/components/ui/tooltip";
 import { AttributeTooltip } from "@/components/tooltips/AttributeTooltip";
 
@@ -119,14 +118,15 @@ function AttributeItemLabelled({
                         <div className="w-10 shrink-0 items-center xs:align-top align-middle">
                             <Icon
                                 className={cn("w-full h-auto object-cover",
-                                    isActive ? iconColorClass : "fill-pr-800 opacity-25"
+                                    isActive ? iconColorClass : "fill-disabled-400"
                                 )}
                             />
                         </div>
                         <hr className="hidden xs:block hr-neu-shadow w-0 xs:w-10 mb-1.25 mt-0.25" />
                         <div
-                            className={`${!isActive && "opacity-25"
-                                } text-pr-800 dark:text-white xs:text-center text-base leading-4 -mt-0.25 uppercase`}
+                            className={cn(
+                                "xs:text-center text-base leading-4 -mt-0.25 uppercase",
+                                isActive ? "text-pr-800 dark:text-white" : "text-disabled-400")}
                         >
                             {label}
                             <span className="sr-only">
@@ -165,7 +165,7 @@ function AttributeItemIcon({
                             iconSizeMap[iconSize],
                             isActive
                                 ? iconColorClass
-                                : "fill-pr-800 opacity-25"
+                                : "text-disabled-400"
                         )}
                     />
                 </div>
@@ -189,7 +189,7 @@ export default function AttributeSection({
         return (
 
             <div
-                className={cn("flex w-max gap-2 p-2", className)}
+                className={cn("flex w-max gap-1.5 px-2", className)}
                 role="region"
                 aria-label="Coffee attribute icons"
             >

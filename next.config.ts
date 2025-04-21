@@ -13,19 +13,30 @@ const nextConfig: NextConfig = {
             },
         ],
     },
-    webpack(config) {
-        // Find the default file loader rule that handles SVGs.
+
+    webpack(config, { dev, isServer }) {
+        // ↓ Only in dev on the client side, override webpack's file‐watcher options
+        if (dev && !isServer) {
+            config.watchOptions = {
+                // turn off polling so chokidar will use native FSEvents
+                poll: false,
+                // ignore build output and deps
+                ignored: ["**/.next/**", "**/node_modules/**"],
+                // wait this many ms after change before recompile
+                aggregateTimeout: 300,
+            };
+        }
+
+        // --- your existing SVG loader logic ---
         const fileLoaderRule = config.module?.rules.find((rule: any) => {
             if (typeof rule === "string") return false;
             return rule.test instanceof RegExp && rule.test.test(".svg");
         }) as RuleSetRule | undefined;
 
         if (fileLoaderRule) {
-            // Exclude SVG files from the default loader.
             fileLoaderRule.exclude = /\.svg$/;
         }
 
-        // rule to handle SVGs using @svgr/webpack.
         config.module?.rules.push({
             test: /\.svg$/,
             issuer: /\.[jt]sx?$/,

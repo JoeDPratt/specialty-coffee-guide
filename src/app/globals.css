@@ -50,11 +50,16 @@
     --color-orange-400: rgb(246, 150, 9);
     --color-tan-100: rgb(255, 247, 241);
     --color-tan-400: rgb(157, 93, 41);
+    --color-disabled-400: rgb(201, 176,176);
 
     /* Breakpoints */
     --container-sm: 500px;
     --breakpoint-xs: 420px;
     --breakpoint-xl: 1360px;
+    --container-search-2-col: calc(2 * 290px + 1 * 16px); /* 2 x min carrd width + 1 x gap */
+    --container-search-3-col: calc(3 * 290px + 2 * 16px);
+    --container-search-4-col: calc(4 * 290px + 3 * 16px);
+    --container-card-sm: 320px;
 
     /* Shadows */   
     --shadow-b-neumorphic: 0 1px 0 0 rgba(255,255,255,0.4);

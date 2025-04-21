@@ -34,15 +34,15 @@ export default function CupScoreBadge({
                                 role="img"
                                 aria-label="Specialty Coffee Association cup score logo"
                                 className={cn(
-                                    "h-5.5 mb-0.5 ml-0.5 fill-pr-900",
-                                    isScore ? "opacity-100" : "opacity-30"
+                                    "h-5.5 mb-0.5 ml-0.5",
+                                    isScore ? "fill-pr-900" : "fill-disabled-400"
                                 )}
                             />
                             <div className={cn(
-                                "font-teko text-[31px] tracking-wider leading-6 pt-0.75 text-pr-900",
-                                isScore ? "opacity-100 font-semibold" : "opacity-30 font-light"
+                                "font-teko text-[31px] tracking-wider leading-6 pt-0.75",
+                                isScore ? "text-pr-900 font-semibold" : "text-disabled-400 font-light"
                             )}>
-                                {isScore ? score : "- -"}
+                                {isScore ? score : "--"}
                             </div>
                         </div>
                     </div>

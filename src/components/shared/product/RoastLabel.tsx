@@ -38,7 +38,7 @@ function RoastTag({
                     ? [borderColor, textColor, "border-1"]
                     : [bgColor, "text-white"],
                 isSmall
-                    ? "text-sm px-2 pt-2 pb-1.5 leading-3"
+                    ? "text-sm px-2 pt-1.5 pb-1 leading-3"
                     : "text-base px-3 pt-3 pb-2.5 leading-3"
             )}
         >
