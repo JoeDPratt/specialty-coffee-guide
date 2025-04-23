@@ -1,6 +1,9 @@
 import type { JSX } from "react";
 import type { RoastLevel } from "@/types/product";
 import { cn } from "@/utils/classes/merge";
+import {
+    FireIcon
+} from "@heroicons/react/16/solid";
 
 function RoastTag({
     roast,
@@ -9,7 +12,7 @@ function RoastTag({
 }: {
     roast: string;
     size: string;
-    variant: string;
+    variant?: "default" | "outline" | "text";
 }): JSX.Element | null {
 
     if (!roast) return null;
@@ -26,24 +29,39 @@ function RoastTag({
     const bgColor = colorMap[roast?.toLowerCase()]?.bg ?? "bg-brown-600";
     const borderColor = colorMap[roast?.toLowerCase()]?.border ?? "border-brown-600";
     const textColor = colorMap[roast?.toLowerCase()]?.text ?? "text-brown-600";
-    const isOutline = variant === "outline"
     const isSmall = size === "sm"
 
     return (
-        <span
-            aria-label={`${roast} roast`}
-            className={cn(
-                "font-sofia-sans text-center font-bold tracking-wider rounded-full",
-                isOutline
-                    ? [borderColor, textColor, "border-1"]
-                    : [bgColor, "text-white"],
-                isSmall
-                    ? "text-sm px-2 pt-1.5 pb-1 leading-3"
-                    : "text-base px-3 pt-3 pb-2.5 leading-3"
-            )}
-        >
-            {roast.toUpperCase()}
-        </span>
+        <div className={cn(
+            "font-sofia-sans rounded-sm flex items-center gap-0.75",
+            variant === "outline"
+                ? [borderColor, textColor, "border-1"]
+                : [bgColor, "text-white"],
+            isSmall
+                ? "text-sm pl-1.5 pr-2 pt-1.5 pb-1 leading-3"
+                : "text-base px-3 pt-3 pb-2.5 leading-3",
+            variant === "text"
+                ? ["text-base text-left font-normal tracking-normal bg-transparent border-none p-0", textColor]
+                : "text-center font-bold tracking-wider"
+        )}>
+            <FireIcon className={cn(
+                "w-4 h-4 -mt-0.5",
+                variant === "outline" || "text" ? textColor : "text-white")} />
+            <span
+                aria-label={`${roast} roast`}
+                className={cn(
+                    variant === "text"
+                        ? "capitalize"
+                        : "uppercase"
+                )}
+            >
+                {roast}
+            </span>
+            <span className="max-xs:hidden -ml-0.75">
+                {variant === "text" && ","}
+            </span>
+        </div>
+
     );
 }
 
@@ -52,16 +70,18 @@ export default function RoastLabel({
     roasts,
     limit = 3,
     size = "default",
-    variant = "default"
+    variant = "default",
+    className
 }: {
     roasts: RoastLevel[];
     limit?: number;
     size?: string;
-    variant?: string;
+    variant?: "default" | "outline" | "text";
+    className?: string
 }): JSX.Element | null {
     if (!roasts || roasts.length === 0) return null;
     return (
-        <div id="roasts" className="flex flex-row gap-1 pb-1">
+        <div id="roasts" className={cn("flex flex-row gap-1", className)}>
             {roasts.slice(0, limit).map((roast) => (
                 <RoastTag roast={roast} key={roast} size={size} variant={variant} />
             ))}

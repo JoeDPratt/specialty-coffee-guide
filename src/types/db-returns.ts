@@ -87,6 +87,7 @@ export type RawProductCard = Pick<
     | 'sca_cup_score'
     | 'search_flavours'
     | 'search_roasts'
+    | 'is_instock'
 > & {
     product_images: ProductImageForCard[];
     product_variants: ProductVariantForCard[];

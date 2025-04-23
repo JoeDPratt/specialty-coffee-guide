@@ -1,7 +1,30 @@
-export default function BestValueTag() {
+import { cn } from "@/utils/classes/merge";
+
+export default function BestValueTag({
+    variant = "default"
+}: {
+    variant?: "default" | "outline"
+}) {
+
+    const baseClass = "text-sm font-bold tracking-wide rounded-xs pt-0.5 pb-0 px-1.5 max-h-6";
+
+    if (variant === "outline") {
+        return (
+            <div className={cn(
+                "border-pr-500 border-1 text-pr-500 ",
+                baseClass
+            )}>
+                BEST VALUE
+            </div>
+        );
+    }
+
     return (
-        <div className="bg-pr-500 text-white text-sm font-bold tracking-wide rounded-sm border-white pt-0.5 pb-0 px-2 max-h-6">
+        <div className={cn(
+            "bg-pr-500 text-white",
+            baseClass
+        )}>
             BEST VALUE
         </div>
-    )
+    );
 }

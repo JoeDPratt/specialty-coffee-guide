@@ -42,7 +42,13 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
     if (isLoading) return <div>Loading...</div>;
     if (!data?.length) return <div>No results</div>;
 
+    const products = data.sort((a, b) => {
+        return Number(b?.is_instock === true) - Number(a?.is_instock === true);
+    });
+
+
     const resultsView = "list"
+    console.log("PRODUCTS", products)
 
     return (
         <div className={cn(
@@ -54,18 +60,18 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
                 Filter section
             </div>
             <div className="@container/grid flex flex-col flex-1">
-                <h2>{data.length} search result{data.length === 1 ? "" : "s"}</h2>
+                <h2>{products.length} search result{products.length === 1 ? "" : "s"}</h2>
                 <motion.div
                     className={cn(
                         resultsView === "list"
-                            ? "gap-4 flex flex-col"
+                            ? "gap-4 flex flex-col "
                             : "gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4"
                     )}
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
                 >
-                    {data?.map((product) => (
+                    {products?.map((product) => (
                         <motion.div
                             key={product.slug}
                             variants={fadeUpItem}

@@ -102,6 +102,7 @@ export interface ProductCard {
         alt_text: string;
     }[];
     lowest_price_per_kg: number | null;
+    is_instock: boolean;
     attributes: CoffeeAttributes;
     roasts: RoastLevel[];
     sca_cup_score: number | null;

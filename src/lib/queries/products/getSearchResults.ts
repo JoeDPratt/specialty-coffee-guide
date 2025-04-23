@@ -1,6 +1,6 @@
 // lib/queries/products/getSearchResults.ts
 import { cache } from 'react';
-import { fetchProductCards } from './common';
+import { fetchProductCards } from './getProductCard';
 
 type SearchParams = {
     q?: string;

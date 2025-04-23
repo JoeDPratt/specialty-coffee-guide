@@ -10,15 +10,6 @@ const validRoastLevels: RoastLevel[] = [
     "light",
 ];
 
-// interface Attributes {
-//     is_organic: boolean;
-//     is_fairtrade: boolean;
-//     is_mycotoxin_free: boolean;
-//     is_decaf?: boolean;
-//     is_lowcaf?: boolean;
-//     is_single_origin?: boolean;
-// }
-
 export function transformProduct(raw: RawProduct): Product {
     const provenanceRaw = raw.coffee_provenance?.[0];
 
@@ -160,6 +151,7 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
             alt_text: img.alt_text ?? "Product image",
         })),
         lowest_price_per_kg: raw.lowest_price_per_kg ?? null,
+        is_instock: raw.is_instock,
         attributes,
         roasts: cardRoasts,
         sca_cup_score: raw.sca_cup_score,

@@ -13,23 +13,30 @@ interface CupScoreBadgeProps {
     score: number | null;
     className?: string;
     variant?: string;
+    background?: boolean;
 }
 
 export default function CupScoreBadge({
     score,
     className,
     variant = "default",
+    background = true
 }: CupScoreBadgeProps): JSX.Element | null {
 
     const isScore: boolean = Boolean(score)
 
     if (variant === "card") {
         return (
-            <Tooltip>
-                <TooltipTrigger asChild >
-                    <div className={`${className} w-auto`}>
-                        <div className={cn("text-center flex flex-row gap-1.5 items-center pt-1.5 pb-0.75 px-2 max-w-max rounded-sm",
-                            isScore ? "bg-white shadow-xs" : "bg-card-200 shadow-none")}>
+            <div className={`${className}`}>
+                <Tooltip>
+                    <TooltipTrigger asChild >
+
+                        <div className={cn(
+                            "text-center flex flex-row gap-1.5 items-center px-2 max-w-max rounded-sm",
+                            background ?
+                                [isScore ? "bg-white shadow-xs" : "bg-card-200 shadow-none", "pt-1.5 pb-0.75"]
+                                : "bg-transparent shadow-none p-0"
+                        )}>
                             <SCALogo
                                 role="img"
                                 aria-label="Specialty Coffee Association cup score logo"
@@ -45,12 +52,13 @@ export default function CupScoreBadge({
                                 {isScore ? score : "--"}
                             </div>
                         </div>
-                    </div>
-                </TooltipTrigger>
-                <DefaultTooltip
-                    title={"Specialty Coffee Association Cup Score"}
-                    description={"Scored according to the SCA’s official cupping protocol, reflecting the coffee’s quality and taste attributes."} />
-            </Tooltip>
+
+                    </TooltipTrigger>
+                    <DefaultTooltip
+                        title={"Specialty Coffee Association Cup Score"}
+                        description={"Scored according to the SCA’s official cupping protocol, reflecting the coffee’s quality and taste attributes."} />
+                </Tooltip>
+            </div>
         );
     } else {
         if (!score) return null;

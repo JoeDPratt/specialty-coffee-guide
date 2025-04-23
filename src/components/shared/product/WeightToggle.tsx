@@ -10,16 +10,17 @@ type WeightOption = 250 | 1000;
 interface WeightToggleProps {
     value?: WeightOption;
     onChange?: (weight: WeightOption) => void;
+    className?: string;
 }
 
-export function WeightToggle({ value, onChange }: WeightToggleProps) {
+export function WeightToggle({ value, onChange, className }: WeightToggleProps) {
     // Fallback to Zustand store if props are not provided
     const selectedWeight = useSearchStore((s) => s.selectedWeight);
     const setWeight = useSearchStore((s) => s.setSelectedWeight);
 
     const effectiveValue = value ?? selectedWeight;
     const handleChange = onChange ?? setWeight;
-    const toggleClassSmall = "py-0 px-2.5 h-6 text-sm leading-2 border-1 border-pr-300 data-[state=on]:bg-pr-300 text-pr-700/60 data-[state=on]:text-pr-700 cursor-pointer";
+    const toggleClassSmall = "pt-0.25 px-3 w-1/2 text-sm h-full leading-2 bg-card-200 data-[state=on]:bg-pr-600 text-pr-700/60 data-[state=on]:text-white data-[state=on]:font-bold cursor-pointer ";
 
     return (
         <ToggleGroup
@@ -28,19 +29,23 @@ export function WeightToggle({ value, onChange }: WeightToggleProps) {
             onValueChange={(val) => {
                 if (val) handleChange(parseInt(val) as WeightOption);
             }}
-            className="flex gap-0"
+            className="flex gap-0 rounded-sm"
         >
             <ToggleGroupItem
                 value="250"
-                className={cn(toggleClassSmall,
-                    "rounded-l-full")}
+                className={cn(
+                    toggleClassSmall,
+                    className,
+                    "rounded-l-sm rounded-r-none")}
             >
                 250g
             </ToggleGroupItem>
             <ToggleGroupItem
                 value="1000"
-                className={cn(toggleClassSmall,
-                    "rounded-r-full")}
+                className={cn(
+                    toggleClassSmall,
+                    className,
+                    "rounded-r-sm rounded-l-none")}
             >
                 1kg
             </ToggleGroupItem>

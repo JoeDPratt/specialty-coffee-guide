@@ -57,7 +57,7 @@ export default function ProductCard({
         : null;
     const flavourText = flavours?.join(" · ");
     const isBestValue = false; // Add logic for best value
-    const isInStock = variant?.is_instock ?? false;
+    const isInStock = product?.is_instock ?? false;
 
     return (
         <div
@@ -85,7 +85,7 @@ export default function ProductCard({
             {/* Attriibutes and tags */}
             <div className="flex justify-between items-center gap-2 px-4 py-3 @min-card-sm/card:px-6 bg-card-200 inset-shadow-xs">
                 {/* Tags (optional icons) */}
-                <AttributeSection attributeData={attributes} variant={"icon"} className={"-ml-2 gap-2 @min-card-sm/card:gap-3"} />
+                <AttributeSection attributeData={attributes} variant={"icon-bg"} className={"-ml-2 gap-2 @min-card-sm/card:gap-3"} />
                 <CupScoreBadge score={sca_cup_score} variant={"card"} />
             </div>
 

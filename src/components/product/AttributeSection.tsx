@@ -16,10 +16,13 @@ interface IconProps {
     className?: string;
 }
 
+type IconSize = "base" | "md" | "lg";
+type Variant = "default" | "icon-bg" | "icon-only" | "icon-label";
+
 interface AttributeItemIconProps {
     flagName: keyof typeof attributeConfig;
     isActive?: boolean;
-    iconSize?: "base" | "lg";
+    iconSize?: IconSize;
 }
 
 interface AttributeItemLabelledProps {
@@ -30,9 +33,9 @@ interface AttributeItemLabelledProps {
 
 interface AttributeSectionProps {
     attributeData: CoffeeAttributes;
-    variant?: "default" | "icon";
+    variant?: Variant;
     className?: string;
-    iconSize?: "base" | "lg";
+    iconSize?: IconSize;
 }
 
 type LabelConfig = {
@@ -43,7 +46,7 @@ type LabelConfig = {
     description: string;
 };
 
-type Variant = "default" | "icon";
+
 
 const attributeConfig: Record<keyof CoffeeAttributes, LabelConfig> = {
     is_organic: {
@@ -92,6 +95,7 @@ const attributeConfig: Record<keyof CoffeeAttributes, LabelConfig> = {
 
 const iconSizeMap = {
     base: "w-7 h-7",
+    md: "w-8 h-8",
     lg: "w-9 h-9"
 }
 
@@ -141,6 +145,7 @@ function AttributeItemLabelled({
     );
 }
 
+// Attributte icon with background highlight (white)
 function AttributeItemIcon({
     flagName,
     isActive = false,
@@ -153,21 +158,86 @@ function AttributeItemIcon({
             <TooltipTrigger asChild >
                 <div
                     className={cn(
-                        "p-1",
+                        "flex items-center shadow-none p-1 gap-0 rounded-sm",
                         isActive
-                            ? "bg-white rounded-sm shadow-xs"
-                            : "bg-transparent"
+                            ? "bg-white shadow-xs"
+                            : "bg-transparent",
                     )}
                     aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
                 >
                     <Icon
                         className={cn(
-                            iconSizeMap[iconSize],
                             isActive
                                 ? iconColorClass
-                                : "text-disabled-400"
+                                : "text-disabled-400",
+                            iconSizeMap[iconSize]
                         )}
                     />
+                </div>
+            </TooltipTrigger>
+            <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
+        </Tooltip>
+    );
+}
+
+// Atttribute Icon with no background highlight
+function AttributeItemIconOnly({
+    flagName,
+    isActive = false,
+    iconSize = "md",
+}: AttributeItemIconProps): JSX.Element {
+    const { label, description, icon: Icon, iconColorClass } = attributeConfig[flagName];
+
+    return (
+        <Tooltip>
+            <TooltipTrigger asChild >
+                <div
+                    className={cn(
+                        "flex items-center shadow-none p-1 gap-0 rounded-sm",
+                    )}
+                    aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
+                >
+                    <Icon
+                        className={cn(
+                            isActive
+                                ? iconColorClass
+                                : "text-disabled-400",
+                            iconSizeMap[iconSize]
+                        )}
+                    />
+                </div>
+            </TooltipTrigger>
+            <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
+        </Tooltip>
+    );
+}
+
+// Atttribute Icon with no background highlight
+function AttributeItemIconLabel({
+    flagName,
+    isActive = false,
+    iconSize = "md",
+}: AttributeItemIconProps): JSX.Element {
+    const { label, description, icon: Icon, iconColorClass } = attributeConfig[flagName];
+
+    return (
+        <Tooltip>
+            <TooltipTrigger asChild >
+                <div
+                    className={cn(
+                        "flex items-center shadow-none p-1 gap-0 rounded-sm",
+                    )}
+                    aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
+                >
+                    <Icon
+                        className={cn(
+                            isActive
+                                ? iconColorClass
+                                : "text-disabled-400",
+                            iconSizeMap[iconSize]
+                        )}
+                    />
+                    <span className="capitalize mt-0.75 ml-1">{label}</span>
                 </div>
             </TooltipTrigger>
             <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
@@ -185,7 +255,7 @@ export default function AttributeSection({
         .filter((key) => attributeConfig[key])
         .map((key) => [key, attributeData[key]] as const);
 
-    if (variant === "icon") {
+    if (variant === "icon-bg") {
         return (
 
             <div
@@ -198,6 +268,42 @@ export default function AttributeSection({
                         key={flagName}
                         flagName={flagName}
                         isActive={isActive ?? false}
+                        iconSize={iconSize}
+                    />
+                ))}
+            </div>
+        );
+    } else if (variant === "icon-only") {
+
+        return (
+            <div
+                className={cn("flex w-max gap-3 px-2", className)}
+                role="region"
+                aria-label="Coffee attribute icons"
+            >
+                {entries.map(([flagName, isActive]) => (
+                    isActive && <AttributeItemIconOnly
+                        key={flagName}
+                        flagName={flagName}
+                        isActive={isActive}
+                        iconSize={iconSize}
+                    />
+                ))}
+            </div>
+        );
+    } else if (variant === "icon-label") {
+
+        return (
+            <div
+                className={cn("flex w-max gap-3 px-2", className)}
+                role="region"
+                aria-label="Coffee attribute icons"
+            >
+                {entries.map(([flagName, isActive]) => (
+                    isActive && <AttributeItemIconLabel
+                        key={flagName}
+                        flagName={flagName}
+                        isActive={isActive}
                         iconSize={iconSize}
                     />
                 ))}
