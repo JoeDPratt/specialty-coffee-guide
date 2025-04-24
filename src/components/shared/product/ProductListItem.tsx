@@ -114,7 +114,7 @@ export default function ProductListItem({
             )}>
                 <div className={cn(
                     "flex items-start w-full",
-                    "max-xs:bg-card-100 max-xs:px-4 max-xs:pt-16 max-xs:rounded-t-sm ",
+                    "max-xs:bg-card-100 max-xs:px-4 max-xs:pt-17 max-xs:rounded-t-sm ",
                     "xs:max-xl:col-span-2",
                     "xl:items-center")}>
                     <div className="flex-1">
@@ -143,12 +143,12 @@ export default function ProductListItem({
                 </div>
                 <div className={cn(
                     "flex flex-col items-start justify-between gap-3.5 pt-2.5 -mb-0.5 w-full",
-                    "max-xs:items-center max-xs:px-4 max-xs:pb-4 max-xs:flex-col max-xs:bg-card-100 max-xs:pt-3.5",
+                    "max-xs:items-center max-xs:px-4 max-xs:pb-5 max-xs:flex-col max-xs:bg-card-100 max-xs:pt-4.5 max-xs:gap-4.5",
                     "xs:max-sm:col-span-2",
                     "xl:flex-col-reverse xl:gap-2 xl:pt-0 xl:justify-center")}>
                     <div className={cn(
                         "flex items-center gap-1",
-                        "max-xs:flex-wrap max-xs:w-full max-xs:border-b-2 max-xs:border-card-200 max-xs:pb-4 ")}>
+                        "max-xs:flex-wrap max-xs:w-full max-xs:border-b-2 max-xs:border-card-200 max-xs:pb-5 ")}>
                         {/* Roasts */}
                         {hasRoasts && (
                             <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-xs:w-full max-sm:justify-center max-xs:gap-3"} />
