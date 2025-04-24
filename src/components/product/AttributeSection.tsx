@@ -225,7 +225,7 @@ function AttributeItemIconLabel({
             <TooltipTrigger asChild >
                 <div
                     className={cn(
-                        "flex items-center shadow-none p-1 gap-0 rounded-sm w-[calc(50%-8px)]",
+                        "flex items-center shadow-none py-1 gap-0.5 rounded-sm w-[calc(50%-2px)] ",
                     )}
                     aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
                 >

@@ -57,7 +57,7 @@ function RoastTag({
             >
                 {roast}
             </span>
-            <span className="max-xs:hidden -ml-0.75">
+            <span className="-ml-0.75">
                 {variant === "text" && ","}
             </span>
         </div>

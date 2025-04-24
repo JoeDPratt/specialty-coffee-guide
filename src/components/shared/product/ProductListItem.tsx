@@ -81,7 +81,7 @@ export default function ProductListItem({
                 transition={subtleSpring}
                 className={cn(
                     "relative aspect-[1/1]",
-                    "max-xs:w-24 max-xs:-mb-12 max-xs:border-4 max-xs:border-card-200 max-xs:rounded-sm max-xs:shadow-sm",
+                    "max-xs:w-24 max-xs:-mb-12 max-xs:border-4 max-xs:border-card-100 max-xs:rounded-sm ",
                     "sm:h-full"
                 )}
             >
@@ -96,17 +96,10 @@ export default function ProductListItem({
                     blurDataURL={blurredImage}
                 />
             </motion.div>
-            {isXs && <CupScoreBadge
-                score={sca_cup_score}
-                variant={"card"}
-                className={"absolute right-0 top-2"}
-                background={true}
-            />}
-
             {/* Text Content */}
             <div className={cn(
                 "grid grid-cols-1 grid-rows-[auto_auto_auto] w-full",
-                "max-xs:gap-y-0 max-xs:bg-card-200 max-xs:rounded-md max-xs:border-4 max-xs:border-card-200",
+                "max-xs:gap-y-0 max-xs:bg-card-100 max-xs:rounded-md max-xs:border-4 max-xs:border-card-100",
                 "xs:p-4",
                 "md:px-6 md:py-5",
                 "sm:max-xl:grid-cols-[1fr_auto] sm:max-xl:grid-rows-[auto_auto] sm:max-xl:gap-x-5",
@@ -114,14 +107,14 @@ export default function ProductListItem({
             )}>
                 <div className={cn(
                     "flex items-start w-full",
-                    "max-xs:bg-card-100 max-xs:px-4 max-xs:pt-17 max-xs:rounded-t-sm ",
+                    "max-xs:bg-card-200 max-xs:px-4 max-xs:pt-17 max-xs:rounded-t-sm ",
                     "xs:max-xl:col-span-2",
                     "xl:items-center")}>
                     <div className="flex-1">
                         {/* Product name */}
                         <h3 className={cn(
                             "mt-0.75 mb-0.75 mr-2 text-2xl font-semibold text-pr-900 leading-6 line-clamp-2 tracking-wide",
-                            "max-xs:text-center max-xs:mr-0 max-xs:text-3xl max-xs:leading-7 max-xs:line-clamp-none",
+                            "max-xs:text-center max-xs:mr-0 max-xs:text-4xl max-xs:leading-8 max-xs:line-clamp-none",
                             "sm:max-xl:line-clamp-1 md:text-3xl md:leading-7",
                             "xl:mb-2.5 xl:mt-1.25")}>
                             {product_name.toUpperCase()}
@@ -143,35 +136,43 @@ export default function ProductListItem({
                 </div>
                 <div className={cn(
                     "flex flex-col items-start justify-between gap-3.5 pt-2.5 -mb-0.5 w-full",
-                    "max-xs:items-center max-xs:px-4 max-xs:pb-5 max-xs:flex-col max-xs:bg-card-100 max-xs:pt-4.5 max-xs:gap-4.5",
+                    "max-xs:items-center max-xs:px-4 max-xs:pb-5 max-xs:flex-col max-xs:bg-card-200 max-xs:pt-4.5 max-xs:gap-4.5",
                     "xs:max-sm:col-span-2",
                     "xl:flex-col-reverse xl:gap-2 xl:pt-0 xl:justify-center")}>
                     <div className={cn(
                         "flex items-center gap-1",
-                        "max-xs:flex-wrap max-xs:w-full max-xs:border-b-2 max-xs:border-card-200 max-xs:pb-5 ")}>
+                        "max-xs:flex-wrap max-xs:w-full max-xs:justify-center max-xs:border-b-2 max-xs:border-card-100 max-xs:pb-5 ")}>
                         {/* Roasts */}
                         {hasRoasts && (
-                            <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-xs:w-full max-sm:justify-center max-xs:gap-3"} />
+                            <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-sm:justify-center max-xs:gap-1 max-xs:inline-flex"} />
                         )}
                         {/* Flavours */}
                         {flavourText && (
-                            <div className="text-base text-left max-xs:text-center max-xs:w-full capitalize font-light text-pr-900 xs:line-clamp-1">{flavourText}</div>
+                            <div className={cn(
+                                "text-base text-left capitalize font-light text-pr-900 xs:line-clamp-1",
+                                "max-xs:text-left max-xs:inline-flex max-xs:font-normal max-xs:text-pr-900"
+                            )}>{flavourText}</div>
                         )}
                     </div>
-                    <div className="flex items-center gap-3 lg:gap-4 max-xs:w-full">
-                        {/* <AttributeSection attributeData={attributes} variant={"icon"} className={"gap-3 flex max-md:hidden"} /> */}
-                        {!isXs && <CupScoreBadge
+                    <div className="flex items-center gap-3 lg:gap-4 max-xs:w-full max-xs:flex-col">
+                        {!isXs ? <CupScoreBadge
                             score={sca_cup_score}
                             variant={"card"}
-                            className={"flex-shrink mt-1 "}
+                            className={"flex-shrink mt-1"}
                             background={false}
-                        />}
+                        /> : (sca_cup_score && <CupScoreBadge
+                            score={sca_cup_score}
+                            variant={"card"}
+                            background={true}
+                            title={true}
+                        />)}
+                        {isXs && sca_cup_score && <div className={"w-full border-b-2 border-card-100 pb-2"}></div>}
                         <AttributeSection
                             attributeData={attributes}
                             variant={isXs ? "icon-label" : "icon-only"}
                             className={cn(
                                 "-ml-2 gap-1 lg:gap-2 flex",
-                                "max-xs:flex-wrap max-xs:items-start max-xs:ml-0 max-xs:gap-2"
+                                "max-xs:flex-wrap max-xs:items-start max-xs:ml-0 max-xs:w-full"
                             )}
                         />
 
