@@ -25,9 +25,11 @@ export function AttributeTooltip({ icon, iconColorClass, title, description }: A
             align="center"
             avoidCollisions
             className="tooltip-base">
-            <div className="flex items-end justify-start">
-                <Icon className={cn("w-7 h-auto inline -ml-1 mr-1.25", iconColorClass)} />
-                <span className="font-medium leading-5 p-0.5">{title}</span>
+            <div className="flex items-center justify-start">
+                <div className={cn("flex items-center justify-center mr-2 p-0.5")}>
+                    <Icon className={cn("w-7 h-auto inline", iconColorClass)} />
+                </div>
+                <span className="font-medium leading-5 pt-1">{title}</span>
             </div>
 
             <div className="mt-1 font-light text-sm leading-5">{description}</div>

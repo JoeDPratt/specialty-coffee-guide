@@ -64,7 +64,7 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
                 <motion.div
                     className={cn(
                         resultsView === "list"
-                            ? "gap-4 flex flex-col "
+                            ? "gap-8 xs:gap-4 flex flex-col "
                             : "gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4"
                     )}
                     variants={staggerContainer}

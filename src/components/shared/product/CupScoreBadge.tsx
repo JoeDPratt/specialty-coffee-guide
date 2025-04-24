@@ -36,9 +36,9 @@ export default function CupScoreBadge({
                         <div className={cn(
                             "text-center flex flex-row gap-1.5 items-center px-2 max-w-max rounded-sm",
                             background ?
-                                [isScore ? "bg-white shadow-xs" : "bg-card-200 shadow-none", "pt-1.5 pb-0.75"]
+                                [isScore ? "bg-card-100 " : "bg-card-200 shadow-none", "pt-1.5 pb-0.75"]
                                 : "bg-transparent shadow-none p-0",
-                            title ? "px-3 pt-2 pb-1.25" : ""
+                            title ? "px-3 pt-1.75 pb-1.25" : ""
                         )}>
                             <SCALogo
                                 role="img"
@@ -49,14 +49,14 @@ export default function CupScoreBadge({
                                     title ? "h-7" : "h-5.5"
                                 )}
                             />
-                            {title && <div className="leading-4 text-left pr-3 border-r-2 border-card-200">
+                            {title && <div className="leading-4 text-sm font-medium text-left pl-1 pr-4 border-r-2 border-card-200">
                                 <div>CUP</div>
                                 <div>SCORE</div>
                             </div>}
                             <div className={cn(
-                                "font-teko text-[31px] tracking-wider leading-6 pt-0.75",
+                                "font-teko text-[31px] sm:max-md:text-[28px] tracking-wider leading-6 pt-0.75",
                                 isScore ? "text-pr-900 font-semibold" : "text-disabled-400 font-light",
-                                title ? "pl-2 text-4xl leading-2" : "pl-0"
+                                title ? "pl-2 text-4xl leading-2 pt-1" : "pl-0"
                             )}>
                                 {isScore ? score : "--"}
                             </div>

@@ -85,7 +85,11 @@ export default function ProductCard({
             {/* Attriibutes and tags */}
             <div className="flex justify-between items-center gap-2 px-4 py-3 @min-card-sm/card:px-6 bg-card-200 inset-shadow-xs">
                 {/* Tags (optional icons) */}
-                <AttributeSection attributeData={attributes} variant={"icon-bg"} className={"-ml-2 gap-2 @min-card-sm/card:gap-3"} />
+                <AttributeSection
+                    attributeData={attributes}
+                    variant={"icon"}
+                    className={"-ml-2 gap-2 @min-card-sm/card:gap-3"}
+                    hasBackground={true} />
                 <CupScoreBadge score={sca_cup_score} variant={"card"} />
             </div>
 

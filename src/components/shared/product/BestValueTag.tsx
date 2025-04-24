@@ -11,7 +11,7 @@ export default function BestValueTag({
     if (variant === "outline") {
         return (
             <div className={cn(
-                "border-pr-500 border-1 text-pr-500 ",
+                "border-pr-600 border-1 text-pr-600 ",
                 baseClass
             )}>
                 BEST VALUE
@@ -21,7 +21,7 @@ export default function BestValueTag({
 
     return (
         <div className={cn(
-            "bg-pr-500 text-white",
+            "bg-pr-600 text-white",
             baseClass
         )}>
             BEST VALUE

@@ -52,6 +52,7 @@ export default function ProductListItem({
     // const variantDisplayWeight = 250;
 
     const isXs = useBreakpointStore((s) => s.isXs)
+    const isSm = useBreakpointStore((s) => s.isSm)
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
     const blurredImage = getBlurURL(imageUrl);
 
@@ -63,7 +64,7 @@ export default function ProductListItem({
         ? `£${variant?.price_per_kg.toFixed(2)}`
         : null;
     const flavourText = flavours?.join(", ");
-    const isBestValue = false; // Add logic for best value
+    const isBestValue = true; // Add logic for best value
     const isInStock = variant?.is_instock ?? false;
     const hasRoasts = roasts && roasts.length > 0;
 
@@ -73,7 +74,8 @@ export default function ProductListItem({
             onClick={() => router.push(getProductPath(slug))}
             className={cn(
                 "@container/card group w-full flex flex-col items-center transition-all overflow-hidden cursor-pointer rounded-md hover:shadow-md",
-                "sm:flex-row xs:bg-card-200")}
+                "sm:flex-row sm:bg-card-200",
+                "xs:max-sm:items-end")}
         >
             {/* Image */}
             <motion.div
@@ -81,7 +83,8 @@ export default function ProductListItem({
                 transition={subtleSpring}
                 className={cn(
                     "relative aspect-[1/1]",
-                    "max-xs:w-24 max-xs:-mb-12 max-xs:border-4 max-xs:border-card-100 max-xs:rounded-sm ",
+                    "max-xs:w-24 max-xs:-mb-12 max-sm:border-4 max-sm:border-card-100 max-sm:rounded-sm ",
+                    "xs:max-sm:mr-4 xs:max-sm:w-25 xs:max-sm:-mb-21",
                     "sm:h-full"
                 )}
             >
@@ -99,81 +102,107 @@ export default function ProductListItem({
             {/* Text Content */}
             <div className={cn(
                 "grid grid-cols-1 grid-rows-[auto_auto_auto] w-full",
-                "max-xs:gap-y-0 max-xs:bg-card-100 max-xs:rounded-md max-xs:border-4 max-xs:border-card-100",
-                "xs:p-4",
+                "max-sm:gap-y-0 max-sm:bg-card-100 max-sm:rounded-md max-sm:border-4 max-sm:border-card-100",
+                "sm:p-4",
+                "sm:max-md:gap-x-3.5",
                 "md:px-6 md:py-5",
-                "sm:max-xl:grid-cols-[1fr_auto] sm:max-xl:grid-rows-[auto_auto] sm:max-xl:gap-x-5",
+                "sm:max-xl:grid-cols-[1fr_auto] sm:max-xl:grid-rows-[auto_auto] md:max-xl:gap-x-5",
                 "xl:grid-cols-[4fr_3fr_auto] xl:grid-rows-1 xl:gap-5"
             )}>
                 <div className={cn(
                     "flex items-start w-full",
-                    "max-xs:bg-card-200 max-xs:px-4 max-xs:pt-17 max-xs:rounded-t-sm ",
+                    "max-sm:bg-card-200 max-xs:px-4 max-xs:pt-16.25 max-sm:rounded-t-sm",
+                    "xs:max-sm:pt-4 xs:max-sm:pl-4 xs:max-sm:pr-32",
+                    "sm:max-xl:border-b-2 sm:max-xl:border-card-100 md:max-xl:pb-2.75 md:max-xl:mb-1.75 sm:max-md:pb-1.75 sm:max-md:mb-0.75",
                     "xs:max-xl:col-span-2",
-                    "xl:items-center")}>
+                    "xl:items-center xl:mt-0.25")}>
                     <div className="flex-1">
                         {/* Product name */}
                         <h3 className={cn(
                             "mt-0.75 mb-0.75 mr-2 text-2xl font-semibold text-pr-900 leading-6 line-clamp-2 tracking-wide",
-                            "max-xs:text-center max-xs:mr-0 max-xs:text-4xl max-xs:leading-8 max-xs:line-clamp-none",
+                            "max-xs:text-center max-sm:mr-0 max-xs:text-4xl max-xs:leading-8 max-xs:line-clamp-none",
+                            "xs:max-sm:text-left xs:max-sm:text-3xl xs:max-sm:leading-7",
                             "sm:max-xl:line-clamp-1 md:text-3xl md:leading-7",
-                            "xl:mb-2.5 xl:mt-1.25")}>
+                            "sm:max-xl:mb-0.5",
+                            "xl:mb-0.5 xl:mt-1.75")}>
                             {product_name.toUpperCase()}
                         </h3>
 
                         {/* Roaster */}
-                        <div className="flex items-center max-xs:justify-center xl:pt-0.25 w-full">
-                            {isBestValue && <span className="font-extrabold text-pr-600 pr-1 leading-5">Best Value -</span>}
+                        <div className={cn(
+                            "flex items-center justify-between w-full ",
+                            "max-xs:justify-center max-sm:-mt-0.25",
+                            "xs:max-sm:justify-start",
+                            "xl:flex-row-reverse xl:justify-end")}>
                             <Link
                                 href={getRoasterPath(roaster.slug)}
                                 onClick={(e) => e.stopPropagation()}
-                                className="p-0 m-0"
+                                className="p-0 m-0 xl:pb-0.25"
                             >
-                                <div className="text-base font-normal text-pr-800 hover:text-pr-500 leading-5">{roaster.name}</div>
+                                <span className="text-base font-medium text-pr-800 hover:text-pr-500 leading-5">{roaster.name}</span>
                             </Link>
-
+                            {(!isSm && isBestValue) && <span className="font-extrabold text-pr-600 pr-1 leading-5">
+                                Best Value
+                                <span className="xl:inline hidden"> - </span>
+                            </span>}
                         </div>
                     </div>
                 </div>
                 <div className={cn(
                     "flex flex-col items-start justify-between gap-3.5 pt-2.5 -mb-0.5 w-full",
-                    "max-xs:items-center max-xs:px-4 max-xs:pb-5 max-xs:flex-col max-xs:bg-card-200 max-xs:pt-4.5 max-xs:gap-4.5",
-                    "xs:max-sm:col-span-2",
-                    "xl:flex-col-reverse xl:gap-2 xl:pt-0 xl:justify-center")}>
+                    "max-xs:items-center max-sm:px-4 max-sm:pb-5 max-sm:bg-card-200 max-sm:pt-4.5 max-sm:gap-4.5",
+                    "xs:max-sm:col-span-2 xs:max-sm:items-start xs:max-sm:pt-2.5",
+                    "sm:max-xl:gap-0.25",
+                    "xl:flex-col-reverse xl:gap-0.75 xl:pt-0 xl:justify-center xl:mb-1.25")}>
+
                     <div className={cn(
                         "flex items-center gap-1",
-                        "max-xs:flex-wrap max-xs:w-full max-xs:justify-center max-xs:border-b-2 max-xs:border-card-100 max-xs:pb-5 ")}>
+                        "max-xs:pb-1 max-sm:flex-wrap max-xs:w-full max-xs:justify-center",
+                        "xs:max-sm:items-start xs:max-sm:pb-0 xs:max-sm:w-[calc(100%-116px)]")}>
                         {/* Roasts */}
                         {hasRoasts && (
-                            <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-sm:justify-center max-xs:gap-1 max-xs:inline-flex"} />
+                            <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-xs:justify-center max-sm:gap-1 max-sm:inline-flex"} />
                         )}
                         {/* Flavours */}
                         {flavourText && (
                             <div className={cn(
-                                "text-base text-left capitalize font-light text-pr-900 xs:line-clamp-1",
-                                "max-xs:text-left max-xs:inline-flex max-xs:font-normal max-xs:text-pr-900"
+                                "text-base text-left capitalize text-pr-800 sm:line-clamp-1",
+                                "max-xs:text-center max-sm:inline-flex max-sm:text-pr-900",
+                                "xs:max-sm:text-left"
                             )}>{flavourText}</div>
                         )}
                     </div>
-                    <div className="flex items-center gap-3 lg:gap-4 max-xs:w-full max-xs:flex-col">
-                        {!isXs ? <CupScoreBadge
+                    {(isSm && sca_cup_score) && <CupScoreBadge
+                        score={sca_cup_score}
+                        variant={"card"}
+                        className={"mb-1.5 xs:max-sm:absolute xs:max-sm:right-4 xs:max-sm:top-27"}
+                        background={true}
+                        title={isXs ? true : false}
+                    />}
+
+                    <div className={cn(
+                        "flex items-center gap-3",
+                        "sm:max-xl:gap-4",
+                        "max-sm:w-full max-sm:flex-col max-sm:border-t-2 max-sm:border-card-100 max-sm:pt-5 max-sm:mt-1"
+                    )}>
+                        {!isSm && <CupScoreBadge
                             score={sca_cup_score}
                             variant={"card"}
                             className={"flex-shrink mt-1"}
                             background={false}
-                        /> : (sca_cup_score && <CupScoreBadge
-                            score={sca_cup_score}
-                            variant={"card"}
-                            background={true}
-                            title={true}
-                        />)}
-                        {isXs && sca_cup_score && <div className={"w-full border-b-2 border-card-100 pb-2"}></div>}
+                        />}
                         <AttributeSection
                             attributeData={attributes}
-                            variant={isXs ? "icon-label" : "icon-only"}
+                            variant={"icon"}
                             className={cn(
-                                "-ml-2 gap-1 lg:gap-2 flex",
-                                "max-xs:flex-wrap max-xs:items-start max-xs:ml-0 max-xs:w-full"
+                                "-ml-2 gap-1 flex",
+                                "sm:max-xl:px-0 sm:max-xl:gap-0",
+                                "max-sm:gap-y-4 max-sm:px-0 max-sm:flex-wrap max-sm:items-start max-sm:ml-0 max-sm:w-full"
                             )}
+                            iconSize={"md"}
+                            hasBackground={false}
+                            hasLabel={isSm ? true : false}
+                            showInactive={isSm ? true : false}
                         />
 
                     </div>
@@ -182,55 +211,64 @@ export default function ProductListItem({
                 {/* Comparison section */}
                 <div className={cn(
                     "flex flex-col items-end justify-end gap-1.75 pb-0.75",
-                    "max-xs:py-4 max-xs:px-4",
+                    "max-sm:py-4 max-sm:px-4",
                     "max-xl:justify-end",
-                    "xl:justify-center xl:pt-2.5 xl:pb-3.75"
+                    "xl:justify-center xl:pt-2.5 xl:pb-3.5 xl:gap-1.5"
                 )}>
-                    {/* <div className={cn("min-w-max max-sm:hidden",
-                    !isBestValue && "hidden"
-                )}
-                >
-                    <BestValueTag variant="outline" />
-                </div> */}
-
                     <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen}>
 
                         <TooltipTrigger asChild >
-                            <div className="flex items-center gap-2 mt-1.5">
-                                {/* <div onClick={(e) => e.stopPropagation()}>
-                                    <WeightToggle value={selectedWeight} onChange={setSelectedWeight} className={"text-sm py-0.5"} />
-                                </div> */}
-                                <span className={cn(
-                                    "text-3xl font-bold leading-9 -mb-0.5",
-                                    isInStock ? "text-pr-900" : "text-disabled-400"
-                                )}>
-                                    £{variant?.price?.toFixed(2) ?? "--.--"}
-                                </span>
-                                <span className={cn(
-                                    "py-1.25 px-0.25 text-white rounded-xs",
-                                    isInStock ? "bg-green-400" : "bg-disabled-400")}>
-                                    {isInStock ? (
-                                        <CheckIcon className="w-3 h-3" title="In stock" />
-                                    ) : (
-                                        <XMarkIcon className="w-3 h-3" title="Out of stock" />
-                                    )}
-                                </span>
+                            <div className={cn(
+                                "flex items-end gap-2 mt-1.5",
+                                "max-sm:w-full",
+                                isInStock ? "max-sm:justify-end" : "max-sm:justify-between"
+                            )}>
+                                {(isSm && !isInStock) &&
+                                    <span className="text-pr-700 uppercase text-lg font-bold">
+                                        Out of Stock
+                                    </span>}
+                                <div className="flex items-end gap-2">
+                                    <span className={cn(
+                                        "text-3xl font-bold leading-9 -mb-0.5",
+                                        isInStock ? "text-pr-900" : "text-disabled-400"
+                                    )}>
+                                        £{variant?.price?.toFixed(2) ?? "--.--"}
+                                    </span>
+                                    <span className={cn(
+                                        "mb-1.25 py-1.25 px-0.25 rounded-xs",
+                                        isInStock ? "border-green-400 border-1 text-green-400" : "bg-disabled-400 text-white")}>
+                                        {isInStock ? (
+                                            <CheckIcon className="w-3 h-3" title="In stock" />
+                                        ) : (
+                                            <XMarkIcon className="w-3 h-3" title="Out of stock" />
+                                        )}
+                                    </span>
+                                </div>
                             </div>
                         </TooltipTrigger>
                         <DefaultTooltip description={isInStock ? "In-stock" : "Out of stock"} align="end" />
                     </Tooltip>
-                    <div className="flex items-center gap-1 border-1 border-pr-300 rounded-sm">
-                        <span className={cn(
-                            "bg-pr-300 px-2 pt-0.25",
-                            isInStock ? "text-pr-700" : "text-card-100"
-                        )}>
-                            {selectedWeight}g
-                        </span>
-                        <span className={cn(
-                            "text-base leading-4 font-normal px-2 pt-0.25",
-                            isInStock ? "text-pr-700" : "text-disabled-400"
-                        )}>{pricePerKg} /kg
-                        </span>
+                    <div className={cn(
+                        "flex max-sm:w-full max-sm:items-center",
+                        isInStock ?? isBestValue
+                            ? "max-sm:justify-between"
+                            : "max-sm:justify-end"
+                    )}>
+                        {(isSm && isInStock && isBestValue) && <BestValueTag variant="outline" />}
+
+                        <div className="flex items-center gap-1 border-1 border-pr-300 rounded-sm">
+                            <span className={cn(
+                                "bg-pr-300 px-2 pt-0.25",
+                                isInStock ? "text-pr-700" : "text-card-100"
+                            )}>
+                                {selectedWeight}g
+                            </span>
+                            <span className={cn(
+                                "text-base leading-4 font-normal px-2 pt-0.25",
+                                isInStock ? "text-pr-700" : "text-disabled-400"
+                            )}>{pricePerKg} /kg
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
