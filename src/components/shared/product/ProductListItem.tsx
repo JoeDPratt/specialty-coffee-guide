@@ -64,7 +64,7 @@ export default function ProductListItem({
         ? `£${variant?.price_per_kg.toFixed(2)}`
         : null;
     const flavourText = flavours?.join(", ");
-    const isBestValue = true; // Add logic for best value
+    const isBestValue = false; // Add logic for best value
     const isInStock = variant?.is_instock ?? false;
     const hasRoasts = roasts && roasts.length > 0;
 
@@ -141,7 +141,7 @@ export default function ProductListItem({
                             >
                                 <span className="text-base font-medium text-pr-800 hover:text-pr-500 leading-5">{roaster.name}</span>
                             </Link>
-                            {(!isSm && isBestValue) && <span className="font-extrabold text-pr-600 pr-1 leading-5">
+                            {(!isSm && isBestValue && isInStock) && <span className="font-extrabold text-pr-600 pr-1 leading-5">
                                 Best Value
                                 <span className="xl:inline hidden"> - </span>
                             </span>}
@@ -157,8 +157,8 @@ export default function ProductListItem({
 
                     <div className={cn(
                         "flex items-center gap-1",
-                        "max-xs:pb-1 max-sm:flex-wrap max-xs:w-full max-xs:justify-center",
-                        "xs:max-sm:items-start xs:max-sm:pb-0 xs:max-sm:w-[calc(100%-116px)]")}>
+                        "max-xs:pb-1 max-sm:flex-wrap max-sm:w-full max-xs:justify-center",
+                        "xs:max-sm:items-start xs:max-sm:pb-0")}>
                         {/* Roasts */}
                         {hasRoasts && (
                             <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-xs:justify-center max-sm:gap-1 max-sm:inline-flex"} />
@@ -172,24 +172,27 @@ export default function ProductListItem({
                             )}>{flavourText}</div>
                         )}
                     </div>
-                    {(isSm && sca_cup_score) && <CupScoreBadge
+                    {(isXs && sca_cup_score) && <CupScoreBadge
                         score={sca_cup_score}
                         variant={"card"}
-                        className={"mb-1.5 xs:max-sm:absolute xs:max-sm:right-4 xs:max-sm:top-27"}
-                        background={true}
-                        title={isXs ? true : false}
+                        className={"mb-1.5"}
+                        hasBackground={true}
+                        hasTitle={true}
                     />}
 
                     <div className={cn(
-                        "flex items-center gap-3",
-                        "sm:max-xl:gap-4",
-                        "max-sm:w-full max-sm:flex-col max-sm:border-t-2 max-sm:border-card-100 max-sm:pt-5 max-sm:mt-1"
+                        "flex items-center gap-2 sm:-ml-2",
+                        "max-sm:gap-4",
+                        "max-sm:w-full max-xs:flex-col max-sm:border-t-2 max-sm:border-card-100 max-sm:pt-5 max-sm:mt-1",
+                        'xs:max-sm:flex-wrap'
                     )}>
-                        {!isSm && <CupScoreBadge
+                        {((!isXs) && (sca_cup_score || !isSm)) && <CupScoreBadge
                             score={sca_cup_score}
                             variant={"card"}
                             className={"flex-shrink mt-1"}
-                            background={false}
+                            hasBackground={isSm}
+                            hasTitle={isSm}
+                            isStacked={isSm}
                         />}
                         <AttributeSection
                             attributeData={attributes}
@@ -197,12 +200,14 @@ export default function ProductListItem({
                             className={cn(
                                 "-ml-2 gap-1 flex",
                                 "sm:max-xl:px-0 sm:max-xl:gap-0",
-                                "max-sm:gap-y-4 max-sm:px-0 max-sm:flex-wrap max-sm:items-start max-sm:ml-0 max-sm:w-full"
+                                "max-sm:gap-y-4 max-sm:px-0 max-sm:flex-wrap max-sm:items-start max-sm:ml-0 max-xs:w-full xs:max-sm:w-2/3",
+                                "xs:max-sm:flex-1 xs:max-sm:min-w-0"
                             )}
                             iconSize={"md"}
                             hasBackground={false}
                             hasLabel={isSm ? true : false}
                             showInactive={isSm ? true : false}
+                            hasColorIcons={isSm}
                         />
 
                     </div>

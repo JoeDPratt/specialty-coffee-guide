@@ -13,19 +13,22 @@ interface CupScoreBadgeProps {
     score: number | null;
     className?: string;
     variant?: string;
-    background?: boolean;
-    title?: boolean;
+    hasBackground?: boolean;
+    hasTitle?: boolean;
+    isStacked?: boolean;
 }
 
 export default function CupScoreBadge({
     score,
     className,
     variant = "default",
-    background = true,
-    title = false
+    hasBackground = true,
+    hasTitle = false,
+    isStacked = false
 }: CupScoreBadgeProps): JSX.Element | null {
 
     const isScore: boolean = Boolean(score)
+
 
     if (variant === "card") {
         return (
@@ -34,29 +37,38 @@ export default function CupScoreBadge({
                     <TooltipTrigger asChild >
 
                         <div className={cn(
-                            "text-center flex flex-row gap-1.5 items-center px-2 max-w-max rounded-sm",
-                            background ?
+                            "text-center flex gap-1.5 items-center max-w-max rounded-sm",
+                            hasBackground ?
                                 [isScore ? "bg-card-100 " : "bg-card-200 shadow-none", "pt-1.5 pb-0.75"]
                                 : "bg-transparent shadow-none p-0",
-                            title ? "px-3 pt-1.75 pb-1.25" : ""
+                            hasTitle ? "px-3 pt-1.75 pb-1.25" : "px-2",
+                            isStacked ? "flex-col px-2.5" : "flex-row"
                         )}>
-                            <SCALogo
-                                role="img"
-                                aria-label="Specialty Coffee Association cup score logo"
-                                className={cn(
-                                    "mb-0.5 ml-0.5",
-                                    isScore ? "fill-pr-900" : "fill-disabled-400",
-                                    title ? "h-7" : "h-5.5"
-                                )}
-                            />
-                            {title && <div className="leading-4 text-sm font-medium text-left pl-1 pr-4 border-r-2 border-card-200">
-                                <div>CUP</div>
-                                <div>SCORE</div>
-                            </div>}
+                            <div className={cn(
+                                "flex gap-1.5 items-center",
+                                isStacked && "pb-0.75 mb-2 border-b-2 border-card-200"
+                            )}>
+                                <SCALogo
+                                    role="img"
+                                    aria-label="Specialty Coffee Association cup score logo"
+                                    className={cn(
+                                        "mb-0.5 ml-0.5",
+                                        isScore ? "fill-pr-900" : "fill-disabled-400",
+                                        hasTitle ? "h-7" : "h-5.5"
+                                    )}
+                                />
+                                {hasTitle && <div className={cn(
+                                    "text-sm font-medium text-left ",
+                                    isStacked ? "pl-0.5" : "pl-1 pr-4 border-r-2 border-card-200")}>
+                                    <div className="leading-4">CUP</div>
+                                    <div className="leading-4">SCORE</div>
+                                </div>}
+                            </div>
                             <div className={cn(
                                 "font-teko text-[31px] sm:max-md:text-[28px] tracking-wider leading-6 pt-0.75",
                                 isScore ? "text-pr-900 font-semibold" : "text-disabled-400 font-light",
-                                title ? "pl-2 text-4xl leading-2 pt-1" : "pl-0"
+                                hasTitle ? "pl-2 text-4xl leading-2 pt-1" : "pl-0",
+                                isStacked ? "pb-2.25" : ""
                             )}>
                                 {isScore ? score : "--"}
                             </div>

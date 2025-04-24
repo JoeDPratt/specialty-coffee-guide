@@ -25,6 +25,7 @@ interface AttributeItemIconProps {
     iconSize?: IconSize;
     hasBackground?: boolean;
     hasLabel?: boolean;
+    hasColorIcons?: boolean;
 }
 
 interface AttributeItemLabelledProps {
@@ -41,6 +42,7 @@ interface AttributeSectionProps {
     hasBackground?: boolean;
     hasLabel?: boolean;
     showInactive?: boolean;
+    hasColorIcons?: boolean;
 }
 
 type LabelConfig = {
@@ -156,7 +158,8 @@ function AttributeItemIcon({
     isActive = false,
     iconSize = "base",
     hasBackground = false,
-    hasLabel = false
+    hasLabel = false,
+    hasColorIcons = true
 }: AttributeItemIconProps): JSX.Element {
     const { label, description, icon: Icon, iconColorClass } = attributeConfig[flagName];
 
@@ -176,7 +179,7 @@ function AttributeItemIcon({
                     <Icon
                         className={cn(
                             isActive
-                                ? iconColorClass
+                                ? hasColorIcons ? iconColorClass : "fill-pr-900"
                                 : "text-disabled-400",
                             iconSizeMap[iconSize]
                         )}
@@ -201,7 +204,8 @@ export default function AttributeSection({
     iconSize = "base",
     hasBackground = false,
     hasLabel = false,
-    showInactive = true
+    showInactive = true,
+    hasColorIcons = true
 }: AttributeSectionProps): JSX.Element {
     const entries = (Object.keys(attributeData) as (keyof CoffeeAttributes)[])
         .filter((key) => attributeConfig[key])
@@ -224,6 +228,7 @@ export default function AttributeSection({
                         iconSize={iconSize}
                         hasBackground={hasBackground}
                         hasLabel={hasLabel}
+                        hasColorIcons={hasColorIcons}
                     />
                 ))}
             </div>
