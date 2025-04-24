@@ -255,7 +255,7 @@ export default function ProductListItem({
                     </Tooltip>
                     <div className={cn(
                         "flex max-sm:w-full max-sm:items-center",
-                        isInStock ?? isBestValue
+                        isBestValue && isInStock
                             ? "max-sm:justify-between"
                             : "max-sm:justify-end"
                     )}>
