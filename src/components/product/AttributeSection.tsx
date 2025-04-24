@@ -225,7 +225,7 @@ function AttributeItemIconLabel({
             <TooltipTrigger asChild >
                 <div
                     className={cn(
-                        "flex items-center shadow-none p-1 gap-0 rounded-sm",
+                        "flex items-center shadow-none p-1 gap-0 rounded-sm w-[calc(50%-8px)]",
                     )}
                     aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
                 >
@@ -237,7 +237,12 @@ function AttributeItemIconLabel({
                             iconSizeMap[iconSize]
                         )}
                     />
-                    <span className="capitalize mt-0.75 ml-1">{label}</span>
+                    <span className={cn(
+                        "capitalize mt-0.75 ml-1",
+                        isActive
+                            ? "text-pr-900"
+                            : "text-disabled-400",)}
+                    >{label}</span>
                 </div>
             </TooltipTrigger>
             <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
@@ -295,15 +300,15 @@ export default function AttributeSection({
 
         return (
             <div
-                className={cn("flex w-max gap-3 px-2", className)}
+                className={cn("flex w-max gap-3", className)}
                 role="region"
                 aria-label="Coffee attribute icons"
             >
                 {entries.map(([flagName, isActive]) => (
-                    isActive && <AttributeItemIconLabel
+                    <AttributeItemIconLabel
                         key={flagName}
                         flagName={flagName}
-                        isActive={isActive}
+                        isActive={isActive ?? false}
                         iconSize={iconSize}
                     />
                 ))}
