@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 
 type WeightOption = 250 | 1000;
+type ViewMode = "grid" | "list";
 
 type SearchState = {
     isSearchOpen: boolean;
@@ -14,6 +15,8 @@ type SearchState = {
     setFilters: (filters: Record<string, string>) => void;
     selectedWeight: WeightOption;
     setSelectedWeight: (weight: WeightOption) => void;
+    selectedView: ViewMode;
+    setSelectedView: (view: ViewMode) => void;
 };
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -32,4 +35,6 @@ export const useSearchStore = create<SearchState>((set) => ({
     setFilters: (filters) => set({ filters }),
     selectedWeight: 250,
     setSelectedWeight: (weight) => set({ selectedWeight: weight }),
+    selectedView: "list",
+    setSelectedView: (view) => set({ selectedView: view })
 }));
