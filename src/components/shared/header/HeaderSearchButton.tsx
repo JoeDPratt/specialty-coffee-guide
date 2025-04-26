@@ -34,7 +34,7 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
                     role="search"
                     className={cn(
                         "font-sofia-sans text-lg text-left flex-1 outline-0 cursor-pointer",
-                        "px-3 sm:px-5 pb-1.25 pt-2.5",
+                        "px-3 sm:px-5 pb-1.25 pt-2.5 sm:pt-2.25",
                         isScrolled
                             ? "aspect-auto"
                             : "aspect-square xs:aspect-auto px-2.5"
@@ -42,7 +42,7 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
                     onClick={toggleSearch}
                 >
                     {/* Desktop label */}
-                    <span className="hidden sm:inline pr-20">
+                    <span className="hidden sm:inline leading-2">
                         Find your favourite beans
                     </span>
 

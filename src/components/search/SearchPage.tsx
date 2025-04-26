@@ -1,8 +1,10 @@
 'use client';
 
-
+import { useRouter, usePathname } from "next/navigation";
+import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useSearchResults } from '@/hooks/useSearchResults';
+import { useSyncUrlParams } from "@/hooks/useSyncUrlParams";
 import { fadeUpItem, staggerContainer } from '@/utils/animation';
 import { motion } from "framer-motion";
 import ProductCard from "@/components/shared/product/ProductCard";
@@ -10,8 +12,9 @@ import { cn } from '@/utils/classes/merge';
 import ProductListItem from '../shared/product/ProductListItem';
 import { useSearchStore } from '@/stores/useSearchStore';
 import { SeacrhViewMenu } from './SearchViewMenu';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
+const queryClient = new QueryClient();
 
 export default function SearchPage({
     dehydratedState,
@@ -26,7 +29,6 @@ export default function SearchPage({
         is_single_origin?: boolean;
     };
 }) {
-    const queryClient = new QueryClient();
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -38,8 +40,11 @@ export default function SearchPage({
 }
 
 function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
+    console.count("SearchResults render");
+    const router = useRouter();
+    const pathname = usePathname();
     const resultsView = useSearchStore((s) => s.selectedView);
-    const selectedWeight = useSearchStore((s) => s.selectedWeight);
+    // const selectedWeight = useSearchStore((s) => s.selectedWeight);
     const sortedBy = useSearchStore((s) => s.sortedBy);
     const page = useSearchStore((s) => s.page);
     const pageSize = useSearchStore((s) => s.pageSize);
@@ -57,14 +62,29 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
         setPage]);
 
     // merge server filters + client sort & pagination
-    const fullParams = {
-        ...queryParams,
-        sort_by: sortedBy,
-        page,
-        page_size: pageSize,
-    } as const;
+    const fullParams = useMemo(
+        () => ({
+            ...queryParams,
+            sort_by: sortedBy,
+            page,
+            page_size: pageSize,
+        }),
+        [
+            queryParams.q,
+            queryParams.is_organic,
+            queryParams.is_decaf,
+            queryParams.is_mycotoxin_free,
+            queryParams.is_single_origin,
+            sortedBy,
+            page,
+            pageSize,
+        ]
+    );
 
-    console.log("FULL PARAMS", fullParams)
+    // console.log("FULL PARAMS", fullParams)
+
+    // Sync the URL Params
+    useSyncUrlParams(fullParams);
 
     const { data, isLoading } = useSearchResults(fullParams);
 
@@ -75,8 +95,7 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
     //         card.product_variants.weight === Number(selectedWeight)
     // );
 
-
-    console.log("PRODUCTS", data)
+    // console.log("PRODUCTS", data)
 
     return (
         <div className={cn(
