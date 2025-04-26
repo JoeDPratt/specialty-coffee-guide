@@ -10,8 +10,8 @@ import { motion } from "framer-motion";
 import ProductCard from "@/components/shared/product/ProductCard";
 import { cn } from '@/utils/classes/merge';
 import ProductListItem from '../shared/product/ProductListItem';
-import { ViewToggle } from './ViewToggle';
 import { useSearchStore } from '@/stores/useSearchStore';
+import { SeacrhViewMenu } from './SearchViewMenu';
 
 
 export default function SearchPage({
@@ -40,6 +40,7 @@ export default function SearchPage({
 
 function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
     const { data, isLoading } = useSearchResults(queryParams);
+    const resultsView = useSearchStore((s) => s.selectedView);
 
     if (isLoading) return <div>Loading...</div>;
     if (!data?.length) return <div>No results</div>;
@@ -49,7 +50,6 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
     });
 
 
-    const resultsView = useSearchStore((s) => s.selectedView);
     console.log("PRODUCTS", products)
 
     return (
@@ -64,7 +64,7 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
             <div className="@container/grid flex flex-col flex-1">
                 <div className="flex justify-between items-center w-full mb-4">
                     <h2 className="leading-7 mt-2.5 mb-0.5">{products.length} search result{products.length === 1 ? "" : "s"}</h2>
-                    <ViewToggle showLabel={true} />
+                    <SeacrhViewMenu />
                 </div>
 
                 <motion.div

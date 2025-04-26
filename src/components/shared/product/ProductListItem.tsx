@@ -24,6 +24,7 @@ import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
 import { useState } from "react";
 
 import { useLongPress } from "@/hooks/useLongPress";
+import { useSearchStore } from "@/stores/useSearchStore";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -47,7 +48,7 @@ export default function ProductListItem({
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const longPressEvents = useLongPress(() => setTooltipOpen(true), 600);
 
-    const [selectedWeight, setSelectedWeight] = useState<250 | 1000>(250);
+    const selectedWeight = useSearchStore((s) => s.selectedWeight);
     const router = useRouter();
     // const variantDisplayWeight = 250;
 
@@ -57,7 +58,7 @@ export default function ProductListItem({
     const blurredImage = getBlurURL(imageUrl);
 
     const variant =
-        product_variants?.find((v) => { return v.weight === selectedWeight })
+        product_variants?.find((v) => { return v.weight === parseInt(selectedWeight) })
         ?? product_variants?.[0];
 
     const pricePerKg = variant?.price_per_kg
@@ -189,7 +190,7 @@ export default function ProductListItem({
                         {((!isXs) && (sca_cup_score || !isSm)) && <CupScoreBadge
                             score={sca_cup_score}
                             variant={"card"}
-                            className={"flex-shrink mt-1"}
+                            className={"flex-shrink mt-1 mr-1"}
                             hasBackground={isSm}
                             hasTitle={isSm}
                             isStacked={isSm}
@@ -224,12 +225,12 @@ export default function ProductListItem({
 
                         <TooltipTrigger asChild >
                             <div className={cn(
-                                "flex items-end gap-2 mt-1.5",
+                                "flex items-center gap-2 mt-1.5",
                                 "max-sm:w-full",
                                 isInStock ? "max-sm:justify-end" : "max-sm:justify-between"
                             )}>
                                 {(isSm && !isInStock) &&
-                                    <span className="text-pr-700 uppercase text-lg font-bold">
+                                    <span className="text-disabled-400 uppercase text-lg font-bold mt-0.75">
                                         Out of Stock
                                     </span>}
                                 <div className="flex items-end gap-2">
@@ -266,7 +267,7 @@ export default function ProductListItem({
                                 "bg-pr-300 px-2 pt-0.25",
                                 isInStock ? "text-pr-700" : "text-card-100"
                             )}>
-                                {selectedWeight}g
+                                {selectedWeight === "1000" ? "1kg" : selectedWeight + "g"}
                             </span>
                             <span className={cn(
                                 "text-base leading-4 font-normal px-2 pt-0.25",

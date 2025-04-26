@@ -1,8 +1,8 @@
 // stores/useSearchStore.ts
 import { create } from 'zustand';
 
-type WeightOption = 250 | 1000;
-type ViewMode = "grid" | "list";
+export type WeightOption = "250" | "1000";
+export type ViewMode = "grid" | "list";
 
 type SearchState = {
     isSearchOpen: boolean;
@@ -33,7 +33,7 @@ export const useSearchStore = create<SearchState>((set) => ({
     toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
     setQuery: (query) => set({ query }),
     setFilters: (filters) => set({ filters }),
-    selectedWeight: 250,
+    selectedWeight: "250",
     setSelectedWeight: (weight) => set({ selectedWeight: weight }),
     selectedView: "list",
     setSelectedView: (view) => set({ selectedView: view })
