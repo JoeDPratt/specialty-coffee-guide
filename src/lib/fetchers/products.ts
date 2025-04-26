@@ -1,3 +1,4 @@
+// lib/fetchers/products.ts
 import type { Product, ProductCard } from "@/types/product";
 import type { SearchQueryParams } from "@/types/search";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";

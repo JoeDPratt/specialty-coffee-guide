@@ -3,6 +3,7 @@ import { create } from 'zustand';
 
 export type WeightOption = "250" | "1000";
 export type ViewMode = "grid" | "list";
+export type SortOption = "price_low" | "price_high" | "cup_score_high";
 
 type SearchState = {
     isSearchOpen: boolean;
@@ -13,10 +14,21 @@ type SearchState = {
     toggleSearch: () => void;
     setQuery: (q: string) => void;
     setFilters: (filters: Record<string, string>) => void;
+
     selectedWeight: WeightOption;
     setSelectedWeight: (weight: WeightOption) => void;
+
     selectedView: ViewMode;
     setSelectedView: (view: ViewMode) => void;
+
+    sortedBy: SortOption;
+    setSortedBy: (sort: SortOption) => void;
+
+    page: number;
+    setPage: (p: number) => void;
+
+    pageSize: number;
+    setPageSize: (s: number) => void;
 };
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -33,8 +45,19 @@ export const useSearchStore = create<SearchState>((set) => ({
     toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
     setQuery: (query) => set({ query }),
     setFilters: (filters) => set({ filters }),
+
     selectedWeight: "250",
     setSelectedWeight: (weight) => set({ selectedWeight: weight }),
+
     selectedView: "list",
-    setSelectedView: (view) => set({ selectedView: view })
+    setSelectedView: (view) => set({ selectedView: view }),
+
+    sortedBy: "price_low",
+    setSortedBy: (sort) => set({ sortedBy: sort }),
+
+    page: 1,
+    setPage: (page) => set({ page }),
+
+    pageSize: 24,
+    setPageSize: (pageSize) => set({ pageSize }),
 }));

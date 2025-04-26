@@ -1,8 +1,6 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-// import type { ProductCard } from '@/types/product';
-import { getSearchResults } from '@/lib/queries/products/getSearchResults';
+
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useSearchResults } from '@/hooks/useSearchResults';
 import { fadeUpItem, staggerContainer } from '@/utils/animation';
@@ -12,6 +10,7 @@ import { cn } from '@/utils/classes/merge';
 import ProductListItem from '../shared/product/ProductListItem';
 import { useSearchStore } from '@/stores/useSearchStore';
 import { SeacrhViewMenu } from './SearchViewMenu';
+import { useEffect } from 'react';
 
 
 export default function SearchPage({
@@ -39,18 +38,45 @@ export default function SearchPage({
 }
 
 function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
-    const { data, isLoading } = useSearchResults(queryParams);
     const resultsView = useSearchStore((s) => s.selectedView);
+    const selectedWeight = useSearchStore((s) => s.selectedWeight);
+    const sortedBy = useSearchStore((s) => s.sortedBy);
+    const page = useSearchStore((s) => s.page);
+    const pageSize = useSearchStore((s) => s.pageSize);
+    const setPage = useSearchStore((s) => s.setPage);
+
+
+    // whenever the filter queryParams object changes, reset to page 1
+    useEffect(() => {
+        setPage(1);
+    }, [queryParams.q,
+    queryParams.is_organic,
+    queryParams.is_decaf,
+    queryParams.is_mycotoxin_free,
+    queryParams.is_single_origin,
+        setPage]);
+
+    // merge server filters + client sort & pagination
+    const fullParams = {
+        ...queryParams,
+        sort_by: sortedBy,
+        page,
+        page_size: pageSize,
+    } as const;
+
+    console.log("FULL PARAMS", fullParams)
+
+    const { data, isLoading } = useSearchResults(fullParams);
 
     if (isLoading) return <div>Loading...</div>;
     if (!data?.length) return <div>No results</div>;
 
-    const products = data.sort((a, b) => {
-        return Number(b?.is_instock === true) - Number(a?.is_instock === true);
-    });
+    //     const filtered = data.filter((card) => 
+    //         card.product_variants.weight === Number(selectedWeight)
+    // );
 
 
-    console.log("PRODUCTS", products)
+    console.log("PRODUCTS", data)
 
     return (
         <div className={cn(
@@ -63,7 +89,7 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
             </div>
             <div className="@container/grid flex flex-col flex-1">
                 <div className="flex justify-between items-center w-full mb-4">
-                    <h2 className="leading-7 mt-2.5 mb-0.5">{products.length} search result{products.length === 1 ? "" : "s"}</h2>
+                    <h2 className="leading-7 mt-2.5 mb-0.5">{data.length} result{data.length === 1 ? "" : "s"}</h2>
                     <SeacrhViewMenu />
                 </div>
 
@@ -77,7 +103,7 @@ function SearchResults({ queryParams }: { queryParams: Record<string, any> }) {
                     initial="hidden"
                     animate="visible"
                 >
-                    {products?.map((product) => (
+                    {data?.map((product) => (
                         <motion.div
                             key={product.slug}
                             variants={fadeUpItem}

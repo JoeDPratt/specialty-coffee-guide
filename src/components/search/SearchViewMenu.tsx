@@ -3,6 +3,7 @@ import { ToggleWithTooltips } from "../shared/buttons/ToggleWithToolTips";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { Bars4Icon, Squares2X2Icon } from '@heroicons/react/16/solid';
 import type { WeightOption, ViewMode } from "@/stores/useSearchStore";
+import { DropdownSort } from "./DropdownSort";
 
 export function SeacrhViewMenu() {
     const isSm = useBreakpointStore((s) => s.isSm);
@@ -14,7 +15,7 @@ export function SeacrhViewMenu() {
     return (
         <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-                <span className="mt-0.5">Viewing prices for:</span>
+                <span className="mt-0.5 text-base">Viewing prices for:</span>
                 <ToggleWithTooltips<WeightOption>
                     value={selectedWeight}
                     onChange={setWeight}
@@ -34,7 +35,9 @@ export function SeacrhViewMenu() {
                     { value: "list", label: "List", icon: <Bars4Icon />, tooltip: "List View" },
                 ]}
                 showLabel={!isSm}
+                showTooltip={isSm}
             />
+            <DropdownSort />
         </div>
     )
 }

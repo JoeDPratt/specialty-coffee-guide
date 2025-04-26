@@ -14,16 +14,19 @@ interface TooltipProps {
 export function DefaultTooltip({ title, description, align = "center", sideOffset = 4 }: TooltipProps) {
 
     return (
+
         <TooltipContent
             side="top"
             sideOffset={sideOffset}
             align={align}
             avoidCollisions
             className={cn(description ? "tooltip-base" : "tooltip-no-descritpion")}>
+
             {title && <span className={cn(
                 "font-medium leading-4 p-0.5")}>{title}</span>}
             {description && <div className="mt-1 font-light text-sm leading-5">{description}</div>}
             <TooltipArrow className="fill-pr-700 dark:fill-pr-100" />
+
         </TooltipContent>
     )
 }
