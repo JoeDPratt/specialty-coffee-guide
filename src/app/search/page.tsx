@@ -3,23 +3,26 @@ import { getSearchResults } from '@/lib/queries/products/getSearchResults';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import SearchPageClient from '@/components/search/SearchPageClient';
 import { parseQueryParams } from '@/utils/navigation/serializeQueryParams';
-import type { RawQueryParams } from '@/types/search';
+import type { RawQueryParams, SearchQueryParams, SearchResultsResponse } from '@/types/search';
 
 export default async function Page({
     searchParams,
 }: {
     searchParams: Promise<RawQueryParams>;
 }) {
-
     const parsedParams = parseQueryParams(await searchParams);
-    const plainParsedParams = JSON.parse(JSON.stringify(parsedParams));
+    const plainParams = JSON.parse(JSON.stringify(parsedParams));
     const queryClient = new QueryClient();
 
-    // Prefetch with the same cache key
-    await queryClient.prefetchInfiniteQuery({
-        queryKey: ['search', plainParsedParams],
-        queryFn: ({ pageParam = 1 }) => getSearchResults({ ...plainParsedParams, page: pageParam }),
-        initialPageParam: 1,
+    // Prefetch page 1
+    await queryClient.prefetchQuery<
+        SearchResultsResponse,
+        Error,
+        SearchResultsResponse,
+        readonly ['search', SearchQueryParams]
+    >({
+        queryKey: ['search', { ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 }] as const,
+        queryFn: () => getSearchResults({ ...plainParams, page: 1 }),
     });
 
     const dehydratedState = dehydrate(queryClient);
@@ -27,7 +30,7 @@ export default async function Page({
     return (
         <SearchPageClient
             dehydratedState={dehydratedState}
-            queryParams={plainParsedParams}
+            queryParams={plainParams}
         />
     );
 }

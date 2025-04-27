@@ -1,4 +1,4 @@
-// /lib/db/products.ts
+// lib/queries/products/getProductsByRoasterSlug.ts
 
 import { cache } from "react"; // Import cache from React
 import { fetchProductCards } from "./getProductCard";

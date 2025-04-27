@@ -21,6 +21,8 @@ export type RawQueryParams = {
 
 export interface SearchResultsResponse {
     results: ProductCard[];
+    totalCount?: number;
+    totalPages?: number;
     nextPage?: number;
     previousPage?: number;
 }

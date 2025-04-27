@@ -24,7 +24,6 @@ import {
 import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
 import { useState } from "react";
 
-import { useLongPress } from "@/hooks/useLongPress";
 import { useSearchStore } from "@/stores/useSearchStore";
 
 interface ProductCardProps {
@@ -46,8 +45,6 @@ export default function ProductListItem({
         sca_cup_score
     } = product;
 
-    const [tooltipOpen, setTooltipOpen] = useState(false);
-    const longPressEvents = useLongPress(() => setTooltipOpen(true), 600);
 
     const selectedWeight = useSearchStore((s) => s.selectedWeight);
     const router = useRouter();
@@ -222,7 +219,7 @@ export default function ProductListItem({
                     "max-xl:justify-end",
                     "xl:justify-center xl:pt-2.5 xl:pb-3.5 xl:gap-1.5"
                 )}>
-                    <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen}>
+                    <Tooltip>
 
                         <TooltipTrigger asChild >
                             <div className={cn(

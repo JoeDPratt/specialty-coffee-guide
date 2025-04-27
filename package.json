@@ -6,7 +6,8 @@
         "dev": "next dev -p 4000",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "generate-types": "npx supabase gen types typescript --project-id bybzohzydqfcicjwrycm > src/types/supabase-updated.ts"
     },
     "dependencies": {
         "@heroicons/react": "^2.2.0",
