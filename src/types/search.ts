@@ -1,3 +1,5 @@
+import type { ProductCard } from "@/types/product";
+
 export interface SearchQueryParams {
     q?: string;
     is_organic?: boolean;
@@ -16,3 +18,9 @@ export type RawQueryParams = {
     is_mycotoxin_free?: string;
     is_single_origin?: string;
 };
+
+export interface SearchResultsResponse {
+    results: ProductCard[];
+    nextPage?: number;
+    previousPage?: number;
+}

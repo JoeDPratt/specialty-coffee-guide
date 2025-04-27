@@ -5,7 +5,7 @@ import { Bars4Icon, Squares2X2Icon } from '@heroicons/react/16/solid';
 import type { WeightOption, ViewMode } from "@/stores/useSearchStore";
 import { DropdownSort } from "./DropdownSort";
 
-export function SeacrhViewMenu() {
+export default function SeacrhViewMenu() {
     const isSm = useBreakpointStore((s) => s.isSm);
     const selectedView = useSearchStore((s) => s.selectedView);
     const setSelectedView = useSearchStore((s) => s.setSelectedView);

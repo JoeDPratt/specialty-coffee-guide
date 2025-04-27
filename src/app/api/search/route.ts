@@ -1,7 +1,8 @@
+// app/api/search/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { getSearchResults } from '@/lib/queries/products/getSearchResults';
 import type { SearchQueryParams } from "@/types/search";
-import { SortOption } from "@/stores/useSearchStore";
+import type { SortOption } from "@/stores/useSearchStore";
 
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);

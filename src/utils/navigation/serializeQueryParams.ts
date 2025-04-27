@@ -1,4 +1,5 @@
 import type { SearchQueryParams } from '@/types/search';
+import { usePaginationStore } from '@/stores/usePaginationStore';
 
 export function serializeQueryParams(params: SearchQueryParams) {
     const qs = new URLSearchParams();
@@ -17,6 +18,7 @@ export function serializeQueryParams(params: SearchQueryParams) {
 
 export function parseQueryParams(
     params: Record<string, string | string[] | undefined>): SearchQueryParams {
+
     return {
         q: Array.isArray(params.q) ? params.q[0] : params.q ?? undefined,
         is_organic: params.is_organic === 'true',

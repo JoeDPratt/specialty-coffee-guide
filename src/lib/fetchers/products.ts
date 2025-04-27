@@ -22,15 +22,17 @@ export const fetchProductBySlug = async (slug: string): Promise<Product> => {
     return data as Product; // Assume the API returns data matching the Product type
 };
 
-export const fetchSearchResults = async (
-    queryParams: SearchQueryParams
-): Promise<ProductCard[]> => {
-    const queryString = serializeQueryParams(queryParams);
 
-    const res = await fetch(`/api/search?${queryString}`);
-    if (!res.ok) {
-        throw new Error(`Search failed: ${res.statusText}`);
-    }
+export async function fetchSearchResults(
+    params: SearchQueryParams
+): Promise<{ results: any[]; nextPage?: number; previousPage?: number }> {
 
+    const qs = new URLSearchParams();
+    Object.entries(params).forEach(([key, val]) => {
+        if (val != null) qs.set(key, String(val));
+    });
+
+    const res = await fetch(`/api/search?${qs.toString()}`);
+    if (!res.ok) throw new Error(res.statusText);
     return await res.json();
-};
+}

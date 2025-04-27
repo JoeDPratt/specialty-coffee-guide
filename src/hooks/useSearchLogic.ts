@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useSearchStore } from "@/stores/useSearchStore";
+import { usePaginationStore } from "@/stores/usePaginationStore";
 import { useRouter } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
 
@@ -17,9 +18,9 @@ export function useSearchLogic() {
     const query = useSearchStore((s) => s.query);
     const setQuery = useSearchStore((s) => s.setQuery);
     const sortedBy = useSearchStore((s) => s.sortedBy);
-    const page = useSearchStore((s) => s.page);
-    const pageSize = useSearchStore((s) => s.pageSize);
-    const setPage = useSearchStore((s) => s.setPage);
+    const page = usePaginationStore((s) => s.page);
+    const pageSize = usePaginationStore((s) => s.pageSize);
+    const setPage = usePaginationStore((s) => s.setPage);
 
     const [localQuery, setLocalQuery] = useState(query);
 

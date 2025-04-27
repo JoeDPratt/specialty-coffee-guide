@@ -1,3 +1,4 @@
+// components/shared/product/ProductListItem.tsx
 "use client";
 
 import Image from "next/image";
@@ -75,7 +76,7 @@ export default function ProductListItem({
             onClick={() => router.push(getProductPath(slug))}
             className={cn(
                 "@container/card group w-full flex flex-col items-center transition-all overflow-hidden cursor-pointer rounded-md hover:shadow-md",
-                "sm:flex-row sm:bg-card-200",
+                "sm:flex-row sm:items-stretch sm:bg-card-200",
                 "xs:max-sm:items-end")}
         >
             {/* Image */}
@@ -83,10 +84,10 @@ export default function ProductListItem({
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
                 className={cn(
-                    "relative aspect-[1/1]",
+                    "relative aspect-square",
                     "max-xs:w-24 max-xs:-mb-12 max-sm:border-4 max-sm:border-card-100 max-sm:rounded-sm ",
                     "xs:max-sm:mr-4 xs:max-sm:w-25 xs:max-sm:-mb-21",
-                    "sm:h-full"
+                    "sm:w-auto sm:h-[198px] xl:h-[136px]"
                 )}
             >
                 <Image
@@ -94,7 +95,7 @@ export default function ProductListItem({
                     src={imageUrl}
                     alt={product_name}
                     fill
-                    className="object-cover"
+                    className="object-cover object-center"
                     sizes="(min-width: 768px) 25vw, 100vw"
                     placeholder="blur"
                     blurDataURL={blurredImage}
@@ -108,7 +109,7 @@ export default function ProductListItem({
                 "sm:max-md:gap-x-3.5",
                 "md:px-6 md:py-5",
                 "sm:max-xl:grid-cols-[1fr_auto] sm:max-xl:grid-rows-[auto_auto] md:max-xl:gap-x-5",
-                "xl:grid-cols-[4fr_3fr_auto] xl:grid-rows-1 xl:gap-5"
+                "xl:grid-cols-[4fr_3fr_auto] xl:grid-rows-1 xl:gap-5 xl:pt-5 xl:pb-4.75"
             )}>
                 <div className={cn(
                     "flex items-start w-full",
