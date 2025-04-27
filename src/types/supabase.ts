@@ -870,7 +870,7 @@ export type Database = {
             product_variants: {
                 Row: {
                     currency: string
-                    discount_percent: string | null
+                    discount_percent: number | null
                     id: number
                     is_instock: boolean | null
                     price: number
@@ -880,7 +880,7 @@ export type Database = {
                 }
                 Insert: {
                     currency: string
-                    discount_percent?: string | null
+                    discount_percent?: number | null
                     id?: number
                     is_instock?: boolean | null
                     price: number
@@ -890,7 +890,7 @@ export type Database = {
                 }
                 Update: {
                     currency?: string
-                    discount_percent?: string | null
+                    discount_percent?: number | null
                     id?: number
                     is_instock?: boolean | null
                     price?: number
