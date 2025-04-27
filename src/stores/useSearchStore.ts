@@ -24,11 +24,6 @@ type SearchState = {
     sortedBy: SortOption;
     setSortedBy: (sort: SortOption) => void;
 
-    page: number;
-    setPage: (p: number) => void;
-
-    pageSize: number;
-    setPageSize: (s: number) => void;
 };
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -55,9 +50,5 @@ export const useSearchStore = create<SearchState>((set) => ({
     sortedBy: "price_low",
     setSortedBy: (sort) => set({ sortedBy: sort }),
 
-    page: 1,
-    setPage: (page) => set({ page }),
 
-    pageSize: 24,
-    setPageSize: (pageSize) => set({ pageSize }),
 }));
