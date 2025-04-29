@@ -5,6 +5,7 @@ import { fadeUpItem } from '@/utils/animation';
 import IconButton from '@/components/shared/buttons/IconButton';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid'
 import { useSearchLogic } from '@/hooks/useSearchLogic';
+import { Button } from '@/components/ui/button';
 
 
 export default function ExpandedDesktopSearch() {
@@ -21,11 +22,14 @@ export default function ExpandedDesktopSearch() {
             <div className="flex flex-col flex-1 gap-2 items-center pb-10 px-6 z-30">
                 <div className={"flex items-start justify-between w-full max-w-[840px] mb-2"}>
                     <h2 className="text-xl text-white text-center font-sofia-sans font-semibold leading-none m-0 pt-14 self-end">Find coffees by name, flavour, varieties or processes:</h2>
-                    <IconButton
-                        icon={<XMarkIcon className="w-8 h-8 mb-0.75 text-white group-hover:animate-pulse" />}
+                    <Button
+                        variant={"ghostDark"}
+                        size={"iconLg"}
+                        className="self-end [&_svg]:size-8 mb-4"
                         onClick={toggleSearch}
-                        className={"flex bg-transparent hover:bg-white/20 self-start"}
-                    />
+                    >
+                        <XMarkIcon />
+                    </Button>
                 </div>
                 <motion.div
                     className="flex w-full max-w-[840px] items-center bg-white border-2 border-white rounded-full shadow-md"
@@ -42,12 +46,15 @@ export default function ExpandedDesktopSearch() {
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                         placeholder='Try "Cherry" or "Bourbon"'
                     />
-                    <IconButton
-                        label={"SEARCH"}
-                        icon={<MagnifyingGlassIcon className="w-6 h-6 mb-0.75 text-white group-hover:animate-pulse my-auto" />}
+                    <Button
+                        variant={"accent"}
                         onClick={handleSearch}
-                        ariaLabel="Search Button"
-                    ></IconButton>
+                        aria-label="Search Button"
+                        iconPosition={"left"}
+                        className="h-12"
+                    >
+                        <MagnifyingGlassIcon />Search
+                    </Button>
                 </motion.div>
                 <motion.div className="flex gap-2 text-white text-center mt-3"
                     variants={fadeUpItem}

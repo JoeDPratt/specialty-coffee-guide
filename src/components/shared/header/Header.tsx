@@ -8,8 +8,8 @@ import Link from 'next/link'
 import { cn } from '@/utils/classes/merge'
 import { HeaderLogo } from './HeaderLogo'
 import { HeaderSearchButton } from './HeaderSearchButton'
-import { HeaderLoginButton } from './HeaderLoginButton'
-import { HeaderHamburgerButton } from './HeaderHamburgerButton'
+import { Button } from '@/components/ui/button';
+import { Bars3Icon } from '@heroicons/react/16/solid';
 
 export default function Header() {
     const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
@@ -71,13 +71,25 @@ export default function Header() {
                         {/* Search Button / Looks like an input */}
                         {!isSearchOpen && <HeaderSearchButton isScrolled={isScrolled} />}
 
-                        {/* Login */}
-                        <HeaderLoginButton isSearchOpen={isSearchOpen} isScrolled={isScrolled} />
-
-                        {/* Hamburger */}
-                        <HeaderHamburgerButton isSearchOpen={isSearchOpen} isScrolled={isScrolled} />
+                        {/* Right Menu Buttons */}
+                        <div
+                            className={cn(
+                                "md:flex justify-end hidden",
+                                isSearchOpen ? "w-max" :
+                                    isScrolled ? "sm:max-w-min" : "w-1/3",
+                            )}>
+                            {/* Login */}
+                            <Button variant={"secondary"} styleType={"outline"} size={"lg"}>Log in</Button>
+                        </div>
+                        <div className={cn(
+                            "md:hidden justify-end flex",
+                            isScrolled ? "max-w-min" : "md:w-1/3",
+                        )}
+                        >
+                            {/* Hamburger */}
+                            <Button variant={"secondary"} styleType={"outline"} size={"iconLg"}><Bars3Icon /></Button>
+                        </div>
                     </motion.div>
-
 
                 </div>
             </motion.header>

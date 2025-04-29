@@ -6,6 +6,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import PageNumbers from "./PageNumbers";
+import { useBreakpointStore } from "@/stores/useBreakpointStore";
 
 export default function PaginationControl({
     page,
@@ -18,35 +19,33 @@ export default function PaginationControl({
     totalPages: number;
     nextPage?: number;
 }) {
+    const isSm = useBreakpointStore((s) => s.isSm)
     return (
         <Pagination className="mt-8">
             <PaginationContent>
                 {/* Previous Button */}
-                {page > 1 && (
-                    <PaginationItem>
-                        <PaginationPrevious
-                            className="bg-white cursor-pointer"
-                            onClick={() => setPage(Math.max(page - 1, 1))}
-                        />
-                    </PaginationItem>
-                )}
+                <PaginationItem>
+                    <PaginationPrevious
+                        // className="bg-whicursor-pointer"
+                        onClick={() => setPage(Math.max(page - 1, 1))}
+                        disabled={page === 1}
+                    />
+                </PaginationItem>
 
                 {/* Page Numbers */}
-                <PageNumbers
+                {!isSm && <PageNumbers
                     page={page}
                     totalPages={totalPages}
                     setPage={setPage}
-                />
+                />}
 
                 {/* Next Button */}
-                {nextPage && (
-                    <PaginationItem>
-                        <PaginationNext
-                            className="bg-white cursor-pointer"
-                            onClick={() => setPage(page + 1)}
-                        />
-                    </PaginationItem>
-                )}
+                <PaginationItem>
+                    <PaginationNext
+                        disabled={!nextPage}
+                        onClick={() => setPage(page + 1)}
+                    />
+                </PaginationItem>
             </PaginationContent>
         </Pagination>
     );

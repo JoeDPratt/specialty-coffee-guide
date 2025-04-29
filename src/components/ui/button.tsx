@@ -1,32 +1,66 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/utils/classes/merge"
 
 const buttonVariants = cva(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full text-lg font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:size-6 [&_svg]:shrink-0 hover:scale-102 hover:shadow-sm hover:animate-pulse",
     {
         variants: {
             variant: {
                 default:
-                    "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+                    "bg-pr-700 text-white hover:bg-pr-700/80",
+                accent: "bg-pr-500 text-white hover:bg-pr-500/80",
                 destructive:
-                    "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-                outline:
-                    "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+                    "bg-pr-600 text-white hover:bg-pr-600/90",
                 secondary:
-                    "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-                ghost: "hover:bg-accent hover:text-accent-foreground",
-                link: "text-primary underline-offset-4 hover:underline",
+                    "bg-white text-pr-700 hover:bg-white/80",
+                ghost: "hover:bg-pr-100 text-pr-700 hover:shadow-none",
+                ghostDark: "hover:bg-white/20 text-white hover:shadow-none",
+                link: "text-pr-900 underline-offset-4 hover:underline hover:shadow-none",
+            },
+            styleType: {
+                solid: "",
+                outline: "border bg-transparent",
             },
             size: {
-                default: "h-9 px-4 py-2",
-                sm: "h-8 rounded-md px-3 text-xs",
-                lg: "h-10 rounded-md px-8",
-                icon: "h-9 w-9",
+                default: "h-10 px-5 pt-0.25",
+                sm: "h-8 px-4 text-base [&_svg]:size-4 pt-0.25",
+                lg: "h-12 px-8 text-xl [&_svg]:size-7",
+                icon: "h-10 w-10 gap-0",
+                iconLg: "h-12 w-12 [&_svg]:size-6 gap-0"
             },
+            iconPosition: {
+                left: "[&_svg]:-ml-1",
+                right: "[&_svg]:-mr-1",
+            }
         },
+        compoundVariants: [
+            // DEFAULT outline
+            {
+                variant: "default",
+                styleType: "outline",
+                className: "border-pr-700 text-pr-700 hover:bg-white/20",
+            },
+            // SECONDARY outline
+            {
+                variant: "secondary",
+                styleType: "outline",
+                className: "border-white text-white hover:bg-white/20",
+            },
+            // ACCENT outline
+            {
+                variant: "accent",
+                styleType: "outline",
+                className: "border-pr-500 text-pr-500 hover:bg-white/20",
+            },
+            // DESTRUCTIVE outline
+            {
+                variant: "destructive",
+                styleType: "outline",
+                className: "border-pr-600 text-pr-600 hover:bg-white/20",
+            },
+        ],
         defaultVariants: {
             variant: "default",
             size: "default",
@@ -41,11 +75,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
+    ({ className, variant, styleType, size, iconPosition, asChild = false, ...props }, ref) => {
         const Comp = asChild ? Slot : "button"
         return (
             <Comp
-                className={cn(buttonVariants({ variant, size, className }))}
+                className={cn(buttonVariants({ variant, size, styleType, className, iconPosition }))}
                 ref={ref}
                 {...props}
             />

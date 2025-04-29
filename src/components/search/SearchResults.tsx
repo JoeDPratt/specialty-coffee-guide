@@ -105,12 +105,12 @@ export default function SearchResults({
                 ))}
             </motion.div>
 
-            {/* <PaginationControl
+            <PaginationControl
                 page={page}
                 setPage={setPage}
-                totalPages={data.totalPages}
+                totalPages={data.totalPages ?? 0}
                 nextPage={data.nextPage}
-            /> */}
+            />
         </div>
     );
 }

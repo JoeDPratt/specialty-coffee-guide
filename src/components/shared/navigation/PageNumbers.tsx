@@ -13,6 +13,7 @@ export default function PageNumbers({
     totalPages: number;
     setPage: (page: number) => void;
 }) {
+
     const pages: (number | 'ellipsis')[] = [];
 
     const maxVisiblePages = 5;
@@ -23,7 +24,7 @@ export default function PageNumbers({
             pages.push(i);
         }
     } else {
-        const siblings = 1; // how many pages to show around current
+        const siblings = 1;
 
         const startPage = Math.max(2, page - siblings);
         const endPage = Math.min(totalPages - 1, page + siblings);
@@ -59,7 +60,6 @@ export default function PageNumbers({
                 <PaginationLink
                     isActive={p === page}
                     onClick={() => setPage(p)}
-                    className="cursor-pointer"
                 >
                     {p}
                 </PaginationLink>

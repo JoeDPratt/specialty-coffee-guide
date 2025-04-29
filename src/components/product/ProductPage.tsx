@@ -114,7 +114,7 @@ export default function ProductPage({
                             layout={product.roaster.logo_layout}
                             baseHeight={28}
                         />
-                        <hr className="hr-neu-shadow w-1/3 lg:w-1/5 mx-auto mt-3.75 mb-2.25" />
+                        <hr className="hr-light w-1/3 lg:w-1/5 mx-auto mt-3.75 mb-2.25" />
                         <h1 className="text-center text-white w-full text-6xl lg:text-7xl lg:w-3/4 mx-auto leading-12 lg:leading-14 -mb-3 mt-2 ">
                             {product.product_name.toUpperCase()}
                         </h1>
@@ -180,10 +180,10 @@ export default function ProductPage({
                     >
                         <AttributeSection attributeData={product?.attribute || {}} />
                         <p className="text-left font-base pt-14">{product.description}</p>
-                        <hr className="hr-neu-shadow w-full mb-12 mt-16"></hr>
+                        <hr className="hr-dark w-full mb-12 mt-16"></hr>
                         {/* Provenance details such as origin, producer, altitude */}
                         <ProvenanceSection provenanceData={product?.provenance} />
-                        <hr className="hr-neu-shadow w-full mt-6"></hr>
+                        <hr className="hr-dark w-full mt-6"></hr>
                         {/* Purchase options – links to the brand's product page */}
                         <div
                             id="product-options"

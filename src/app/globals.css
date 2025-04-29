@@ -5,17 +5,6 @@
 
 @theme {
     /* Colors */
-    /* --color-pr-25: rgba(250, 245, 245, 0.25);
-    --color-pr-50: rgba(250, 245, 245, 0.5);
-    --color-pr-100: #FAF5F5;
-    --color-pr-200: #F2E6E6;
-    --color-pr-300: #E5D7DD;
-    --color-pr-400: #C2B6BB;
-    --color-pr-500: #A81D1F;
-    --color-pr-600: #837373;
-    --color-pr-700: #524343;
-    --color-pr-800: #170404; */
-
     --color-pr-100: rgb(242, 236, 236); /* lightest neutral tint */
     --color-pr-200: rgb(247, 233, 231); /* light surface */
     --color-pr-300: rgb(237, 212, 209); /* soft background hover */
@@ -45,7 +34,7 @@
     --color-blue-100: rgb(242, 247, 255);
     --color-blue-400: rgb(13, 126, 233);
     --color-aqua-100: rgb(241, 254, 255);
-    --color-aqua-400: rgb(18, 205, 215);
+    --color-aqua-400: rgb(10, 164, 191);
     --color-orange-100: rgb(255, 249, 240);
     --color-orange-400: rgb(246, 150, 9);
     --color-tan-100: rgb(255, 247, 241);
@@ -76,6 +65,17 @@
     --shadow-img-lg: 0px 0px 56px 0px rgba(0,0,0,0.1);
     --shadow-cup-score: -4px 4px 0px 0px rgba(23,4,4,0.15);
     --shadow-breadcrumbs: 0px 0px 20px 2px rgba(0,0,0,0.05);
+
+    --animate-pulse:  pulse 1.5s ease-in-out infinite;
+
+    @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
 
 }
 
@@ -128,10 +128,13 @@
     .section-layout {
         @apply mx-auto lg:max-w-[1400px] md:max-lg:max-w-172 xl:px-20 sm:px-6.5 px-4;
     }
-    .hr-neu-shadow {
-        @apply border-none h-0.5 opacity-60;
-        background-color: var(--color-pr-200);
-        box-shadow: var(--shadow-hr-neumorphic);
+    .hr-dark {
+        @apply border-none h-0.5 bg-pr-900/10;
+
+    }
+    .hr-light {
+        @apply border-none h-0.5 bg-white/25;
+
     }
     .tooltip-base {
         font-family: var(--font-sofia-sans), sans-serif;

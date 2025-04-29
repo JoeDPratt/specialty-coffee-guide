@@ -10,7 +10,7 @@ interface PaginationState {
 
 export const usePaginationStore = create<PaginationState>((set) => ({
     page: 1,
-    pageSize: 2, // or whatever your default is
+    pageSize: 24, // or whatever your default is
     setPage: (page) => set({ page }),
     setPageSize: (size) => set({ pageSize: size }),
     resetPagination: () => set({ page: 1 }),

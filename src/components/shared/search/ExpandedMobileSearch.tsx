@@ -5,6 +5,7 @@ import { fadeUpItem } from '@/utils/animation';
 import IconButton from '../buttons/IconButton';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid';
 import { useSearchLogic } from '@/hooks/useSearchLogic';
+import { Button } from '@/components/ui/button';
 
 
 export default function ExpandedMobileSearch() {
@@ -18,11 +19,15 @@ export default function ExpandedMobileSearch() {
 
     return (
         <div className="flex flex-col flex-1 gap-2 items-start pt-4 h-screen px-4">
-            <IconButton
-                icon={<XMarkIcon className="w-8 h-8 mb-0.75 text-white group-hover:animate-pulse" />}
+            <Button
+                variant={"ghostDark"}
+                size={"iconLg"}
+                className="self-end [&_svg]:size-8"
                 onClick={toggleSearch}
-                className={"flex bg-transparent hover:bg-white/20 self-end"}
-            />
+            >
+                <XMarkIcon />
+            </Button>
+
             <h2 className="text-left text-2xl pl-2 text-white font-sofia-sans font-semibold">Find coffees by name, flavour, varieties or processes:</h2>
             <motion.div
                 className="flex w-full items-center bg-white border-2 border-white rounded-full shadow-md"
@@ -52,13 +57,15 @@ export default function ExpandedMobileSearch() {
                 variants={fadeUpItem}
                 initial="hidden"
                 animate="visible">
-                <IconButton
-                    label={"SEARCH"}
-                    className={"flex-1 justify-center text-xl"}
-                    icon={<MagnifyingGlassIcon className="w-6 h-6 mb-0.75 text-white group-hover:animate-pulse" />}
+                <Button
+                    variant={"accent"}
+                    size={"lg"}
+                    iconPosition={"left"}
                     onClick={handleSearch}
-                    ariaLabel="Search Button"
-                ></IconButton>
+                    aria-label="Search Button"
+                    className="flex-1">
+                    <MagnifyingGlassIcon />Search
+                </Button>
             </motion.div>
         </div>
     );

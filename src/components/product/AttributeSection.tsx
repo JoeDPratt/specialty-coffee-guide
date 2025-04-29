@@ -65,9 +65,9 @@ const attributeConfig: Record<keyof CoffeeAttributes, LabelConfig> = {
     },
     is_mycotoxin_free: {
         label: "Myco Free",
-        bgClass: "bg-teal-100",
+        bgClass: "bg-aqua-100",
         icon: MycoIcon,
-        iconColorClass: "fill-teal-400",
+        iconColorClass: "fill-aqua-400",
         description: "Tested free from mycotoxins.",
     },
     is_fairtrade: {
@@ -133,7 +133,7 @@ function AttributeItemLabelled({
                                 )}
                             />
                         </div>
-                        <hr className="hidden xs:block hr-neu-shadow w-0 xs:w-10 mb-1.25 mt-0.25" />
+                        <hr className="hidden xs:block hr-dark w-0 xs:w-10 mb-1.25 mt-0.25" />
                         <div
                             className={cn(
                                 "xs:text-center text-base leading-4 -mt-0.25 uppercase",
