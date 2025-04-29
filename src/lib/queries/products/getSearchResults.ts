@@ -54,7 +54,7 @@ export const getSearchResults = cache(async (params: SearchQueryParams) => {
     })[]
     const products = cleanAndTransform(rawRows);
     const totalPages = Math.ceil((count ?? 0) / pageSize);
-    const nextPage = page < totalPages ? page + 1 : null;
+    const nextPage = page < totalPages ? page + 1 : undefined;
 
     return { results: products, totalPages, nextPage };
 });
