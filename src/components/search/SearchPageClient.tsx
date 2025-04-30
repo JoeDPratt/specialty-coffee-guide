@@ -46,7 +46,9 @@ export default function SearchPageClient({
                     "flex items-center justify-center")}>
                     <div className="flex items-center justify-center gap-2 xs:gap-4 sm:gap-6 max-w-[1300px] w-full">
                         <div
-                            className="flex items-center w-full bg-white border-2 border-white rounded-full"
+                            className={cn(
+                                "flex items-center w-full bg-white border-2 border-white rounded-full",
+                                "focus-within:outline-none focus-within:ring-1 focus-within:ring-ring")}
                         // layoutId="searchField"
                         >
                             <Input
