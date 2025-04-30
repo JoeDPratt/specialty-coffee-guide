@@ -3,7 +3,7 @@ import { cn } from "@/utils/classes/merge"
 import { cva, type VariantProps } from "class-variance-authority"
 
 const inputVariants = cva(
-    "flex h-10 w-full rounded-full font-sofia-sans text-left border border-white bg-white px-3 py-1 transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-pr-900/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40 cursor-text hide-search-clear",
+    "flex h-10 w-full rounded-full font-sofia-sans text-left border border-white bg-white px-3 py-1 transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-pr-900/60 disabled:cursor-not-allowed disabled:opacity-40 cursor-text hide-search-clear focus-visible:outline-none",
     {
         variants: {
             inputSize: {
@@ -14,6 +14,10 @@ const inputVariants = cva(
             intent: {
                 default: "",
                 search: ""
+            },
+            focus: {
+                default: "focus-visible:ring-1 focus-visible:ring-ring",
+                parent: ""
             }
         },
         defaultVariants: {
@@ -28,11 +32,11 @@ export interface InputProps
     VariantProps<typeof inputVariants> { }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ className, type, inputSize, intent, ...props }, ref) => {
+    ({ className, type, inputSize, intent, focus, ...props }, ref) => {
         return (
             <input
                 type={type}
-                className={cn(inputVariants({ inputSize, intent }), className)}
+                className={cn(inputVariants({ inputSize, intent, focus }), className)}
                 ref={ref}
                 {...props}
             />

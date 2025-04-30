@@ -77,8 +77,10 @@ export function DropdownSort({ className }: DropdownSortProps) {
                 {isOpen && (
                     <DropdownMenuContent
                         align="end"
-                        sideOffset={8}
-                        className="rounded-md bg-white shadow-md p-0 min-w-[220px] border-none"
+                        sideOffset={10}
+                        className={cn(
+                            "rounded-md bg-white shadow-md p-0 xs:min-w-[250px] border-none",
+                            "max-xs:w-screen")}
                         asChild
                     >
                         <motion.div {...tooltipMotion}>
@@ -87,8 +89,9 @@ export function DropdownSort({ className }: DropdownSortProps) {
                                     key={option.value}
                                     onClick={() => setSortedBy(option.value)}
                                     className={cn(
-                                        "flex items-center px-3 pb-2.25 pt-2.75 rounded-none text-pr-700 hover:bg-pr-100 hover:text-pr-700 cursor-pointer text-base",
-                                        sortedBy === option.value && "bg-pr-300 text-pr-700 font-bold"
+                                        "flex items-center px-3 pb-3.25 pt-3.75 rounded-none text-pr-700 hover:bg-pr-100 hover:text-pr-700 cursor-pointer text-lg md:text-base",
+                                        sortedBy === option.value && "bg-pr-300 text-pr-700 font-bold",
+
                                     )}
                                 >
                                     {option.label}
@@ -98,6 +101,6 @@ export function DropdownSort({ className }: DropdownSortProps) {
                     </DropdownMenuContent>
                 )}
             </AnimatePresence>
-        </DropdownMenu>
+        </DropdownMenu >
     );
 }

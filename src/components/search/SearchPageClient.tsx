@@ -61,6 +61,7 @@ export default function SearchPageClient({
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 placeholder='Try "Cherry" or "Bourbon"'
                                 className="bg-transparent md:min-w-86"
+                                focus={"parent"}
                             />
                             <Button
                                 variant={"accent"}
