@@ -163,6 +163,12 @@
     .font-sofia-sans-condensed {
         font-family: var(--font-sofia-sans-condensed), sans-serif;
     }
+    .hide-search-clear::-webkit-search-decoration,
+    .hide-search-clear::-webkit-search-cancel-button,
+    .hide-search-clear::-webkit-search-results-button,
+    .hide-search-clear::-webkit-search-results-decoration {
+        display: none;
+    }
 }
   
 

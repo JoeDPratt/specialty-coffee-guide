@@ -44,7 +44,7 @@ export function DefaultHeader() {
 
     return (
         <>
-            <div ref={sentinelRef} className="absolute top-8 h-1 w-full pointer-events-none" />
+            <div ref={sentinelRef} className="absolute top-14 md:top-12 h-1 w-full pointer-events-none" />
 
             <motion.header
                 className="sticky top-0 z-20"
