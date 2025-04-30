@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid'
 import { Button } from '@/components/ui/button';
-import SearchButton from '@/components/shared/buttons/SearchButton'
 import { cn } from '@/utils/classes/merge'
 import { useSearchStore } from '@/stores/useSearchStore'
 import { useBreakpointStore } from '@/stores/useBreakpointStore'

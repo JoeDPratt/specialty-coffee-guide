@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion'
 import { FilterRow } from '@/components/search/FilterRow';
 import { fadeUpItem } from '@/utils/animation';
-import IconButton from '@/components/shared/buttons/IconButton';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid'
 import { useSearchLogic } from '@/hooks/useSearchLogic';
 import { Button } from '@/components/ui/button';
