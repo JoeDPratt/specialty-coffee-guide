@@ -41,8 +41,6 @@ export function FilterToggle({
             iconPosition={"left"}
             styleType={"outline"}
             className={cn("pl-3 pr-4 h-11",
-                // "rounded-full pl-3 pr-5 py-2 text-lg leading-tight flex items-center gap-1.5 border transition-colors duration-200 cursor-pointer",
-                // "h-auto min-h-10",
                 selected
                     ? "text-white border-[var(--accent-color)] bg-[var(--accent-color)] hover:bg-[var(--accent-color)]"
                     : ""

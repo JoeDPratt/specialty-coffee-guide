@@ -16,9 +16,9 @@ export function HeaderLogo({ isCompact, isSearchOpen, className }: HeaderLogoPro
         <div className={cn("", className)}>
             <Link href="/">
                 {showSmallLogo ? (
-                    <SCGLogoSmall className="h-12 md:h-14 w-auto" />
+                    <SCGLogoSmall className="h-11 md:h-12 w-auto" />
                 ) : (
-                    <SCGLogoBig className="h-20 md:h-24 w-auto" />
+                    <SCGLogoBig className="h-20 w-auto" />
                 )}
             </Link>
         </div>

@@ -24,6 +24,7 @@ import type {
     SearchResultsResponse,
 } from '@/types/search';
 import { fetchSearchResults } from '@/lib/fetchers/products';
+import { useBreakpointStore } from '@/stores/useBreakpointStore';
 
 
 export default function SearchResults({
@@ -39,6 +40,7 @@ export default function SearchResults({
     const pageSize = usePaginationStore((s) => s.pageSize);
     const setPage = usePaginationStore((s) => s.setPage);
     const resetPagination = usePaginationStore((s) => s.resetPagination);
+    const isSm = useBreakpointStore((s) => s.isSm);
 
     // Full params WITHOUT page
     const filterParams = useMemo(() => ({
@@ -84,7 +86,7 @@ export default function SearchResults({
         <div>
             <motion.div
                 className={cn(
-                    resultsView === 'list'
+                    resultsView === 'list' && !isSm
                         ? 'gap-8 sm:gap-4 flex flex-col'
                         : 'gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4'
                 )}
@@ -98,7 +100,7 @@ export default function SearchResults({
                         variants={fadeUpItem}
                         className="flex flex-col h-full"
                     >
-                        {resultsView === 'list'
+                        {resultsView === 'list' && !isSm
                             ? <ProductListItem product={product} />
                             : <ProductCard product={product} />}
                     </motion.div>

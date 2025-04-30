@@ -22,15 +22,15 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
             "group md:px-6 sm:w-full md:max-w-[700px]",
             className,
             isScrolled ? "flex-1" : "sm:flex-1"
-        )}>
+        )}
+            onClick={toggleSearch}>
             <motion.div
                 className={cn(
-                    "flex items-center min-w-max bg-white border-2 border-white rounded-full shadow-sm hover:bg-white/98 hover:animate-pulse cursor-pointer",
-                    isScrolled ? "w-auto" : "sm:max-md:max-w-min",
+                    "flex items-center min-w-max border-white rounded-full xs:hover:bg-white/98 hover:animate-pulse cursor-pointer",
+                    isScrolled ? "w-auto border-2 bg-white" : "sm:max-md:max-w-min xs:bg-white xs:border-2",
                     "group-hover:bg-white/90"
                 )}
                 {...(!isXs && { layoutId: "searchField" })}
-
             >
                 <button
                     role="search"
@@ -39,7 +39,7 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
                         "px-4 sm:px-5 pb-1.25 pt-2",
                         isScrolled ? "inline" : "hidden xs:inline"
                     )}
-                    onClick={toggleSearch}
+
                 >
                     {/* Desktop label */}
                     <span className="hidden sm:inline">
@@ -55,13 +55,16 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
                     </span>
                 </button>
                 <Button
-                    variant={"accent"}
+                    variant={
+                        !isScrolled && isXs ? "secondary" : "accent"}
+                    styleType={!isScrolled && isXs ? "outline" : null}
                     size={"icon"}
-                    className="h-11 w-11"
-                    onClick={toggleSearch}>
+                    className={cn("h-10 w-10",
+                    )}
+                >
                     <MagnifyingGlassIcon />
                 </Button>
             </motion.div>
-        </div>
+        </div >
     )
 }

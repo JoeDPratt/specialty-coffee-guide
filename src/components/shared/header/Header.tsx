@@ -4,14 +4,26 @@ import { motion } from 'framer-motion'
 import { useStickyStore } from '@/stores/useStickyStore'
 import { useSearchStore } from '@/stores/useSearchStore';
 import ExpandedSearch from '../search/ExpandedSearch'
-import Link from 'next/link'
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { cn } from '@/utils/classes/merge'
 import { HeaderLogo } from './HeaderLogo'
+import SCGLogoSmall from "@public/logos/scg-logo-mark.svg"
 import { HeaderSearchButton } from './HeaderSearchButton'
 import { Button } from '@/components/ui/button';
 import { Bars3Icon } from '@heroicons/react/16/solid';
 
 export default function Header() {
+    const pathname = usePathname();
+    const isSearchPage = pathname === "/search"
+    return (
+        <>
+            {isSearchPage ? <SearchHeader /> : <DefaultHeader />}
+        </>
+    )
+}
+
+export function DefaultHeader() {
     const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
     const setIsScrolled = useStickyStore((state) => state.setIsScrolled);
     const isScrolled = useStickyStore((state) => state.isScrolled);
@@ -50,9 +62,9 @@ export default function Header() {
                 <div className={cn("relative", isHeaderBgVisible ? "bg-pr-900" : "bg-transparent")}>
                     <motion.div
                         className={cn(
-                            "flex justify-start md:justify-between items-center gap-3 sm:gap-4 md:gap-6 px-3 md:px-6 transition-colors duration-300",
+                            "flex justify-start md:justify-between items-center gap-4 sm:gap-4 md:gap-6 px-3 md:px-6 transition-colors duration-300",
                         )}
-                        animate={isHeaderBgVisible ? { paddingTop: 12, paddingBottom: 12 } : { paddingTop: 24, paddingBottom: 24 }}
+                        animate={isHeaderBgVisible ? { paddingTop: 8, paddingBottom: 8 } : { paddingTop: 16, paddingBottom: 16 }}
                         transition={{ duration: 0.3 }}
                     >
                         {/* Logo */}
@@ -79,7 +91,7 @@ export default function Header() {
                                     isScrolled ? "sm:max-w-min" : "w-1/3",
                             )}>
                             {/* Login */}
-                            <Button variant={"secondary"} styleType={"outline"} size={"lg"}>Log in</Button>
+                            <Button variant={"secondary"} styleType={"outline"}>Log in</Button>
                         </div>
                         <div className={cn(
                             "md:hidden justify-end flex",
@@ -87,7 +99,7 @@ export default function Header() {
                         )}
                         >
                             {/* Hamburger */}
-                            <Button variant={"secondary"} styleType={"outline"} size={"iconLg"}><Bars3Icon /></Button>
+                            {!isSearchOpen && <Button variant={"secondary"} styleType={"outline"} size={"icon"}><Bars3Icon /></Button>}
                         </div>
                     </motion.div>
 
@@ -97,7 +109,7 @@ export default function Header() {
             {isSearchOpen && (
                 <motion.div
                     className={cn(
-                        "fixed inset-x-0 top-0 md:top-20 z-30 transition-colors duration-300 ease-out",
+                        "fixed inset-x-0 top-0 md:top-16 z-30 transition-colors duration-300 ease-out",
                         isHeaderBgVisible ? "bg-pr-900" : "bg-transparent"
                     )}
                     initial={{ opacity: 0 }}
@@ -113,5 +125,60 @@ export default function Header() {
                 </motion.div>
             )}
         </>
+    )
+}
+
+
+export function SearchHeader() {
+
+    return (
+
+        <motion.header
+            className=""
+            style={{ height: '112px' }}
+            role="banner"
+            aria-label="SCG site header"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{
+                duration: 0.3,
+                ease: [0.5, 0, 0.1, 1]
+            }}
+        >
+            <div className={cn("relative bg-pr-900")}>
+                <motion.div
+                    className={cn(
+                        "flex justify-between items-center gap-3 sm:gap-4 md:gap-6 px-3 md:px-6 py-2 transition-colors duration-300",
+                    )}
+                >
+                    {/* Logo */}
+                    <div className={cn("max-w-min")}>
+                        <Link href="/">
+                            <SCGLogoSmall className="h-12 w-auto" />
+                        </Link>
+                    </div>
+
+                    {/* Right Menu Buttons */}
+                    <div
+                        className={cn(
+                            "md:flex justify-end hidden",
+                            "sm:max-w-min"
+                        )}>
+                        {/* Login */}
+                        <Button variant={"secondary"} styleType={"outline"} >Log in</Button>
+                    </div>
+                    <div className={cn(
+                        "md:hidden justify-end flex",
+                        "max-w-min"
+                    )}
+                    >
+                        {/* Hamburger */}
+                        <Button variant={"secondary"} styleType={"outline"} size={"icon"}><Bars3Icon /></Button>
+                    </div>
+                </motion.div>
+
+            </div>
+        </motion.header>
     )
 }

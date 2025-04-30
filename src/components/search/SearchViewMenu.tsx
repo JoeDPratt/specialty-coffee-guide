@@ -27,7 +27,7 @@ export default function SeacrhViewMenu() {
                     tooltipOffset={17}
                 />
             </div>
-            <ToggleWithTooltips<ViewMode>
+            {!isSm && <ToggleWithTooltips<ViewMode>
                 value={selectedView}
                 onChange={setSelectedView}
                 options={[
@@ -36,7 +36,7 @@ export default function SeacrhViewMenu() {
                 ]}
                 showLabel={!isSm}
                 showTooltip={isSm}
-            />
+            />}
             <DropdownSort />
         </div>
     )
