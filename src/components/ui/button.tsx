@@ -21,14 +21,14 @@ const buttonVariants = cva(
             },
             styleType: {
                 solid: "",
-                outline: "border bg-transparent",
+                outline: "border border-2 bg-transparent",
             },
             size: {
                 default: "h-10 px-5 pt-0.25",
                 sm: "h-8 px-4 text-base [&_svg]:size-4 pt-0.25",
                 lg: "h-12 px-8 text-xl [&_svg]:size-7",
-                icon: "h-10 w-10 gap-0",
-                iconLg: "h-12 w-12 [&_svg]:size-6 gap-0"
+                icon: "size-10 aspect-square gap-0",
+                iconLg: "size-12 aspect-square [&_svg]:size-6 gap-0"
             },
             iconPosition: {
                 left: "[&_svg]:-ml-1",

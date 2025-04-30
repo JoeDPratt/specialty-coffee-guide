@@ -22,17 +22,16 @@ export function BreadcrumbsClientWrapper({ crumbs, className }: Props) {
     const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
 
     return (
-
-        <div
-            className={cn(
-                "px-4 md:px-6 z-155 sticky transition-colors duration-300 shadow-sm",
-                !isSearchOpen && isScrolled
-                    ? "bg-pr-100/95 text-pr-900 top-14.75 md:top-15.75"
-                    : "opacity-0 pointer-events-none"
+        <>
+            {!isSearchOpen && isScrolled && (
+                <div
+                    className={cn(
+                        "px-4 md:px-6 z-155 sticky bg-pr-100/95 text-pr-900 shadow-sm top-14.75 md:top-15.75 transition-colors duration-300"
+                    )}
+                >
+                    <Breadcrumbs crumbs={crumbs} />
+                </div>
             )}
-        >
-            <Breadcrumbs crumbs={crumbs} />
-        </div>
-
+        </>
     );
 }

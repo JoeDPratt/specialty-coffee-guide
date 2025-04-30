@@ -9,10 +9,12 @@ import {
 import { cn } from "@/utils/classes/merge";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { SortOption } from "@/stores/useSearchStore";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
+import { ArrowsUpDownIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { tooltipMotion } from "@/utils/animation";
+import { useBreakpointStore } from "@/stores/useBreakpointStore";
+import { Button } from "../ui/button";
 
 interface DropdownSortProps {
     className?: string;
@@ -29,7 +31,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
     const setSortedBy = useSearchStore((s) => s.setSortedBy);
     const [isOpen, setIsOpen] = useState(false);
     const [showChevronUp, setShowChevronUp] = useState(false);
-
+    const isMd = useBreakpointStore((s) => s.isMd);
     const activeLabel = sortOptions.find((opt) => opt.value === sortedBy)?.label ?? "Sort";
 
     useEffect(() => {
@@ -45,20 +47,30 @@ export function DropdownSort({ className }: DropdownSortProps) {
     return (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
             <DropdownMenuTrigger asChild>
-                <button
-                    className={cn(
-                        "flex items-center justify-between gap-1 px-5 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-colors cursor-pointer min-w-[220px] outline-none",
-                        className
-                    )}
-                >
-                    {activeLabel}
-                    <ChevronDownIcon
+                {isMd ?
+                    <Button
+                        styleType={"outline"}
+                        size={"icon"}>
+                        <ArrowsUpDownIcon />
+                    </Button> :
+                    <button
                         className={cn(
-                            "h-4 w-4 transition-transform duration-300",
-                            showChevronUp && "rotate-180"
+                            "flex items-center justify-between gap-2 px-4 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-colors cursor-pointer min-w-[250px] outline-none",
+                            className
                         )}
-                    />
-                </button>
+                    >
+                        <span className="flex items-center gap-2" >
+                            <ArrowsUpDownIcon className="size-5" />
+                            {activeLabel}
+                        </span>
+                        <ChevronDownIcon
+                            className={cn(
+                                "size-4 transition-transform duration-300",
+                                showChevronUp && "rotate-180"
+                            )}
+                        />
+                    </button>
+                }
             </DropdownMenuTrigger>
 
             <AnimatePresence>

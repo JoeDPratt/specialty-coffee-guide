@@ -35,7 +35,7 @@ export function DefaultHeader() {
             ([entry]) => {
                 setIsScrolled(!entry.isIntersecting)
             },
-            { threshold: 1 }
+            { threshold: 1, rootMargin: '0px 0px -91% 0px' }
         )
 
         if (sentinelRef.current) observer.observe(sentinelRef.current)
@@ -135,7 +135,7 @@ export function SearchHeader() {
 
         <motion.header
             className=""
-            style={{ height: '112px' }}
+            // style={{ height: '112px' }}
             role="banner"
             aria-label="SCG site header"
             initial={{ opacity: 0, y: -10 }}

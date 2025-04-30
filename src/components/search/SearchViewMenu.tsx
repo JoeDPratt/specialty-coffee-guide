@@ -1,21 +1,30 @@
-import { useBreakpointStore } from "@/stores/useBreakpointStore";
 import { ToggleWithTooltips } from "../shared/buttons/ToggleWithToolTips";
 import { useSearchStore } from "@/stores/useSearchStore";
-import { Bars4Icon, Squares2X2Icon } from '@heroicons/react/16/solid';
-import type { WeightOption, ViewMode } from "@/stores/useSearchStore";
+import type { WeightOption } from "@/stores/useSearchStore";
 import { DropdownSort } from "./DropdownSort";
+import { Button } from "../ui/button";
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
 
 export default function SeacrhViewMenu() {
-    const isSm = useBreakpointStore((s) => s.isSm);
-    const selectedView = useSearchStore((s) => s.selectedView);
-    const setSelectedView = useSearchStore((s) => s.setSelectedView);
     const selectedWeight = useSearchStore((s) => s.selectedWeight);
     const setWeight = useSearchStore((s) => s.setSelectedWeight);
 
     return (
-        <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-                <span className="mt-0.5 text-base">Viewing prices for:</span>
+        <div className="flex items-center gap-2 xs:gap-4 md:gap-6">
+            {/* Filter Icon Button, shows below lg */}
+            <Button
+                variant={"default"}
+                styleType={"outline"}
+                // onClick={}
+                aria-label="Filter Option Button"
+                size={"icon"}
+                className="inliine lg:hidden"
+            >
+                <AdjustmentsHorizontalIcon />
+            </Button>
+
+            <div className="hidden items-center gap-2 lg:flex">
+                <span className="mt-0.5 text-base min-w-max">View prices for:</span>
                 <ToggleWithTooltips<WeightOption>
                     value={selectedWeight}
                     onChange={setWeight}
@@ -27,16 +36,6 @@ export default function SeacrhViewMenu() {
                     tooltipOffset={17}
                 />
             </div>
-            {!isSm && <ToggleWithTooltips<ViewMode>
-                value={selectedView}
-                onChange={setSelectedView}
-                options={[
-                    { value: "grid", label: "Grid", icon: <Squares2X2Icon />, tooltip: "Grid View" },
-                    { value: "list", label: "List", icon: <Bars4Icon />, tooltip: "List View" },
-                ]}
-                showLabel={!isSm}
-                showTooltip={isSm}
-            />}
             <DropdownSort />
         </div>
     )

@@ -5,6 +5,7 @@ import { fadeUpItem } from '@/utils/animation';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid'
 import { useSearchLogic } from '@/hooks/useSearchLogic';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 
 export default function ExpandedDesktopSearch() {
@@ -34,16 +35,17 @@ export default function ExpandedDesktopSearch() {
                     className="flex w-full max-w-[840px] items-center bg-white border-2 border-white rounded-full shadow-md"
                     layoutId="searchField"
                 >
-                    <input
+                    <Input
                         ref={inputRef}
-                        role="search"
                         type="search"
                         enterKeyHint="search"
-                        className=" font-sofia-sans text-lg text-left px-5 pb-2.25 pt-2.75 flex-1 outline-0 cursor-text placeholder:text-pr-900/60"
+                        role="search"
                         value={localQuery}
                         onChange={(e) => setLocalQuery(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                         placeholder='Try "Cherry" or "Bourbon"'
+                        inputSize={"lg"}
+                        className="bg-transparent"
                     />
                     <Button
                         variant={"accent"}
