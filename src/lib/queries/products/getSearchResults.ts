@@ -30,7 +30,7 @@ export const getSearchResults =
         if (params.q) builder = builder.textSearch('search_terms', params.q, { type: 'websearch' });
         if (params.is_organic) builder = builder.eq('is_organic', true);
         if (params.is_decaf) builder = builder.or('is_decaf.eq.true,is_lowcaf.eq.true');
-        if (params.is_mycotoxin_free) builder = builder.eq('is_mycotoxin_tested', true);
+        if (params.is_mycotoxin_free) builder = builder.eq('is_mycotoxin_free', true);
         if (params.is_single_origin) builder = builder.eq('is_single_origin', true);
 
         // 4) Sorting

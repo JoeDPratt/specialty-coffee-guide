@@ -14,7 +14,7 @@ export const getFullProductBySlug = cache(
             .select(
                 `
             product_name, product_url, description, meta_title, meta_description, schema, slug,
-            sca_cup_score, is_decaf, is_lowcaf, is_fairtrade, is_instock, is_mycotoxin_tested,
+            sca_cup_score, is_decaf, is_lowcaf, is_fairtrade, is_instock, is_mycotoxin_free,
             is_organic, is_single_origin, insight, lowest_price_per_kg,
             product_variants ( price, weight, price_per_kg, currency, discount_percent ),
             product_images ( image_url, alt_text, is_primary ),

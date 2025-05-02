@@ -4,24 +4,28 @@ import type { WeightOption } from "@/stores/useSearchStore";
 import { DropdownSort } from "./DropdownSort";
 import { Button } from "../ui/button";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
+import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";
+import { useFilterCount } from "@/hooks/useFilterCount";
 
 export default function SeacrhViewMenu() {
     const selectedWeight = useSearchStore((s) => s.selectedWeight);
     const setWeight = useSearchStore((s) => s.setSelectedWeight);
+    const filterCount = useFilterCount();
 
     return (
         <div className="flex items-center gap-2 xs:gap-4 md:gap-6">
             {/* Filter Icon Button, shows below lg */}
-            <Button
+            <ButtonWithBadge
                 variant={"default"}
                 styleType={"outline"}
+                count={filterCount}
                 // onClick={}
                 aria-label="Filter Option Button"
                 size={"icon"}
-                className="inliine lg:hidden"
+                className="inline lg:hidden"
             >
                 <AdjustmentsHorizontalIcon />
-            </Button>
+            </ButtonWithBadge>
 
             <div className="hidden items-center gap-2 lg:flex">
                 <span className="mt-0.5 text-base min-w-max">View prices for:</span>

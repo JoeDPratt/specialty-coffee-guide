@@ -291,7 +291,7 @@ export type Database = {
                     is_fairtrade: boolean | null
                     is_instock: boolean
                     is_lowcaf: boolean | null
-                    is_mycotoxin_tested: boolean | null
+                    is_mycotoxin_free: boolean | null
                     is_organic: boolean | null
                     is_published: boolean
                     is_single_origin: boolean | null
@@ -335,7 +335,7 @@ export type Database = {
                     is_fairtrade?: boolean | null
                     is_instock: boolean
                     is_lowcaf?: boolean | null
-                    is_mycotoxin_tested?: boolean | null
+                    is_mycotoxin_free?: boolean | null
                     is_organic?: boolean | null
                     is_published: boolean
                     is_single_origin?: boolean | null
@@ -379,7 +379,7 @@ export type Database = {
                     is_fairtrade?: boolean | null
                     is_instock?: boolean
                     is_lowcaf?: boolean | null
-                    is_mycotoxin_tested?: boolean | null
+                    is_mycotoxin_free?: boolean | null
                     is_organic?: boolean | null
                     is_published?: boolean
                     is_single_origin?: boolean | null

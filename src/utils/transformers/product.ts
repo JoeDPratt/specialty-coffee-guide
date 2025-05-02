@@ -54,7 +54,7 @@ export function transformProduct(raw: RawProduct): Product {
         is_organic: raw.is_organic,
         is_single_origin: raw.is_single_origin,
         is_fairtrade: raw.is_fairtrade,
-        is_mycotoxin_free: raw.is_mycotoxin_tested,
+        is_mycotoxin_free: raw.is_mycotoxin_free,
     };
 
     if (raw.is_lowcaf) {
@@ -129,7 +129,7 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
     const attributes: CoffeeAttributes = {
         is_organic: raw.is_organic,
         is_single_origin: raw.is_single_origin,
-        is_mycotoxin_free: raw.is_mycotoxin_tested,
+        is_mycotoxin_free: raw.is_mycotoxin_free,
     };
 
     if (raw.is_lowcaf) {

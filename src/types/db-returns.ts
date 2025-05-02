@@ -82,7 +82,7 @@ export type RawProductCard = Pick<
     | 'is_organic'
     | 'is_decaf'
     | 'is_lowcaf'
-    | 'is_mycotoxin_tested'
+    | 'is_mycotoxin_free'
     | 'is_single_origin'
     | 'sca_cup_score'
     | 'search_flavours'
