@@ -61,7 +61,10 @@ export default function ExpandedDesktopSearch() {
                     variants={fadeUpItem}
                     initial="hidden"
                     animate="visible">
-                    <FilterRow styleType={"header"} />
+                    <FilterRow
+                        excludedFilters={["is_fairtrade"]}
+                        styleType={"header"}
+                    />
                 </motion.div>
             </div>
             {/* Transparent Background Overlay */}

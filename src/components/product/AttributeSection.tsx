@@ -1,3 +1,5 @@
+// src/components/product/AttributeSection.tsx
+
 import type { CoffeeAttributes } from "@/types/product";
 import type { JSX } from "react";
 import OrganicIcon from "@/components/icons/icon-organic.svg";
@@ -6,6 +8,8 @@ import DecafIcon from "@/components/icons/icon-decaf.svg";
 import MycoIcon from "@/components/icons/icon-myco-free.svg";
 import SingleOriginIcon from "@/components/icons/icon-single-origin.svg";
 import { cn } from "@/utils/classes/merge";
+import { attributeConfig, AttributeKey } from "@/consts/attributeConfig";
+
 import {
     Tooltip,
     TooltipTrigger,
@@ -19,20 +23,15 @@ interface IconProps {
 type IconSize = "base" | "md" | "lg";
 type Variant = "default" | "icon";
 
-interface AttributeItemIconProps {
-    flagName: keyof typeof attributeConfig;
+interface AttributeItemProps {
+    flagName: AttributeKey;
     isActive?: boolean;
+    config: (typeof attributeConfig)[AttributeKey];
     iconSize?: IconSize;
     hasBackground?: boolean;
     hasLabel?: boolean;
     hasColorIcons?: boolean;
 }
-
-interface AttributeItemLabelledProps {
-    flagName: keyof typeof attributeConfig;
-    isActive?: boolean;
-}
-
 
 interface AttributeSectionProps {
     attributeData: CoffeeAttributes;
@@ -53,52 +52,23 @@ type LabelConfig = {
     description: string;
 };
 
+// Tailwind-safe maps
+const colorClassMap = {
+    green: "fill-green-400",
+    blue: "fill-blue-400",
+    aqua: "fill-aqua-400",
+    orange: "fill-orange-400",
+    tan: "fill-tan-400",
+    disabled: "fill-disabled-400",
+} as const;
 
-
-const attributeConfig: Record<keyof CoffeeAttributes, LabelConfig> = {
-    is_organic: {
-        label: "Organic",
-        bgClass: "bg-green-100",
-        icon: OrganicIcon,
-        iconColorClass: "fill-green-400",
-        description: "Certified organic beans grown without synthetic fertilizers or pesticides.",
-    },
-    is_mycotoxin_free: {
-        label: "Myco Free",
-        bgClass: "bg-aqua-100",
-        icon: MycoIcon,
-        iconColorClass: "fill-aqua-400",
-        description: "Tested free from mycotoxins.",
-    },
-    is_fairtrade: {
-        label: "Fairtrade",
-        bgClass: "bg-tan-100",
-        icon: FairtradeIcon,
-        iconColorClass: "fill-tan-400",
-        description: "Supports fair prices and safe working conditions for farmers.",
-    },
-    is_decaf: {
-        label: "Decaf",
-        bgClass: "bg-blue-100",
-        icon: DecafIcon,
-        iconColorClass: "fill-blue-400",
-        description: "Coffee with most of the caffeine removed through water processing.",
-    },
-    is_lowcaf: {
-        label: "Low Caf",
-        bgClass: "bg-blue-100",
-        icon: DecafIcon,
-        iconColorClass: "fill-blue-400",
-        description: "Reduced caffeine content but still maintains some natural energy.",
-    },
-    is_single_origin: {
-        label: "Single Origin",
-        bgClass: "bg-orange-100",
-        icon: SingleOriginIcon,
-        iconColorClass: "fill-orange-400",
-        description: "Beans sourced from a single region or farm.",
-    },
-};
+const bgClassMap = {
+    green: "bg-green-100",
+    blue: "bg-blue-100",
+    aqua: "bg-aqua-100",
+    orange: "bg-orange-100",
+    tan: "bg-tan-100",
+} as const;
 
 const iconSizeMap = {
     base: "w-7 h-7",
@@ -109,13 +79,11 @@ const iconSizeMap = {
 function AttributeItemLabelled({
     flagName,
     isActive = false,
-}: AttributeItemLabelledProps): JSX.Element {
-    const {
-        label,
-        description,
-        icon: Icon,
-        iconColorClass,
-    } = attributeConfig[flagName];
+    config
+}: AttributeItemProps): JSX.Element {
+
+    const { label, description, icon: Icon, color } = config;
+    const iconColorClass = colorClassMap[color];
 
     return (
         <Tooltip>
@@ -156,12 +124,15 @@ function AttributeItemLabelled({
 function AttributeItemIcon({
     flagName,
     isActive = false,
+    config,
     iconSize = "base",
     hasBackground = false,
     hasLabel = false,
     hasColorIcons = true
-}: AttributeItemIconProps): JSX.Element {
-    const { label, description, icon: Icon, iconColorClass } = attributeConfig[flagName];
+}: AttributeItemProps): JSX.Element {
+
+    const { label, description, icon: Icon, color } = config;
+    const iconColorClass = colorClassMap[color]
 
     return (
         <Tooltip>
@@ -207,11 +178,14 @@ export default function AttributeSection({
     showInactive = true,
     hasColorIcons = true
 }: AttributeSectionProps): JSX.Element {
-    const entries = (Object.keys(attributeData) as (keyof CoffeeAttributes)[])
+
+    const entries = (Object.keys(attributeData) as AttributeKey[])
         .filter((key) => attributeConfig[key])
         .map((key) => [key, attributeData[key]] as const);
 
-    if (variant === "icon") { //bg
+    console.log("ENTRIES", entries)
+
+    if (variant === "icon") {
         return (
 
             <div
@@ -224,6 +198,7 @@ export default function AttributeSection({
                     <AttributeItemIcon
                         key={flagName}
                         flagName={flagName}
+                        config={attributeConfig[flagName]}
                         isActive={isActive ?? false}
                         iconSize={iconSize}
                         hasBackground={hasBackground}
@@ -251,6 +226,7 @@ export default function AttributeSection({
                     <AttributeItemLabelled
                         key={flagName}
                         flagName={flagName}
+                        config={attributeConfig[flagName]}
                         isActive={isActive ?? false}
                     />
                 ))}

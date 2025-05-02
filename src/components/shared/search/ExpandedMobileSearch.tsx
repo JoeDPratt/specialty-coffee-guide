@@ -46,7 +46,10 @@ export default function ExpandedMobileSearch() {
                 variants={fadeUpItem}
                 initial="hidden"
                 animate="visible">
-                <FilterRow styleType={"header"} />
+                <FilterRow
+                    excludedFilters={["is_fairtrade"]}
+                    styleType={"header"}
+                />
             </motion.div>
             <motion.div
                 className={"fixed left-0 right-0 bottom-0 border-t-1 border-white/50 flex items-center justify-end p-4"}

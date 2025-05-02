@@ -46,6 +46,8 @@ export default function ProductPage({
     if (!product) return <p>Product not found</p>;
     const flavors = product.flavours.join(" • ");
 
+    console.log("PRODUCT", product)
+
     return (
         <>
             {/* Dynamic product metadata */}

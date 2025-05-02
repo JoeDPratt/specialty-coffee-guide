@@ -1,40 +1,30 @@
-import { Button } from "@/components/ui/button"
-import { cn } from "@/utils/classes/merge"
-import React, { ReactElement } from "react"
-import { useSearchStore } from "@/stores/useSearchStore"
+// src/components/search/FilterToggle.tsx
+import { Button } from "@/components/ui/button";
+import { cn } from "@/utils/classes/merge";
+import React from "react";
+import { useSearchStore } from "@/stores/useSearchStore";
+import { ScalableIcon } from "../icons/ScalableIcon";
+import { filterConfig, FilterKey } from "@/consts/filterConfig";
 
 type FilterToggleProps = {
-    label: string;
-    icon?: ReactElement;
-    filterKey: string;
+    filterKey: FilterKey;
+    config: typeof filterConfig[FilterKey];
     styleType?: string;
-}
+};
 
-const accentColorMap: Record<string, string> = {
-    "Organic": "var(--color-green-400)",
-    "Single Origin": "var(--color-orange-400)",
-    "Decaf / Low Caf": "var(--color-blue-400)",
-    "Mycotoxin Free": "var(--color-aqua-400)",
-}
-
-export function FilterToggle({
-    label,
-    icon,
-    filterKey,
-    styleType = "default"
-}: FilterToggleProps) {
-    const filters = useSearchStore((s) => s.filters)
-    const setFilters = useSearchStore((s) => s.setFilters)
-    const selected = filters[filterKey] === "true"
+export function FilterToggle({ filterKey, config, styleType = "default" }: FilterToggleProps) {
+    const filters = useSearchStore((s) => s.filters);
+    const setFilters = useSearchStore((s) => s.setFilters);
+    const selected = filters[filterKey] === "true";
 
     const toggle = () => {
         setFilters({
             ...filters,
-            [filterKey]: selected ? "" : "true"
-        })
-    }
-
-    const accent = accentColorMap[label] ?? "var(--color-pr-700)"
+            [filterKey]: selected ? "" : "true",
+        });
+    };
+    const accent = `var(--color-${config.color}-400)`;
+    const label = config.label;
 
     if (styleType === "header") {
         return (
@@ -50,10 +40,10 @@ export function FilterToggle({
                 )}
                 style={{ "--accent-color": accent } as React.CSSProperties}
             >
-                {icon}
-                {label}
+                <ScalableIcon icon={<config.icon />} size={28} />
+                {config.label}
             </Button>
-        )
+        );
     }
 
     return (
@@ -68,8 +58,9 @@ export function FilterToggle({
             )}
             style={{ "--accent-color": accent } as React.CSSProperties}
         >
-            {icon}
-            {label}
+            <ScalableIcon icon={<config.icon />} size={28} />
+            {config.label}
         </Button>
-    )
+    );
+
 }
