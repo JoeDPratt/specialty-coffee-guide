@@ -1,15 +1,14 @@
 import type { ProductCard } from "@/types/product";
+import type { FilterKey } from "@/consts/filterConfig";
 
-export interface SearchQueryParams {
+export type SearchQueryParams = {
     q?: string;
-    is_organic?: boolean;
-    is_decaf?: boolean;
-    is_mycotoxin_free?: boolean;
-    is_single_origin?: boolean;
     sort_by?: "price_low" | "price_high" | "cup_score_high";
     page?: number;
     page_size?: number;
-}
+} & {
+        [K in FilterKey]?: boolean;
+    };
 
 export type RawQueryParams = {
     q?: string | string[];

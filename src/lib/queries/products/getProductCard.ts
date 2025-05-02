@@ -8,7 +8,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 // Product Card select
 export const PRODUCT_CARD_SELECT = `
   product_name, slug, lowest_price_per_kg, is_instock,
-  is_organic, is_decaf, is_lowcaf, is_mycotoxin_free, sca_cup_score,
+  is_organic, is_decaf, is_lowcaf, is_mycotoxin_free, is_fairtrade, sca_cup_score,
   search_flavours, is_single_origin, search_roasts,
   product_images ( image_url, alt_text, is_primary ),
   coffee_roaster:coffee_roasters!inner (

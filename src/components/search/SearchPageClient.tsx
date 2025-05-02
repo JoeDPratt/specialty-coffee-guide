@@ -6,7 +6,6 @@ import SearchViewMenu from '@/components/search/SearchViewMenu';
 import SearchResults from '@/components/search/SearchResults';
 import type { SearchQueryParams } from '@/types/search';
 import { cn } from '@/utils/classes/merge';
-import SearchFilters from './SearchFilters';
 import { Input } from '../ui/input';
 import { useSearchLogic } from '@/hooks/useSearchLogic';
 import { useBreakpointStore } from '@/stores/useBreakpointStore';
@@ -14,6 +13,7 @@ import { ViewMode, useSearchStore } from '@/stores/useSearchStore';
 import { ToggleWithTooltips } from '../shared/buttons/ToggleWithToolTips';
 import { Bars4Icon, MagnifyingGlassIcon, Squares2X2Icon } from '@heroicons/react/16/solid';
 import { Button } from '../ui/button';
+import SearchFilterMenu from '@/components/search/SearchFilterMenu';
 
 const queryClient = new QueryClient();
 
@@ -81,7 +81,7 @@ export default function SearchPageClient({
                     "px-3 md:px-4 lg:px-6",
                     "gap-3 sm:gap-6")} >
 
-                    <SearchFilters className={"hidden lg:flex flex-col w-full lg:w-1/4 bg-card-100 rounded-md p-10 h-max gap-4"} />
+                    <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 bg-card-100 rounded-md p-10 h-max gap-4"} />
                     <div className="@container/grid flex flex-col flex-1">
                         <div className="flex justify-between items-center w-full mb-4">
                             {/* <h2 className="leading-7 mt-2.5 mb-0.5">{data.length} result{data.length === 1 ? "" : "s"}</h2> */}

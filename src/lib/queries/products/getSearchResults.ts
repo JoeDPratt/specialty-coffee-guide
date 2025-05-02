@@ -5,6 +5,7 @@ import { PRODUCT_CARD_SELECT, cleanAndTransform } from './getProductCard';
 import type { SearchQueryParams, SearchResultsResponse } from '@/types/search';
 import type { ProductVariantForCard, RawProductCard } from '@/types/db-returns';
 import { ProductCard } from '@/types/product';
+import { filterConfig, FilterKey } from "@/consts/filterConfig";
 
 export const getSearchResults =
     cache(async (params: SearchQueryParams): Promise<SearchResultsResponse> => {
@@ -28,10 +29,24 @@ export const getSearchResults =
 
         // 3) Your optional filters, with plain `if` blocks
         if (params.q) builder = builder.textSearch('search_terms', params.q, { type: 'websearch' });
-        if (params.is_organic) builder = builder.eq('is_organic', true);
-        if (params.is_decaf) builder = builder.or('is_decaf.eq.true,is_lowcaf.eq.true');
-        if (params.is_mycotoxin_free) builder = builder.eq('is_mycotoxin_free', true);
-        if (params.is_single_origin) builder = builder.eq('is_single_origin', true);
+
+        for (const key of Object.keys(filterConfig) as FilterKey[]) {
+            const isActive = params[key];
+            if (!isActive) continue;
+
+            const config = filterConfig[key];
+            const logic = config.matchLogic ?? "equals";
+
+            if (logic === "equals") {
+                builder = builder.eq(key, true);
+            }
+
+            if (logic === "or") {
+                const orString = config.attributeKeys.map(k => `${k}.eq.true`).join(",");
+                builder = builder.or(orString);
+            }
+
+        }
 
         // 4) Sorting
         builder = builder.order('is_instock', { ascending: false, nullsFirst: false });

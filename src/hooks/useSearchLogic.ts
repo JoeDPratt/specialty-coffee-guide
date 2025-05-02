@@ -6,6 +6,7 @@ import { useSearchStore } from "@/stores/useSearchStore";
 import { usePaginationStore } from "@/stores/usePaginationStore";
 import { useRouter } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
+import { useDebouncedEffect } from "./useDebounceEffect";
 
 export function useSearchLogic() {
     const router = useRouter();
@@ -35,6 +36,19 @@ export function useSearchLogic() {
         document.addEventListener("keydown", onEsc);
         return () => document.removeEventListener("keydown", onEsc);
     }, [closeSearch]);
+
+    useDebouncedEffect(() => {
+        // rebuild full query
+        const queryObj = {
+            q: query || undefined,
+            ...filters,
+            sort_by: sortedBy,
+            page,
+            page_size: pageSize,
+        };
+        const qs = serializeQueryParams(queryObj);
+        router.push(`/search?${qs}`);
+    }, [filters, sortedBy, page, pageSize, query], 300);
 
     const handleSearch = () => {
         // commit the typed query into the store

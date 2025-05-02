@@ -183,8 +183,6 @@ export default function AttributeSection({
         .filter((key) => attributeConfig[key])
         .map((key) => [key, attributeData[key]] as const);
 
-    console.log("ENTRIES", entries)
-
     if (variant === "icon") {
         return (
 

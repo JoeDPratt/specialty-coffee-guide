@@ -1,14 +1,14 @@
 import type { SearchQueryParams } from '@/types/search';
-import { usePaginationStore } from '@/stores/usePaginationStore';
+import { filterConfig, type FilterKey } from "@/consts/filterConfig";
 
 export function serializeQueryParams(params: SearchQueryParams) {
     const qs = new URLSearchParams();
 
     for (const key in params) {
         const value = params[key as keyof SearchQueryParams];
-
-        // skip undefined and boolean-false
-        if (value !== undefined && value !== false) {
+        if (typeof value === "boolean") {
+            if (value) qs.set(key, "true");
+        } else if (value !== undefined) {
             qs.set(key, String(value));
         }
     }
@@ -19,14 +19,18 @@ export function serializeQueryParams(params: SearchQueryParams) {
 export function parseQueryParams(
     params: Record<string, string | string[] | undefined>): SearchQueryParams {
 
-    return {
+    const result: SearchQueryParams = {
         q: Array.isArray(params.q) ? params.q[0] : params.q ?? undefined,
-        is_organic: params.is_organic === 'true',
-        is_decaf: params.is_decaf === 'true',
-        is_mycotoxin_free: params.is_mycotoxin_free === 'true',
-        is_single_origin: params.is_single_origin === 'true',
-        sort_by: Array.isArray(params.sort) ? params.sort[0] as any : params.sort as any,
-        page: params.page ? Number(params.page) : 1, // default to 1
-        page_size: params.pageSize ? Number(params.pageSize) : 24, // default to 24
+        sort_by: Array.isArray(params.sort_by) ? params.sort_by[0] as any : params.sort_by as any,
+        page: params.page ? Number(params.page) : 1,
+        page_size: params.page_size ? Number(params.page_size) : 24,
     };
+
+    for (const key of Object.keys(filterConfig) as FilterKey[]) {
+        if (params[key] === "true") {
+            result[key] = true;
+        }
+    }
+
+    return result;
 }
