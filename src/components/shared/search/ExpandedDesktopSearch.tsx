@@ -61,7 +61,7 @@ export default function ExpandedDesktopSearch() {
                     variants={fadeUpItem}
                     initial="hidden"
                     animate="visible">
-                    <FilterRow />
+                    <FilterRow styleType={"header"} />
                 </motion.div>
             </div>
             {/* Transparent Background Overlay */}

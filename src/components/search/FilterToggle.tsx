@@ -6,7 +6,8 @@ import { useSearchStore } from "@/stores/useSearchStore"
 type FilterToggleProps = {
     label: string;
     icon?: ReactElement;
-    filterKey: string; // <- added key
+    filterKey: string;
+    styleType?: string;
 }
 
 const accentColorMap: Record<string, string> = {
@@ -20,6 +21,7 @@ export function FilterToggle({
     label,
     icon,
     filterKey,
+    styleType = "default"
 }: FilterToggleProps) {
     const filters = useSearchStore((s) => s.filters)
     const setFilters = useSearchStore((s) => s.setFilters)
@@ -34,10 +36,29 @@ export function FilterToggle({
 
     const accent = accentColorMap[label] ?? "var(--color-pr-700)"
 
+    if (styleType === "header") {
+        return (
+            <Button
+                onClick={toggle}
+                variant={"secondary"}
+                iconPosition={"left"}
+                styleType={"outline"}
+                className={cn("pl-3 pr-4 h-11",
+                    selected
+                        ? "text-white border-[var(--accent-color)] bg-[var(--accent-color)] hover:bg-[var(--accent-color)]"
+                        : ""
+                )}
+                style={{ "--accent-color": accent } as React.CSSProperties}
+            >
+                {icon}
+                {label}
+            </Button>
+        )
+    }
+
     return (
         <Button
             onClick={toggle}
-            variant={"secondary"}
             iconPosition={"left"}
             styleType={"outline"}
             className={cn("pl-3 pr-4 h-11",
