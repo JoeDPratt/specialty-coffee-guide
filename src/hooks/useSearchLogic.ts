@@ -4,12 +4,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { usePaginationStore } from "@/stores/usePaginationStore";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
 import { useDebouncedEffect } from "./useDebounceEffect";
 
 export function useSearchLogic() {
     const router = useRouter();
+    const pathname = usePathname();
     const inputRef = useRef<HTMLInputElement>(null);
 
     // existing store bits
@@ -38,6 +39,7 @@ export function useSearchLogic() {
     }, [closeSearch]);
 
     useDebouncedEffect(() => {
+        if (!pathname.startsWith("/search")) return;
         // rebuild full query
         const queryObj = {
             q: query || undefined,

@@ -36,6 +36,7 @@ const initialFilters = Object.keys(filterConfig).reduce((acc, key) => {
 
 export const useSearchStore = create<SearchState>((set) => ({
     isSearchOpen: false,
+
     query: '',
 
     openSearch: () => set({ isSearchOpen: true }),
