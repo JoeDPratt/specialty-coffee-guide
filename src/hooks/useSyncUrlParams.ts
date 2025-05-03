@@ -3,11 +3,12 @@
 import { useEffect, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
+import { useSearchParams } from "@/hooks/useSearchParams";
 
-export function useSyncUrlParams(params: Record<string, unknown>) {
+export function useSyncUrlParams() {
     const pathname = usePathname();
-
-    const qs = useMemo(() => serializeQueryParams(params), [params]);
+    const queryObj = useSearchParams();
+    const qs = useMemo(() => serializeQueryParams(queryObj), [queryObj]);
 
     useEffect(() => {
         const currentQs = window.location.search.replace(/^\?/, "");

@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import SkeletonProductCard from "../shared/product/SkeletonProductCard";
+import SkeletonProductCard from "../skeleton/SkeletonProductCard";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeUpItem } from "@/utils/animation/index";
 

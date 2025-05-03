@@ -1,6 +1,7 @@
 // stores/useSearchStore.ts
 import { FilterKey, filterConfig } from '@/consts/filterConfig';
-import { create } from 'zustand';
+import { createWithEqualityFn } from 'zustand/traditional';
+import { shallow } from 'zustand/shallow';
 
 export type WeightOption = "250" | "1000";
 export type ViewMode = "grid" | "list";
@@ -8,17 +9,17 @@ export type SortOption = "price_low" | "price_high" | "cup_score_high";
 
 type SearchState = {
     isSearchOpen: boolean;
-    query: string;
-
     openSearch: () => void;
     closeSearch: () => void;
     toggleSearch: () => void;
+
+    query: string;
     setQuery: (q: string) => void;
 
     totalResults: number;
     setTotalResults: (results: number) => void;
 
-    filters: Record<FilterKey, boolean>; // or a custom type
+    filters: Record<FilterKey, boolean>;
     setFilters: (filters: Record<FilterKey, boolean>) => void;
 
     selectedWeight: WeightOption;
@@ -29,37 +30,37 @@ type SearchState = {
 
     sortedBy: SortOption;
     setSortedBy: (sort: SortOption) => void;
-
 };
 
-const initialFilters = Object.keys(filterConfig).reduce((acc, key) => {
+const initialFilters: Record<FilterKey, boolean> = Object.keys(filterConfig).reduce((acc, key) => {
     acc[key as FilterKey] = false;
     return acc;
 }, {} as Record<FilterKey, boolean>);
 
-export const useSearchStore = create<SearchState>((set) => ({
-    isSearchOpen: false,
-    query: '',
+export const useSearchStore = createWithEqualityFn<SearchState>()(
+    (set) => ({
+        isSearchOpen: false,
+        openSearch: () => set({ isSearchOpen: true }),
+        closeSearch: () => set({ isSearchOpen: false }),
+        toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
 
-    openSearch: () => set({ isSearchOpen: true }),
-    closeSearch: () => set({ isSearchOpen: false }),
-    toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
-    setQuery: (query) => set({ query }),
+        query: '',
+        setQuery: (query) => set({ query }),
 
-    totalResults: 0,
-    setTotalResults: (results) => set({ totalResults: results }),
+        totalResults: 0,
+        setTotalResults: (results) => set({ totalResults: results }),
 
-    filters: initialFilters,
-    setFilters: (filters) => set({ filters }),
+        filters: initialFilters,
+        setFilters: (filters) => set({ filters }),
 
-    selectedWeight: "250",
-    setSelectedWeight: (weight) => set({ selectedWeight: weight }),
+        selectedWeight: "250",
+        setSelectedWeight: (weight) => set({ selectedWeight: weight }),
 
-    selectedView: "list",
-    setSelectedView: (view) => set({ selectedView: view }),
+        selectedView: "list",
+        setSelectedView: (view) => set({ selectedView: view }),
 
-    sortedBy: "price_low",
-    setSortedBy: (sort) => set({ sortedBy: sort }),
-
-
-}));
+        sortedBy: "price_low",
+        setSortedBy: (sort) => set({ sortedBy: sort }),
+    }),
+    shallow
+);

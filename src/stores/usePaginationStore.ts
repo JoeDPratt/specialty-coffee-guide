@@ -1,4 +1,6 @@
-import { create } from 'zustand';
+// stores/usePaginationStore.ts
+import { createWithEqualityFn } from 'zustand/traditional';
+import { shallow } from 'zustand/shallow';
 
 interface PaginationState {
     page: number;
@@ -8,10 +10,13 @@ interface PaginationState {
     resetPagination: () => void;
 }
 
-export const usePaginationStore = create<PaginationState>((set) => ({
-    page: 1,
-    pageSize: 24, // or whatever your default is
-    setPage: (page) => set({ page }),
-    setPageSize: (size) => set({ pageSize: size }),
-    resetPagination: () => set({ page: 1 }),
-}));
+export const usePaginationStore = createWithEqualityFn<PaginationState>()(
+    (set) => ({
+        page: 1,
+        pageSize: 24,
+        setPage: (page) => set({ page }),
+        setPageSize: (size) => set({ pageSize: size }),
+        resetPagination: () => set({ page: 1 }),
+    }),
+    shallow
+);

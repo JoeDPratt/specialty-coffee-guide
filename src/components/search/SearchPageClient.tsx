@@ -1,10 +1,10 @@
 // components/search/SearchPageClient.tsx
 'use client';
 
-import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HydrationBoundary, QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import SearchViewMenu from '@/components/search/SearchViewMenu';
 import SearchResults from '@/components/search/SearchResults';
-import type { SearchQueryParams } from '@/types/search';
+import type { SearchQueryParams, SearchResultsResponse } from '@/types/search';
 import { cn } from '@/utils/classes/merge';
 import { Input } from '../ui/input';
 import { useSearchLogic } from '@/hooks/useSearchLogic';
@@ -15,6 +15,10 @@ import { Bars4Icon, MagnifyingGlassIcon, Squares2X2Icon } from '@heroicons/react
 import { Button } from '../ui/button';
 import SearchFilterMenu from '@/components/search/SearchFilterMenu';
 import { useSearchResultsCounter } from '@/hooks/useSearchResultsCounter';
+import { useEffect } from 'react';
+import { usePaginationStore } from '@/stores/usePaginationStore';
+import { useHydrateFilters } from '@/hooks/useHydrateFilterParams';
+import { useSearchQuery } from '@/hooks/useSearchQuery';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +31,17 @@ export default function SearchPageClient({
 }) {
     console.count("SearchResults render");
 
+    // hydrate the stores wit hthe query params
+    useEffect(() => {
+        const { setQuery, setFilters, setSortedBy } = useSearchStore.getState()
+        const { setPageSize, setPage } = usePaginationStore.getState()
+        setQuery(queryParams.q ?? '')
+        setFilters(useHydrateFilters(queryParams))
+        setSortedBy(queryParams.sort_by ?? 'price_low')
+        setPageSize(queryParams.page_size ?? 24)
+        setPage(queryParams.page ?? 1)
+    }, [queryParams])
+
     const {
         inputRef,
         localQuery,
@@ -34,10 +49,12 @@ export default function SearchPageClient({
         handleSearch,
     } = useSearchLogic();
 
+    const { isLoading, isFetching } = useSearchQuery();
+
     const isSm = useBreakpointStore((s) => s.isSm);
     const selectedView = useSearchStore((s) => s.selectedView);
     const setSelectedView = useSearchStore((s) => s.setSelectedView);
-    const resultsString = useSearchResultsCounter()
+    const resultsString = useSearchResultsCounter();
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -85,7 +102,7 @@ export default function SearchPageClient({
                     <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />
                     <div className="@container/grid flex flex-col flex-1">
                         <div className="flex justify-between items-center w-full mb-4">
-                            <span>{resultsString}</span>
+                            <span>{isLoading || isFetching ? "Loading coffees..." : resultsString}</span>
                             {!isSm && <ToggleWithTooltips<ViewMode>
                                 value={selectedView}
                                 onChange={setSelectedView}
@@ -100,7 +117,7 @@ export default function SearchPageClient({
                         {/* <SearchInput /> */}
 
 
-                        <SearchResults queryParams={queryParams} />
+                        <SearchResults />
 
                     </div>
                 </div>
