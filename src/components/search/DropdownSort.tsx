@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { tooltipMotion } from "@/utils/animation";
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
 import { Button } from "../ui/button";
+import { usePaginationStore } from "@/stores/usePaginationStore";
 
 interface DropdownSortProps {
     className?: string;
@@ -29,6 +30,7 @@ const sortOptions: { label: string; value: SortOption }[] = [
 export function DropdownSort({ className }: DropdownSortProps) {
     const sortedBy = useSearchStore((s) => s.sortedBy);
     const setSortedBy = useSearchStore((s) => s.setSortedBy);
+    const resetPagination = usePaginationStore((s) => s.resetPagination)
     const [isOpen, setIsOpen] = useState(false);
     const [showChevronUp, setShowChevronUp] = useState(false);
     const isMd = useBreakpointStore((s) => s.isMd);
@@ -43,6 +45,11 @@ export function DropdownSort({ className }: DropdownSortProps) {
         }
         return () => clearTimeout(timeout);
     }, [isOpen]);
+
+    function handleSort(value: SortOption) {
+        setSortedBy(value)
+        resetPagination();
+    }
 
     return (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -87,7 +94,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
                             {sortOptions.map((option) => (
                                 <DropdownMenuItem
                                     key={option.value}
-                                    onClick={() => setSortedBy(option.value)}
+                                    onClick={() => handleSort(option.value)}
                                     className={cn(
                                         "flex items-center px-3 pb-3.25 pt-3.75 rounded-none text-pr-700 hover:bg-pr-100 hover:text-pr-700 cursor-pointer text-lg md:text-base",
                                         sortedBy === option.value && "bg-pr-300 text-pr-700 font-bold",

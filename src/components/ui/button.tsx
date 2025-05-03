@@ -8,13 +8,11 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default:
-                    "bg-pr-700 text-white hover:bg-pr-700/80",
+                default: "bg-pr-700 text-white hover:bg-pr-700/80",
+                soft: "bg-pr-900/60 text-white hover:bg-pr-900/50",
                 accent: "bg-pr-500 text-white hover:bg-pr-500/80",
-                destructive:
-                    "bg-pr-600 text-white hover:bg-pr-600/90",
-                secondary:
-                    "bg-white text-pr-700 hover:bg-white/80",
+                destructive: "bg-pr-600 text-white hover:bg-pr-600/90",
+                secondary: "bg-white text-pr-700 hover:bg-white/80",
                 ghost: "hover:bg-pr-100 text-pr-700 hover:shadow-none",
                 ghostDark: "hover:bg-white/20 text-white hover:shadow-none",
                 link: "text-pr-900 underline-offset-4 hover:underline hover:shadow-none",
@@ -22,6 +20,7 @@ const buttonVariants = cva(
             styleType: {
                 solid: "",
                 outline: "border border-2 bg-transparent",
+                outlineLight: "border border-1 bg-transparent",
             },
             size: {
                 default: "h-10 px-5 pt-0.25",
@@ -39,27 +38,33 @@ const buttonVariants = cva(
             // DEFAULT outline
             {
                 variant: "default",
-                styleType: "outline",
+                styleType: ["outline", "outlineLight"],
                 className: "border-pr-700 text-pr-700 hover:bg-white/20",
+            },
+            {
+                variant: "soft",
+                styleType: ["outline", "outlineLight"],
+                className: "border-pr-700/30 text-pr-700 hover:bg-white/20",
             },
             // SECONDARY outline
             {
                 variant: "secondary",
-                styleType: "outline",
+                styleType: ["outline", "outlineLight"],
                 className: "border-white text-white hover:bg-white/20",
             },
             // ACCENT outline
             {
                 variant: "accent",
-                styleType: "outline",
+                styleType: ["outline", "outlineLight"],
                 className: "border-pr-500 text-pr-500 hover:bg-white/20",
             },
             // DESTRUCTIVE outline
             {
                 variant: "destructive",
-                styleType: "outline",
+                styleType: ["outline", "outlineLight"],
                 className: "border-pr-600 text-pr-600 hover:bg-white/20",
             },
+
         ],
         defaultVariants: {
             variant: "default",

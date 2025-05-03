@@ -14,6 +14,7 @@ import { ToggleWithTooltips } from '../shared/buttons/ToggleWithToolTips';
 import { Bars4Icon, MagnifyingGlassIcon, Squares2X2Icon } from '@heroicons/react/16/solid';
 import { Button } from '../ui/button';
 import SearchFilterMenu from '@/components/search/SearchFilterMenu';
+import { useSearchResultsCounter } from '@/hooks/useSearchResultsCounter';
 
 const queryClient = new QueryClient();
 
@@ -31,12 +32,12 @@ export default function SearchPageClient({
         localQuery,
         setLocalQuery,
         handleSearch,
-        toggleSearch,
     } = useSearchLogic();
 
     const isSm = useBreakpointStore((s) => s.isSm);
     const selectedView = useSearchStore((s) => s.selectedView);
     const setSelectedView = useSearchStore((s) => s.setSelectedView);
+    const resultsString = useSearchResultsCounter()
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -77,15 +78,14 @@ export default function SearchPageClient({
                 </div>
                 <div className={cn(
                     "flex flex-col sm:flex-row flex-nowrap",
-                    "mt-20 pb-50 max-w-[1920px] mx-auto",
+                    "mt-10 pb-50 max-w-[1920px] mx-auto",
                     "px-3 md:px-4 lg:px-6",
-                    "gap-3 sm:gap-6")} >
+                    "gap-3 sm:gap-6 lg:gap-12")} >
 
-                    <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 bg-card-100 rounded-md p-10 h-max gap-4"} />
+                    <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />
                     <div className="@container/grid flex flex-col flex-1">
                         <div className="flex justify-between items-center w-full mb-4">
-                            {/* <h2 className="leading-7 mt-2.5 mb-0.5">{data.length} result{data.length === 1 ? "" : "s"}</h2> */}
-                            <h2 className="leading-7 mt-2.5 mb-0.5">Search Results</h2>
+                            <span>{resultsString}</span>
                             {!isSm && <ToggleWithTooltips<ViewMode>
                                 value={selectedView}
                                 onChange={setSelectedView}

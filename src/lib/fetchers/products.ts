@@ -24,7 +24,7 @@ export const fetchProductBySlug = async (slug: string): Promise<Product> => {
 
 export async function fetchSearchResults(
     params: SearchQueryParams
-): Promise<{ results: any[]; nextPage?: number; previousPage?: number }> {
+): Promise<{ results: any[]; nextPage?: number; previousPage?: number, totalCount?: number }> {
 
     const qs = new URLSearchParams();
     Object.entries(params).forEach(([key, val]) => {

@@ -1,7 +1,7 @@
 // components/search/SearchResults.tsx
 'use client';
 
-import { useQuery, useQueryClient, keepPreviousData } from '@tanstack/react-query';
+import { useQuery, useQueryClient, keepPreviousData, UseQueryOptions } from '@tanstack/react-query';
 import {
     Pagination,
     PaginationContent,
@@ -35,11 +35,10 @@ export default function SearchResults({
     const queryClient = useQueryClient();
     const resultsView = useSearchStore((s) => s.selectedView);
     const sortedBy = useSearchStore((s) => s.sortedBy);
-
     const page = usePaginationStore((s) => s.page);
     const pageSize = usePaginationStore((s) => s.pageSize);
     const setPage = usePaginationStore((s) => s.setPage);
-    const resetPagination = usePaginationStore((s) => s.resetPagination);
+    const setTotalResults = useSearchStore((s) => s.setTotalResults);
     const isSm = useBreakpointStore((s) => s.isSm);
 
     // Full params WITHOUT page
@@ -49,14 +48,9 @@ export default function SearchResults({
         page_size: pageSize,
     }), [queryParams, sortedBy, pageSize]);
 
-    // Whenever filters change, reset to page 1
-    useEffect(() => {
-        resetPagination();
-    }, [JSON.stringify(filterParams), resetPagination]);
-
     useSyncUrlParams({ ...filterParams, page });
 
-    const { data, isLoading, isError } = useQuery<
+    const { data, isLoading, isSuccess, isError } = useQuery<
         SearchResultsResponse,
         Error,
         SearchResultsResponse,
@@ -76,6 +70,16 @@ export default function SearchResults({
             });
         }
     }, [data?.nextPage, filterParams, queryClient]);
+
+    // Side-effect: update the store when data arrives or fails
+    useEffect(() => {
+        if (isSuccess) {
+            setTotalResults(data?.totalCount ?? 0);
+        }
+        if (isError) {
+            setTotalResults(0);
+        }
+    }, [isSuccess, isError, data, setTotalResults]);
 
 
     if (isLoading) return <div>Loading…</div>;

@@ -61,7 +61,7 @@ export const getSearchResults =
         const { data, count, error } = await builder;
         if (error) {
             console.error('Product card fetch error:', error);
-            return { results: [] as ProductCard[], totalPages: 0, nextPage: undefined };
+            return { results: [] as ProductCard[], totalPages: 0, nextPage: undefined, totalCount: 0 };
         }
 
         const rows = data ?? []
@@ -73,5 +73,5 @@ export const getSearchResults =
         const totalPages = Math.ceil((count ?? 0) / pageSize);
         const nextPage = page < totalPages ? page + 1 : undefined;
 
-        return { results: products, totalPages, nextPage };
+        return { results: products, totalPages, nextPage, totalCount: count ?? 0 };
     });

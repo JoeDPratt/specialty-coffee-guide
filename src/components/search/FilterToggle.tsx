@@ -54,15 +54,17 @@ export function FilterToggle({ filterKey, config, styleType = "default" }: Filte
         <Button
             onClick={toggle}
             iconPosition={"left"}
-            styleType={"outline"}
-            className={cn("pl-3 pr-4 h-11",
+            variant={"soft"}
+            styleType={"outlineLight"}
+            size={"sm"}
+            className={cn("pl-3 pr-4 h-10",
                 selected
                     ? "text-white border-[var(--accent-color)] bg-[var(--accent-color)] hover:bg-[var(--accent-color)]"
                     : ""
             )}
             style={{ "--accent-color": accent } as React.CSSProperties}
         >
-            <ScalableIcon icon={<Icon />} size={28} />
+            <ScalableIcon icon={<Icon />} size={32} />
             {config.label}
         </Button>
     );

@@ -20,6 +20,6 @@ export async function GET(req: NextRequest) {
         if (sp.get(key) === "true") params[key] = true;
     }
 
-    const products = await getSearchResults(params);
-    return NextResponse.json(products);
+    const data = await getSearchResults(params);
+    return NextResponse.json(data);
 }

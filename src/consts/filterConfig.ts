@@ -22,6 +22,12 @@ export const filterConfig = {
         attributeKeys: ["is_single_origin"],
         matchLogic: "equals",
     },
+    is_fairtrade: {
+        label: "Fairtrade",
+        color: "tan",
+        attributeKeys: ["is_fairtrade"],
+        matchLogic: "equals",
+    },
     is_decaf: {
         label: "Decaf / Low Caf",
         color: "blue",
@@ -35,12 +41,7 @@ export const filterConfig = {
         attributeKeys: ["is_mycotoxin_free"],
         matchLogic: "equals",
     },
-    is_fairtrade: {
-        label: "Fairtrade",
-        color: "tan",
-        attributeKeys: ["is_fairtrade"],
-        matchLogic: "equals",
-    },
+
 } as const;
 
 export type FilterKey = keyof typeof filterConfig;

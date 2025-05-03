@@ -100,17 +100,17 @@
 @layer base {
     h1 {
       font-family: var(--font-teko), 'Courier New', Courier, monospace;
-      @apply text-5xl dark:text-white font-medium;
+      @apply text-5xl dark:text-white font-medium tracking-wide;
     }
   
     h2 {
       font-family: var(--font-teko), 'Courier New', Courier, monospace;
-      @apply text-4xl dark:text-white font-medium mb-2;
+      @apply text-4xl dark:text-white font-medium mb-2 tracking-wide;
     }
   
     h3 {
       font-family: var(--font-teko), 'Courier New', Courier, monospace;
-      @apply text-3xl dark:text-white font-medium mb-2;
+      @apply text-3xl dark:text-white font-medium mb-2 tracking-wide;
     }
   
     p {
@@ -134,7 +134,6 @@
     }
     .hr-light {
         @apply border-none h-0.5 bg-white/25;
-
     }
     .tooltip-base {
         font-family: var(--font-sofia-sans), sans-serif;

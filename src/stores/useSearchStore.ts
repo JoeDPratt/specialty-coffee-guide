@@ -15,6 +15,9 @@ type SearchState = {
     toggleSearch: () => void;
     setQuery: (q: string) => void;
 
+    totalResults: number;
+    setTotalResults: (results: number) => void;
+
     filters: Record<FilterKey, boolean>; // or a custom type
     setFilters: (filters: Record<FilterKey, boolean>) => void;
 
@@ -36,13 +39,15 @@ const initialFilters = Object.keys(filterConfig).reduce((acc, key) => {
 
 export const useSearchStore = create<SearchState>((set) => ({
     isSearchOpen: false,
-
     query: '',
 
     openSearch: () => set({ isSearchOpen: true }),
     closeSearch: () => set({ isSearchOpen: false }),
     toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
     setQuery: (query) => set({ query }),
+
+    totalResults: 0,
+    setTotalResults: (results) => set({ totalResults: results }),
 
     filters: initialFilters,
     setFilters: (filters) => set({ filters }),
