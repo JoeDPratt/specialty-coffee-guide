@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import { usePaginationStore } from '@/stores/usePaginationStore';
 import { useHydrateFilters } from '@/hooks/useHydrateFilterParams';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
+import SCGSpinner from '../shared/loading/SCGSpinner';
 
 const queryClient = new QueryClient();
 
@@ -102,7 +103,10 @@ export default function SearchPageClient({
                     <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />
                     <div className="@container/grid flex flex-col flex-1">
                         <div className="flex justify-between items-center w-full mb-4">
-                            <span>{isLoading || isFetching ? "Loading coffees..." : resultsString}</span>
+                            {isLoading || isFetching
+                                ? <span className="flex items-center gap-2" ><SCGSpinner size={32} />Loading coffees...</span>
+                                : <span>{resultsString}</span>
+                            }
                             {!isSm && <ToggleWithTooltips<ViewMode>
                                 value={selectedView}
                                 onChange={setSelectedView}

@@ -1,7 +1,6 @@
 import { cn } from "@/utils/classes/merge";
 import { FilterRow } from "./FilterRow";
-import { useSearchStore } from "@/stores/useSearchStore";
-import { usePaginationStore } from "@/stores/usePaginationStore";
+import SCGSpinner from "../shared/loading/SCGSpinner";
 
 export default function SearchFilterMenu({ className }: { className: string }) {
 

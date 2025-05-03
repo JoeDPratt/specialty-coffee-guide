@@ -13,7 +13,6 @@ export function useSearchLogic() {
     const pathname = usePathname();
     const inputRef = useRef<HTMLInputElement>(null);
 
-    // existing store bits
     const toggleSearch = useSearchStore((s) => s.toggleSearch);
     const closeSearch = useSearchStore((s) => s.closeSearch);
     const filters = useSearchStore((s) => s.filters);
@@ -30,6 +29,11 @@ export function useSearchLogic() {
         inputRef.current?.focus();
     }, []);
 
+    // sync query
+    useEffect(() => {
+        setLocalQuery(query);
+    }, [query]);
+
     useEffect(() => {
         const onEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") closeSearch();
@@ -41,6 +45,7 @@ export function useSearchLogic() {
     useDebouncedEffect(() => {
         if (!pathname.startsWith("/search")) return;
         // rebuild full query
+
         const queryObj = {
             q: query || undefined,
             ...filters,

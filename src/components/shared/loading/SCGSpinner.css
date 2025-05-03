@@ -1,0 +1,44 @@
+.spinner-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logo-wrapper {
+    animation: jagged-rotate 1s infinite;
+    transform-origin: center;
+  }
+  
+  @keyframes jagged-rotate {
+    0% { transform: rotate(-360deg); }
+    1% { transform: rotate(-360deg); }
+    
+  }
+  
+  .grounds-container {
+    position: absolute;
+    top: 100%;
+    left: 25%;
+    width: 50%;
+    overflow: visible;
+  }
+  
+  .coffee-ground {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #6f4e37; /* Coffee color */
+    border-radius: 50%;
+    animation: fall 1s ease-out forwards;
+  }
+  
+  @keyframes fall {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(20px) scale(0.5);
+      opacity: 0;
+    }
+  }
+  
