@@ -14,20 +14,18 @@ import { useBreakpointStore } from '@/stores/useBreakpointStore';
 import SkeletonSearchResults from '../skeleton/SkeletonSearchResults';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
 
-
 export default function SearchResults() {
+    console.count("Search Results Component")
+    const {
+        page,
+        setPage
+    } = usePaginationStore((s) => ({
+        page: s.page,
+        setPage: s.setPage
+    }));
 
     const resultsView = useSearchStore((s) => s.selectedView);
-    const page = usePaginationStore((s) => s.page);
-    const setPage = usePaginationStore((s) => s.setPage);
     const isSm = useBreakpointStore((s) => s.isSm);
-
-    // // Full params WITHOUT page
-    // const filterParams = useMemo(() => ({
-    //     ...queryParams,
-    //     sort_by: sortedBy,
-    //     page_size: pageSize,
-    // }), [queryParams, sortedBy, pageSize]);
 
     useSyncUrlParams();
 
@@ -37,38 +35,6 @@ export default function SearchResults() {
         isFetching,
         isError,
     } = useSearchQuery();
-
-    // const { data, isLoading, isFetching, isSuccess, isError } = useQuery<
-    //     SearchResultsResponse,
-    //     Error,
-    //     SearchResultsResponse,
-    //     readonly ['search', SearchQueryParams, number]
-    // >({
-    //     queryKey: ['search', filterParams, page] as const,
-    //     queryFn: () => fetchSearchResults({ ...filterParams, page }),
-    //     placeholderData: keepPreviousData,
-    // });
-
-    // Prefetch next page
-    // useEffect(() => {
-    //     if (data?.nextPage) {
-    //         queryClient.prefetchQuery({
-    //             queryKey: ['search', filterParams, data.nextPage] as const,
-    //             queryFn: () => fetchSearchResults({ ...filterParams, page: data.nextPage }),
-    //         });
-    //     }
-    // }, [data?.nextPage, filterParams, queryClient]);
-
-    // Side-effect: update the store when data arrives or fails
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         setTotalResults(data?.totalCount ?? 0);
-    //     }
-    //     if (isError) {
-    //         setTotalResults(0);
-    //     }
-    // }, [isSuccess, isError, data, setTotalResults]);
-
 
     if (isLoading || isFetching) return <div><SkeletonSearchResults view={resultsView} /></div>;
     if (isError) return <div>Error loading results</div>;

@@ -1,27 +1,23 @@
 // components/search/SearchPageClient.tsx
 'use client';
 
-import { HydrationBoundary, QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import SearchViewMenu from '@/components/search/SearchViewMenu';
+import { HydrationBoundary } from '@tanstack/react-query';
 import SearchResults from '@/components/search/SearchResults';
-import type { SearchQueryParams, SearchResultsResponse } from '@/types/search';
+import SearchInputBar from '@/components/search/SearchInputBar';
+import type { SearchQueryParams } from '@/types/search';
 import { cn } from '@/utils/classes/merge';
-import { Input } from '../ui/input';
 import { useSearchLogic } from '@/hooks/useSearchLogic';
 import { useBreakpointStore } from '@/stores/useBreakpointStore';
 import { ViewMode, useSearchStore } from '@/stores/useSearchStore';
-import { ToggleWithTooltips } from '../shared/buttons/ToggleWithToolTips';
-import { Bars4Icon, MagnifyingGlassIcon, Squares2X2Icon } from '@heroicons/react/16/solid';
-import { Button } from '../ui/button';
+import { ToggleWithTooltips, ToggleWithTooltipsProps } from '../shared/buttons/ToggleWithToolTips';
+import { Bars4Icon, Squares2X2Icon } from '@heroicons/react/16/solid';
 import SearchFilterMenu from '@/components/search/SearchFilterMenu';
 import { useSearchResultsCounter } from '@/hooks/useSearchResultsCounter';
-import { useEffect } from 'react';
-import { usePaginationStore } from '@/stores/usePaginationStore';
-import { useHydrateFilters } from '@/hooks/useHydrateFilterParams';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
 import SCGSpinner from '../shared/loading/SCGSpinner';
+import { useHydrateSearchStores } from '@/hooks/useHydrateSearchStores';
+import { useMemo } from 'react';
 
-const queryClient = new QueryClient();
 
 export default function SearchPageClient({
     dehydratedState,
@@ -31,101 +27,55 @@ export default function SearchPageClient({
     queryParams: SearchQueryParams;
 }) {
     console.count("SearchResults render");
-
-    // hydrate the stores wit hthe query params
-    useEffect(() => {
-        const { setQuery, setFilters, setSortedBy } = useSearchStore.getState()
-        const { setPageSize, setPage } = usePaginationStore.getState()
-        setQuery(queryParams.q ?? '')
-        setFilters(useHydrateFilters(queryParams))
-        setSortedBy(queryParams.sort_by ?? 'price_low')
-        setPageSize(queryParams.page_size ?? 24)
-        setPage(queryParams.page ?? 1)
-    }, [queryParams])
-
-    const {
-        inputRef,
-        localQuery,
-        setLocalQuery,
-        handleSearch,
-    } = useSearchLogic();
+    // hydrate the stores with the query params
+    useHydrateSearchStores(queryParams);
 
     const { isLoading, isFetching } = useSearchQuery();
-
-    const isSm = useBreakpointStore((s) => s.isSm);
-    const selectedView = useSearchStore((s) => s.selectedView);
-    const setSelectedView = useSearchStore((s) => s.setSelectedView);
     const resultsString = useSearchResultsCounter();
 
+    const { selectedView, setSelectedView } = useSearchStore((s) => ({
+        selectedView: s.selectedView,
+        setSelectedView: s.setSelectedView,
+    }));
+
+    const isSm = useBreakpointStore((s) => s.isSm);
+
+    const viewOptions: ToggleWithTooltipsProps<ViewMode>["options"] = useMemo(() => [
+        { value: "grid", label: "Grid", icon: <Squares2X2Icon /> },
+        { value: "list", label: "List", icon: <Bars4Icon /> },
+    ], []);
+
     return (
-        <QueryClientProvider client={queryClient}>
-            <HydrationBoundary state={dehydratedState}>
-                <div className={cn(
-                    "sticky top-0 px-3 md:px-4 lg:px-6 pt-4 pb-4 bg-pr-200 z-50 w-full",
-                    "flex items-center justify-center")}>
-                    <div className="flex items-center justify-center gap-2 xs:gap-4 sm:gap-6 max-w-[1300px] w-full">
-                        <div
-                            className={cn(
-                                "flex items-center w-full bg-white border-2 border-white rounded-full",
-                                "focus-within:outline-none focus-within:ring-1 focus-within:ring-ring")}
-                        // layoutId="searchField"
-                        >
-                            <Input
-                                ref={inputRef}
-                                type="search"
-                                enterKeyHint="search"
-                                role="search"
-                                value={localQuery}
-                                onChange={(e) => setLocalQuery(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                                placeholder='Try "Cherry" or "Bourbon"'
-                                className="bg-transparent md:min-w-86"
-                                focus={"parent"}
-                            />
-                            <Button
-                                variant={"accent"}
-                                onClick={handleSearch}
-                                aria-label="Search Button"
-                                size={"icon"}
-                                className="size-11"
-                            ><MagnifyingGlassIcon />
-                            </Button>
-                        </div>
-                        <SearchViewMenu />
+        <HydrationBoundary state={dehydratedState}>
+            <div className={cn(
+                "sticky top-0 px-3 md:px-4 lg:px-6 pt-4 pb-4 bg-pr-200 z-50 w-full",
+                "flex items-center justify-center")}>
+                <SearchInputBar />
+            </div>
+            <div className={cn(
+                "flex flex-col sm:flex-row flex-nowrap",
+                "mt-10 pb-50 max-w-[1920px] mx-auto",
+                "px-3 md:px-4 lg:px-6",
+                "gap-3 sm:gap-6 lg:gap-12")} >
+
+                <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />
+                <div className="@container/grid flex flex-col flex-1">
+                    <div className="flex justify-between items-center w-full mb-4">
+                        {isLoading || isFetching
+                            ? <span className="flex items-center gap-2" ><SCGSpinner size={32} />Loading coffees...</span>
+                            : <span>{resultsString}</span>
+                        }
+                        {!isSm && <ToggleWithTooltips<ViewMode>
+                            value={selectedView}
+                            onChange={setSelectedView}
+                            options={viewOptions}
+                            showLabel={!isSm}
+                            showTooltip={isSm}
+                        />}
                     </div>
+                    <SearchResults />
                 </div>
-                <div className={cn(
-                    "flex flex-col sm:flex-row flex-nowrap",
-                    "mt-10 pb-50 max-w-[1920px] mx-auto",
-                    "px-3 md:px-4 lg:px-6",
-                    "gap-3 sm:gap-6 lg:gap-12")} >
-
-                    <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />
-                    <div className="@container/grid flex flex-col flex-1">
-                        <div className="flex justify-between items-center w-full mb-4">
-                            {isLoading || isFetching
-                                ? <span className="flex items-center gap-2" ><SCGSpinner size={32} />Loading coffees...</span>
-                                : <span>{resultsString}</span>
-                            }
-                            {!isSm && <ToggleWithTooltips<ViewMode>
-                                value={selectedView}
-                                onChange={setSelectedView}
-                                options={[
-                                    { value: "grid", label: "Grid", icon: <Squares2X2Icon />, tooltip: "Grid View" },
-                                    { value: "list", label: "List", icon: <Bars4Icon />, tooltip: "List View" },
-                                ]}
-                                showLabel={!isSm}
-                                showTooltip={isSm}
-                            />}
-                        </div>
-                        {/* <SearchInput /> */}
-
-
-                        <SearchResults />
-
-                    </div>
-                </div>
-            </HydrationBoundary>
-        </QueryClientProvider>
+            </div>
+        </HydrationBoundary>
     );
 }

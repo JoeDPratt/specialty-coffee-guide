@@ -66,7 +66,9 @@ export default function RootLayout({
                         <BreakpointInit />
                         <Header />
 
-                        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+                        <ReactQueryClientProvider>
+                            {children}
+                        </ReactQueryClientProvider>
                     </div>
                 </TooltipProvider>
             </body>

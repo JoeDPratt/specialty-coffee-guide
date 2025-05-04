@@ -1,7 +1,7 @@
-// src/hooks/useSearchResults.ts
+// src/hooks/useSearchQuery.ts
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import {
     useQuery,
     useQueryClient,
@@ -21,7 +21,6 @@ export function useSearchQuery() {
     const { page, ...filterParams } = queryParams;
     const setTotalResults = useSearchStore(s => s.setTotalResults);
 
-    /* ---------- main query ---------- */
     const queryClient = useQueryClient()
 
     const result = useQuery<

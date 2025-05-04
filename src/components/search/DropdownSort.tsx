@@ -28,12 +28,12 @@ const sortOptions: { label: string; value: SortOption }[] = [
 ];
 
 export function DropdownSort({ className }: DropdownSortProps) {
-    const sortedBy = useSearchStore((s) => s.sortedBy);
-    const setSortedBy = useSearchStore((s) => s.setSortedBy);
+    const { sortedBy, setSortedBy } = useSearchStore((s) => ({ sortedBy: s.sortedBy, setSortedBy: s.setSortedBy }));
     const resetPagination = usePaginationStore((s) => s.resetPagination)
+    const isMd = useBreakpointStore((s) => s.isMd);
+
     const [isOpen, setIsOpen] = useState(false);
     const [showChevronUp, setShowChevronUp] = useState(false);
-    const isMd = useBreakpointStore((s) => s.isMd);
     const activeLabel = sortOptions.find((opt) => opt.value === sortedBy)?.label ?? "Sort";
 
     useEffect(() => {

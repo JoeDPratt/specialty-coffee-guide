@@ -1,6 +1,6 @@
+// src/components/search/SearchFilterMenu.tsx
 import { cn } from "@/utils/classes/merge";
 import { FilterRow } from "./FilterRow";
-import SCGSpinner from "../shared/loading/SCGSpinner";
 
 export default function SearchFilterMenu({ className }: { className: string }) {
 

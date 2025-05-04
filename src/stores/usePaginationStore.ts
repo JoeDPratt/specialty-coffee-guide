@@ -1,6 +1,7 @@
 // stores/usePaginationStore.ts
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
+import { SearchQueryParams } from '@/types/search';
 
 interface PaginationState {
     page: number;
@@ -8,15 +9,23 @@ interface PaginationState {
     setPage: (page: number) => void;
     setPageSize: (size: number) => void;
     resetPagination: () => void;
+    hydrate: (params: SearchQueryParams) => void;
 }
 
 export const usePaginationStore = createWithEqualityFn<PaginationState>()(
-    (set) => ({
+    (set, get) => ({
         page: 1,
         pageSize: 24,
         setPage: (page) => set({ page }),
         setPageSize: (size) => set({ pageSize: size }),
         resetPagination: () => set({ page: 1 }),
+
+        hydrate: ({ page, page_size }) => {
+            set((state) => ({
+                page: page ?? state.page,
+                pageSize: page_size ?? state.pageSize,
+            }));
+        },
     }),
     shallow
 );

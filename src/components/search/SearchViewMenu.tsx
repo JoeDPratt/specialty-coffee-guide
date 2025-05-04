@@ -8,8 +8,14 @@ import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";
 import { useFilterCount } from "@/hooks/useFilterCount";
 
 export default function SeacrhViewMenu() {
-    const selectedWeight = useSearchStore((s) => s.selectedWeight);
-    const setWeight = useSearchStore((s) => s.setSelectedWeight);
+    const {
+        selectedWeight,
+        setWeight
+    } = useSearchStore((s) => ({
+        selectedWeight: s.selectedWeight,
+        setWeight: s.setSelectedWeight
+    }));
+
     const filterCount = useFilterCount();
 
     return (

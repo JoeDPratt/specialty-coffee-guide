@@ -1,3 +1,4 @@
+// src/components/shared/buttons/ToggleWithToolTips.tsx
 "use client";
 
 import {
@@ -8,7 +9,7 @@ import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
 import { cn } from "@/utils/classes/merge";
 
-interface ToggleWithTooltipsProps<TValue extends string> {
+export interface ToggleWithTooltipsProps<TValue extends string> {
     value: TValue;
     onChange: (value: TValue) => void;
     options: {
@@ -44,8 +45,6 @@ export function ToggleWithTooltips<TValue extends string>({
     function handleChange(val: string) {
         if (val) onChange(val as TValue);
     }
-
-
 
     return (
         <ToggleGroup

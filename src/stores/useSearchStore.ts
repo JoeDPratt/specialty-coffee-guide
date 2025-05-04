@@ -2,6 +2,8 @@
 import { FilterKey, filterConfig } from '@/consts/filterConfig';
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
+import { SearchQueryParams } from '@/types/search';
+import { useHydrateFilters } from '@/hooks/useHydrateFilterParams';
 
 export type WeightOption = "250" | "1000";
 export type ViewMode = "grid" | "list";
@@ -30,6 +32,8 @@ type SearchState = {
 
     sortedBy: SortOption;
     setSortedBy: (sort: SortOption) => void;
+
+    hydrate: (params: SearchQueryParams) => void;
 };
 
 const initialFilters: Record<FilterKey, boolean> = Object.keys(filterConfig).reduce((acc, key) => {
@@ -38,7 +42,7 @@ const initialFilters: Record<FilterKey, boolean> = Object.keys(filterConfig).red
 }, {} as Record<FilterKey, boolean>);
 
 export const useSearchStore = createWithEqualityFn<SearchState>()(
-    (set) => ({
+    (set, get) => ({
         isSearchOpen: false,
         openSearch: () => set({ isSearchOpen: true }),
         closeSearch: () => set({ isSearchOpen: false }),
@@ -61,6 +65,15 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
 
         sortedBy: "price_low",
         setSortedBy: (sort) => set({ sortedBy: sort }),
+
+        hydrate: (params) => {
+            const { q, sort_by, ...rest } = params;
+            set((state) => ({
+                query: q ?? state.query,
+                sortedBy: sort_by ?? state.sortedBy,
+                filters: useHydrateFilters(params),
+            }));
+        }
     }),
     shallow
 );

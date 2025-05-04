@@ -1,39 +1,59 @@
 // hooks/useSearchLogic.ts
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { usePaginationStore } from "@/stores/usePaginationStore";
 import { usePathname, useRouter } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
 import { useDebouncedEffect } from "./useDebounceEffect";
+import { useSearchParams } from "@/hooks/useSearchParams";
 
 export function useSearchLogic() {
+
     const router = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const toggleSearch = useSearchStore((s) => s.toggleSearch);
-    const closeSearch = useSearchStore((s) => s.closeSearch);
-    const filters = useSearchStore((s) => s.filters);
-    const query = useSearchStore((s) => s.query);
-    const setQuery = useSearchStore((s) => s.setQuery);
-    const sortedBy = useSearchStore((s) => s.sortedBy);
-    const page = usePaginationStore((s) => s.page);
-    const pageSize = usePaginationStore((s) => s.pageSize);
-    const setPage = usePaginationStore((s) => s.setPage);
+    const {
+        toggleSearch,
+        closeSearch,
+        query: storeQuery,
+        setQuery,
+        setPage,
+        resetPagination
+    } = {
+        ...useSearchStore((s) => ({
+            toggleSearch: s.toggleSearch,
+            closeSearch: s.closeSearch,
+            query: s.query,
+            setQuery: s.setQuery,
+        })),
+        ...usePaginationStore((s) => ({
+            setPage: s.setPage,
+            resetPagination: s.resetPagination
+        })),
+    };
 
-    const [localQuery, setLocalQuery] = useState(query);
+    const [localQuery, setLocalQuery] = useState(storeQuery);
+    // Keep localQuery in sync
+    useEffect(() => {
+        setLocalQuery(storeQuery);
+    }, [storeQuery]);
 
+    // Debounce when writing to the store
+    useDebouncedEffect(() => {
+        setQuery(localQuery.trim());
+        resetPagination();
+    }, [localQuery], 300);
+
+    // Set input focus
     useEffect(() => {
         inputRef.current?.focus();
     }, []);
 
-    // sync query
-    useEffect(() => {
-        setLocalQuery(query);
-    }, [query]);
-
+    // Close search on esc
     useEffect(() => {
         const onEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") closeSearch();
@@ -44,44 +64,39 @@ export function useSearchLogic() {
 
     useDebouncedEffect(() => {
         if (!pathname.startsWith("/search")) return;
-        // rebuild full query
 
-        const queryObj = {
-            q: query || undefined,
-            ...filters,
-            sort_by: sortedBy,
-            page,
-            page_size: pageSize,
-        };
-        const qs = serializeQueryParams(queryObj);
-        router.push(`/search?${qs}`);
-    }, [filters, sortedBy, page, pageSize, query], 300);
+        const qs = serializeQueryParams(searchParams);
+        const newUrl = `/search?${qs}`;
+        if (window.location.pathname + window.location.search !== newUrl) {
+            router.replace(newUrl);
+        }
+    }, [searchParams], 300);
 
-    const handleSearch = () => {
-        // commit the typed query into the store
-        setQuery(localQuery.trim());
+    const handleSearch = useCallback(() => {
+        const trimmedQuery = localQuery.trim();
+        setQuery(trimmedQuery);
         closeSearch();
+        resetPagination();
 
-        // whenever we do a brand-new search, go back to page 1
-        setPage(1);
-
-        // build the full query object with filters, sort & pagination
-        const queryObject = {
-            q: localQuery.trim() || undefined,
-            ...filters,
-            sort_by: sortedBy,
-            page,
-            page_size: pageSize,
+        const newParams = {
+            ...searchParams,
+            q: trimmedQuery || undefined,
+            page: 1,
         };
 
-        const queryString = serializeQueryParams(queryObject);
-        router.push(`/search?${queryString}`);
-    };
+        const qs = serializeQueryParams(newParams);
+        const newUrl = `/search?${qs}`;
+
+        if (window.location.pathname + window.location.search !== newUrl) {
+            router.replace(`/search?${newUrl}`);
+        }
+
+    }, [localQuery, searchParams, setQuery, setPage, closeSearch, router]);
 
     return {
         inputRef,
-        localQuery,
-        setLocalQuery,
+        query: localQuery,
+        setQuery: setLocalQuery,
         handleSearch,
         toggleSearch,
     };

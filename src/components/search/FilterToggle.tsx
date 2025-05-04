@@ -15,9 +15,9 @@ type FilterToggleProps = {
 };
 
 export function FilterToggle({ filterKey, config, styleType = "default" }: FilterToggleProps) {
-    const filters = useSearchStore((s) => s.filters);
-    const setFilters = useSearchStore((s) => s.setFilters);
+    const { filters, setFilters } = useSearchStore((s) => ({ filters: s.filters, setFilters: s.setFilters }));
     const resetPagination = usePaginationStore((s) => s.resetPagination)
+
     const selected = filters[filterKey] === true;
     const accent = `var(--color-${config.color}-400)`;
     const Icon = attributeConfig[config.attributeKeys[0]].icon;

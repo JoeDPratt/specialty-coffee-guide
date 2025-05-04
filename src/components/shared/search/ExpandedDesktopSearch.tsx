@@ -11,8 +11,8 @@ import { Input } from '@/components/ui/input';
 export default function ExpandedDesktopSearch() {
     const {
         inputRef,
-        localQuery,
-        setLocalQuery,
+        query,
+        setQuery,
         handleSearch,
         toggleSearch,
     } = useSearchLogic();
@@ -40,8 +40,8 @@ export default function ExpandedDesktopSearch() {
                         type="search"
                         enterKeyHint="search"
                         role="search"
-                        value={localQuery}
-                        onChange={(e) => setLocalQuery(e.target.value)}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                         placeholder='Try "Cherry" or "Bourbon"'
                         inputSize={"lg"}
