@@ -4,16 +4,25 @@ import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
 import { SearchQueryParams } from '@/types/search';
 import { useHydrateFilters } from '@/hooks/useHydrateFilterParams';
+import { cupScoreRange as cupScoreConfig } from '@/consts/rangeConfig';
 
 export type WeightOption = "250" | "1000";
 export type ViewMode = "grid" | "list";
 export type SortOption = "price_low" | "price_high" | "cup_score_high";
+
+const defaultCupScoreRange: [number, number] = [cupScoreConfig.min, cupScoreConfig.max];
+const outOfBoundsCupScore = [(defaultCupScoreRange[0] - 1), (defaultCupScoreRange[1] + 1)] as [number, number]
 
 type SearchState = {
     isSearchOpen: boolean;
     openSearch: () => void;
     closeSearch: () => void;
     toggleSearch: () => void;
+
+    areFiltersOpen: boolean;
+    openFilters: () => void;
+    closeFilters: () => void;
+    toggleFilters: () => void;
 
     query: string;
     setQuery: (q: string) => void;
@@ -51,8 +60,13 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         closeSearch: () => set({ isSearchOpen: false }),
         toggleSearch: () => set((s) => ({ isSearchOpen: !s.isSearchOpen })),
 
+        areFiltersOpen: false,
+        openFilters: () => set({ areFiltersOpen: true }),
+        closeFilters: () => set({ areFiltersOpen: false }),
+        toggleFilters: () => set((s) => ({ areFiltersOpen: !s.areFiltersOpen })),
+
         query: '',
-        setQuery: (query) => set({ query }),
+        setQuery: (query: string) => set({ query: query.trim().replace(/\s+/g, " ").toLowerCase() }),
 
         totalResults: 0,
         setTotalResults: (results) => set({ totalResults: results }),
@@ -60,7 +74,7 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         filters: initialFilters,
         setFilters: (filters) => set({ filters }),
 
-        cupScoreRange: [74, 101],
+        cupScoreRange: outOfBoundsCupScore,
         setCupScoreRange: (range) => set({ cupScoreRange: range }),
 
         selectedWeight: "250",
@@ -74,15 +88,18 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
 
         hydrate: (params) => {
             const { q, sort_by, cup_score_min, cup_score_max, ...rest } = params;
-            set((s) => ({
-                query: q ?? s.query,
-                sortedBy: sort_by ?? s.sortedBy,
+
+            const cupScoreRange: [number, number] = [
+                cup_score_min != null ? Number(cup_score_min) : outOfBoundsCupScore[0],
+                cup_score_max != null ? Number(cup_score_max) : outOfBoundsCupScore[1],
+            ];
+
+            set({
+                query: q ?? get().query,
+                sortedBy: sort_by ?? get().sortedBy,
                 filters: useHydrateFilters(params),
-                cupScore: [
-                    cup_score_min ?? s.cupScoreRange[0],
-                    cup_score_max ?? s.cupScoreRange[1],
-                ],
-            }));
+                cupScoreRange,
+            });
         }
     }),
     shallow

@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 import { RangeSlider } from "@/components/ui/range-slider";
 import { usePaginationStore } from "@/stores/usePaginationStore";
-import { useDebouncedEffect } from "@/hooks/useDebounceEffect";
 import { cn } from "@/utils/classes/merge";
 import type { RangeConfig } from "@/consts/rangeConfig";
-
 
 interface FilterSliderProps {
     rangeConfig: RangeConfig;
@@ -28,11 +26,11 @@ export default function FilterSlider({
         setLocalRange(defaultRange);
     }, [defaultRange]);
 
-    // Debounce updates to the store, and API
-    useDebouncedEffect(() => {
-        setRange(localRange);
+    // Commit to global store and reset pagination on release
+    function handleCommit(newRange: [number, number]) {
+        setRange(newRange);
         resetPagination();
-    }, [localRange]);
+    }
 
     function showInRange(value: number): string {
         return value >= min && value <= max ? String(value) : "--"
@@ -49,6 +47,7 @@ export default function FilterSlider({
             <RangeSlider
                 value={localRange}
                 onValueChange={setLocalRange}
+                onValueCommit={handleCommit}
                 min={min - 1}
                 max={max + 1}
                 step={step}

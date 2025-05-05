@@ -7,10 +7,23 @@ import { cn } from "@/utils/classes/merge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useSearchLogic } from "@/hooks/useSearchLogic";
+import { useEffect, useState } from "react";
+import { useDebouncedEffect } from "@/hooks/useDebounceEffect";
 
 export default function SearchInputBar() {
 
     const { inputRef, query, setQuery, handleSearch } = useSearchLogic();
+    const [inputValue, setInputValue] = useState(query);
+
+    // Keep in sync if query is reset externally
+    useEffect(() => {
+        setInputValue(query);
+    }, [query]);
+
+    // Debounce local input value → update store
+    useDebouncedEffect(() => {
+        setQuery(inputValue);
+    }, [inputValue]);
 
     return (
         <div className="flex items-center justify-center gap-2 xs:gap-4 sm:gap-6 max-w-[1300px] w-full">
@@ -25,8 +38,8 @@ export default function SearchInputBar() {
                     type="search"
                     enterKeyHint="search"
                     role="search"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     placeholder='Try "Cherry" or "Bourbon"'
                     className="bg-transparent md:min-w-86"

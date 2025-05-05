@@ -1,52 +1,43 @@
 // hooks/useSearchLogic.ts
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { startTransition, useCallback, useEffect, useRef, useState } from "react";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { usePaginationStore } from "@/stores/usePaginationStore";
 import { usePathname, useRouter } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
-import { useDebouncedEffect } from "./useDebounceEffect";
+import { cupScoreRange as defaultRange } from "@/consts/rangeConfig";
 import { useSearchParams } from "@/hooks/useSearchParams";
 
-export function useSearchLogic() {
 
+export function useSearchLogic() {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
+    const { min: defaultMin, max: defaultMax } = defaultRange;
 
     const {
         toggleSearch,
         closeSearch,
-        query: storeQuery,
+        filters,
+        query,
         setQuery,
-        setPage,
+        cupScoreRange,
         resetPagination
     } = {
         ...useSearchStore((s) => ({
             toggleSearch: s.toggleSearch,
             closeSearch: s.closeSearch,
+            filters: s.filters,
             query: s.query,
             setQuery: s.setQuery,
+            cupScoreRange: s.cupScoreRange,
         })),
         ...usePaginationStore((s) => ({
-            setPage: s.setPage,
             resetPagination: s.resetPagination
         })),
     };
-
-    const [localQuery, setLocalQuery] = useState(storeQuery);
-    // Keep localQuery in sync
-    useEffect(() => {
-        setLocalQuery(storeQuery);
-    }, [storeQuery]);
-
-    // Debounce when writing the search input to the store
-    useDebouncedEffect(() => {
-        setQuery(localQuery.trim());
-        resetPagination();
-    }, [localQuery]);
 
     // Set input focus
     useEffect(() => {
@@ -62,25 +53,41 @@ export function useSearchLogic() {
         return () => document.removeEventListener("keydown", onEsc);
     }, [closeSearch]);
 
-    // filters are selected on search page
-    const qs = serializeQueryParams(searchParams);
+    // Update URL when filters or query change
     useEffect(() => {
-        if (!pathname.startsWith('/search')) return;
-        const newUrl = `/search?${qs}`;
-        if (window.location.pathname + window.location.search !== newUrl) {
-            router.replace(newUrl);
-        }
-    }, [qs, pathname, router]);
+        if (!pathname.startsWith("/search")) return;
 
-    const handleSearch = useCallback(() => {
-        const trimmedQuery = localQuery.trim();
-        setQuery(trimmedQuery);
+        const [min, max] = cupScoreRange;
+
+        const params = {
+            ...filters,
+            q: query || undefined,
+            page: 1,
+            ...(min !== (defaultMin - 1) || max !== (defaultMax + 1) ? {
+                cup_score_min: min,
+                cup_score_max: max,
+
+            } : {}),
+        };
+
+        const qs = serializeQueryParams(params);
+        const target = `/search?${qs}`;
+
+        if (window.location.pathname + window.location.search !== target) {
+            startTransition(() => {
+                router.replace(target);
+            });
+        }
+    }, [filters, query, cupScoreRange]);
+
+    const handleSearch = () => {
+        setQuery(query);
         closeSearch();
         resetPagination();
 
         const newParams = {
             ...searchParams,
-            q: trimmedQuery || undefined,
+            q: query || undefined,
             page: 1,
         };
 
@@ -91,12 +98,12 @@ export function useSearchLogic() {
             router.push(newUrl);
         }
 
-    }, [localQuery, searchParams, setQuery, setPage, closeSearch, router]);
+    };
 
     return {
         inputRef,
-        query: localQuery,
-        setQuery: setLocalQuery,
+        query,
+        setQuery,
         handleSearch,
         toggleSearch,
     };

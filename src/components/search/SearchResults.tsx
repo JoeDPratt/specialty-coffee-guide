@@ -15,7 +15,7 @@ import SkeletonSearchResults from '../skeleton/SkeletonSearchResults';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
 
 export default function SearchResults() {
-    console.count("Search Results Component")
+
     const {
         page,
         setPage

@@ -1,15 +1,25 @@
 // src/utils/navigation/serializeQueryParams.ts
 import type { SearchQueryParams } from '@/types/search';
 import { filterConfig, type FilterKey } from "@/consts/filterConfig";
+import { cupScoreRange } from '@/consts/rangeConfig';
 
 export function serializeQueryParams(params: SearchQueryParams) {
     const qs = new URLSearchParams();
 
     for (const key in params) {
         const value = params[key as keyof SearchQueryParams];
+
+        // Skip default booleans (false)
         if (typeof value === "boolean") {
             if (value) qs.set(key, "true");
-        } else if (value !== undefined) {
+            continue;
+        }
+
+        // // Skip cup score if default
+        if (key === "cup_score_min" && Number(value) === cupScoreRange.min - 1) continue;
+        if (key === "cup_score_max" && Number(value) === cupScoreRange.max + 1) continue;
+
+        if (value !== undefined) {
             qs.set(key, String(value));
         }
     }

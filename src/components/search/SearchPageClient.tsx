@@ -33,9 +33,10 @@ export default function SearchPageClient({
     const { isLoading, isFetching } = useSearchQuery();
     const resultsString = useSearchResultsCounter();
 
-    const { selectedView, setSelectedView } = useSearchStore((s) => ({
+    const { selectedView, setSelectedView, areFiltersOpen } = useSearchStore((s) => ({
         selectedView: s.selectedView,
         setSelectedView: s.setSelectedView,
+        areFiltersOpen: s.areFiltersOpen,
     }));
 
     const isSm = useBreakpointStore((s) => s.isSm);
