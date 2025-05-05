@@ -6,11 +6,13 @@ import type { SearchQueryParams, SearchResultsResponse } from '@/types/search';
 import type { ProductVariantForCard, RawProductCard } from '@/types/db-returns';
 import { ProductCard } from '@/types/product';
 import { filterConfig, FilterKey } from "@/consts/filterConfig";
+import { cupScoreRange } from '@/consts/rangeConfig';
 
 export const getSearchResults =
     cache(async (params: SearchQueryParams): Promise<SearchResultsResponse> => {
         const supabase = await createClient();
 
+        const { min: cupScoreMin, max: cupScoreMax } = cupScoreRange
         const pageSize = params.page_size ?? 24;
         const page = params.page ?? 1;
         const from = (page - 1) * pageSize;
@@ -45,7 +47,14 @@ export const getSearchResults =
                 const orString = config.attributeKeys.map(k => `${k}.eq.true`).join(",");
                 builder = builder.or(orString);
             }
+        }
+        // Cup score filters
+        if (params.cup_score_min !== undefined) {
+            if (params.cup_score_min >= cupScoreMin) builder = builder.gte('sca_cup_score', params.cup_score_min);
+        }
 
+        if (params.cup_score_max !== undefined) {
+            if (params.cup_score_max <= cupScoreMax) builder = builder.lte('sca_cup_score', params.cup_score_max);
         }
 
         // 4) Sorting

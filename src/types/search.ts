@@ -6,6 +6,8 @@ export type SearchQueryParams = {
     sort_by?: "price_low" | "price_high" | "cup_score_high";
     page?: number;
     page_size?: number;
+    cup_score_min?: number;
+    cup_score_max?: number;
 } & {
         [K in FilterKey]?: boolean;
     };

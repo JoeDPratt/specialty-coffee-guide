@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { FilterRow } from '@/components/search/FilterRow';
+import { AttributeFilterRow } from '@/components/search/filters/AttributeFilterRow';
 import { fadeUpItem } from '@/utils/animation';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/16/solid'
 import { useSearchLogic } from '@/hooks/useSearchLogic';
@@ -61,7 +61,7 @@ export default function ExpandedDesktopSearch() {
                     variants={fadeUpItem}
                     initial="hidden"
                     animate="visible">
-                    <FilterRow
+                    <AttributeFilterRow
                         excludedFilters={["is_fairtrade"]}
                         styleType={"header"}
                     />

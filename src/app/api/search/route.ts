@@ -13,6 +13,8 @@ export async function GET(req: NextRequest) {
         sort_by: sp.get("sort_by") as any,
         page: sp.has("page") ? Number(sp.get("page")) : undefined,
         page_size: sp.has("page_size") ? Number(sp.get("page_size")) : undefined,
+        cup_score_min: sp.has("cup_score_min") ? Number(sp.get("cup_score_min")) : undefined,
+        cup_score_max: sp.has("cup_score_max") ? Number(sp.get("cup_score_max")) : undefined,
     };
 
     // 🔑 dynamically map every filter key (current & future)

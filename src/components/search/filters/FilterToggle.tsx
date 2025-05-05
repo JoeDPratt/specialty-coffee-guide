@@ -1,12 +1,14 @@
 // src/components/search/FilterToggle.tsx
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/classes/merge";
-import React from "react";
+
 import { useSearchStore } from "@/stores/useSearchStore";
-import { ScalableIcon } from "../icons/ScalableIcon";
+import { ScalableIcon } from "../../icons/ScalableIcon";
+
 import { filterConfig, type FilterKey } from "@/consts/filterConfig";
 import { attributeConfig } from "@/consts/attributeConfig";
 import { usePaginationStore } from "@/stores/usePaginationStore";
+
 
 type FilterToggleProps = {
     filterKey: FilterKey;
@@ -14,34 +16,43 @@ type FilterToggleProps = {
     styleType?: string;
 };
 
-export function FilterToggle({ filterKey, config, styleType = "default" }: FilterToggleProps) {
-    const { filters, setFilters } = useSearchStore((s) => ({ filters: s.filters, setFilters: s.setFilters }));
+export function FilterToggle({
+    filterKey,
+    config,
+    styleType = "default"
+}: FilterToggleProps) {
+
     const resetPagination = usePaginationStore((s) => s.resetPagination)
+    const { filters, setFilters } = useSearchStore((s) => ({
+        filters: s.filters,
+        setFilters: s.setFilters
+    }));
 
-    const selected = filters[filterKey] === true;
-    const accent = `var(--color-${config.color}-400)`;
-    const Icon = attributeConfig[config.attributeKeys[0]].icon;
+    const isSelected = filters[filterKey] === true;
 
-    const toggle = () => {
-        setFilters({
-            ...filters,
-            [filterKey]: !selected
-        });
+    const handleClick = () => {
+
+        setFilters({ ...filters, [filterKey]: !isSelected });
         resetPagination();
     };
+
+    const accent = `var(--color-${config.color}-400)`;
+    const Icon = attributeConfig[config.attributeKeys[0]].icon;
+    const classes = cn(
+        styleType === "header" ? "pl-3 pr-4 h-11" : "pl-3 pr-4 h-10",
+        isSelected
+            ? "text-white border-[var(--accent-color)] bg-[var(--accent-color)] hover:bg-[var(--accent-color)]"
+            : ""
+    );
 
     if (styleType === "header") {
         return (
             <Button
-                onClick={toggle}
+                onClick={handleClick}
                 variant={"secondary"}
                 iconPosition={"left"}
                 styleType={"outline"}
-                className={cn("pl-3 pr-4 h-11",
-                    selected
-                        ? "text-white border-[var(--accent-color)] bg-[var(--accent-color)] hover:bg-[var(--accent-color)]"
-                        : ""
-                )}
+                className={cn(classes)}
                 style={{ "--accent-color": accent } as React.CSSProperties}
             >
                 <ScalableIcon icon={<Icon />} size={28} />
@@ -52,16 +63,12 @@ export function FilterToggle({ filterKey, config, styleType = "default" }: Filte
 
     return (
         <Button
-            onClick={toggle}
+            onClick={handleClick}
             iconPosition={"left"}
             variant={"soft"}
             styleType={"outlineLight"}
             size={"sm"}
-            className={cn("pl-3 pr-4 h-10",
-                selected
-                    ? "text-white border-[var(--accent-color)] bg-[var(--accent-color)] hover:bg-[var(--accent-color)]"
-                    : ""
-            )}
+            className={cn(classes)}
             style={{ "--accent-color": accent } as React.CSSProperties}
         >
             <ScalableIcon icon={<Icon />} size={32} />

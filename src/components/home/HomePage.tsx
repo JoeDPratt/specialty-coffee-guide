@@ -13,6 +13,7 @@ export default function HomePage({
 }: {
     roasterSlug: string;
 }): JSX.Element {
+
     const { data: products, isLoading } = useQuery({
         queryKey: ["by-roaster", roasterSlug],
         queryFn: () => fetchProductsByRoaster(roasterSlug),

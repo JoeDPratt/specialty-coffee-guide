@@ -42,11 +42,11 @@ export function useSearchLogic() {
         setLocalQuery(storeQuery);
     }, [storeQuery]);
 
-    // Debounce when writing to the store
+    // Debounce when writing the search input to the store
     useDebouncedEffect(() => {
         setQuery(localQuery.trim());
         resetPagination();
-    }, [localQuery], 300);
+    }, [localQuery]);
 
     // Set input focus
     useEffect(() => {
@@ -62,15 +62,15 @@ export function useSearchLogic() {
         return () => document.removeEventListener("keydown", onEsc);
     }, [closeSearch]);
 
-    useDebouncedEffect(() => {
-        if (!pathname.startsWith("/search")) return;
-
-        const qs = serializeQueryParams(searchParams);
+    // filters are selected on search page
+    const qs = serializeQueryParams(searchParams);
+    useEffect(() => {
+        if (!pathname.startsWith('/search')) return;
         const newUrl = `/search?${qs}`;
         if (window.location.pathname + window.location.search !== newUrl) {
             router.replace(newUrl);
         }
-    }, [searchParams], 300);
+    }, [qs, pathname, router]);
 
     const handleSearch = useCallback(() => {
         const trimmedQuery = localQuery.trim();
@@ -88,7 +88,7 @@ export function useSearchLogic() {
         const newUrl = `/search?${qs}`;
 
         if (window.location.pathname + window.location.search !== newUrl) {
-            router.replace(`/search?${newUrl}`);
+            router.push(newUrl);
         }
 
     }, [localQuery, searchParams, setQuery, setPage, closeSearch, router]);

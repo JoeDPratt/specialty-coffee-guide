@@ -133,18 +133,11 @@ export function SearchHeader() {
 
     return (
 
-        <motion.header
+        <header
             className=""
-            // style={{ height: '112px' }}
             role="banner"
             aria-label="SCG site header"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{
-                duration: 0.3,
-                ease: [0.5, 0, 0.1, 1]
-            }}
+
         >
             <div className={cn("relative bg-pr-900")}>
                 <motion.div
@@ -179,6 +172,6 @@ export function SearchHeader() {
                 </motion.div>
 
             </div>
-        </motion.header>
+        </header>
     )
 }

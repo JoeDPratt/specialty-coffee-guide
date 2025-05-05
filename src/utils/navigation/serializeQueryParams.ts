@@ -1,3 +1,4 @@
+// src/utils/navigation/serializeQueryParams.ts
 import type { SearchQueryParams } from '@/types/search';
 import { filterConfig, type FilterKey } from "@/consts/filterConfig";
 
@@ -17,13 +18,16 @@ export function serializeQueryParams(params: SearchQueryParams) {
 }
 
 export function parseQueryParams(
-    params: Record<string, string | string[] | undefined>): SearchQueryParams {
+    params: Record<string, string | string[] | undefined>
+): SearchQueryParams {
 
     const result: SearchQueryParams = {
         q: Array.isArray(params.q) ? params.q[0] : params.q ?? undefined,
         sort_by: Array.isArray(params.sort_by) ? params.sort_by[0] as any : params.sort_by as any,
         page: params.page ? Number(params.page) : 1,
         page_size: params.page_size ? Number(params.page_size) : 24,
+        cup_score_min: params.cup_score_min ? Number(params.cup_score_min) : undefined,
+        cup_score_max: params.cup_score_max ? Number(params.cup_score_max) : undefined,
     };
 
     for (const key of Object.keys(filterConfig) as FilterKey[]) {

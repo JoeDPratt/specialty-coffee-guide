@@ -24,6 +24,9 @@ type SearchState = {
     filters: Record<FilterKey, boolean>;
     setFilters: (filters: Record<FilterKey, boolean>) => void;
 
+    cupScoreRange: [number, number];
+    setCupScoreRange: (range: [number, number]) => void;
+
     selectedWeight: WeightOption;
     setSelectedWeight: (weight: WeightOption) => void;
 
@@ -57,6 +60,9 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         filters: initialFilters,
         setFilters: (filters) => set({ filters }),
 
+        cupScoreRange: [74, 101],
+        setCupScoreRange: (range) => set({ cupScoreRange: range }),
+
         selectedWeight: "250",
         setSelectedWeight: (weight) => set({ selectedWeight: weight }),
 
@@ -67,11 +73,15 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         setSortedBy: (sort) => set({ sortedBy: sort }),
 
         hydrate: (params) => {
-            const { q, sort_by, ...rest } = params;
-            set((state) => ({
-                query: q ?? state.query,
-                sortedBy: sort_by ?? state.sortedBy,
+            const { q, sort_by, cup_score_min, cup_score_max, ...rest } = params;
+            set((s) => ({
+                query: q ?? s.query,
+                sortedBy: sort_by ?? s.sortedBy,
                 filters: useHydrateFilters(params),
+                cupScore: [
+                    cup_score_min ?? s.cupScoreRange[0],
+                    cup_score_max ?? s.cupScoreRange[1],
+                ],
             }));
         }
     }),

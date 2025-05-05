@@ -8,8 +8,8 @@ export function useSearchParams(): Omit<SearchQueryParams, 'page' | 'page_size'>
     page: number;
     page_size: number;
 } {
-    const [query, filters, sortedBy] = useSearchStore(
-        s => [s.query, s.filters, s.sortedBy] as const
+    const [cupScoreRange, query, filters, sortedBy] = useSearchStore(
+        s => [s.cupScoreRange, s.query, s.filters, s.sortedBy] as const
     );
 
     const [page, pageSize] = usePaginationStore(
@@ -22,5 +22,7 @@ export function useSearchParams(): Omit<SearchQueryParams, 'page' | 'page_size'>
         sort_by: sortedBy,
         page,
         page_size: pageSize,
-    }), [query, filters, sortedBy, page, pageSize]);
+        cup_score_min: cupScoreRange[0],
+        cup_score_max: cupScoreRange[1],
+    }), [query, filters, sortedBy, page, pageSize, cupScoreRange]);
 }

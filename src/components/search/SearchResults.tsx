@@ -27,7 +27,7 @@ export default function SearchResults() {
     const resultsView = useSearchStore((s) => s.selectedView);
     const isSm = useBreakpointStore((s) => s.isSm);
 
-    useSyncUrlParams();
+    // useSyncUrlParams();
 
     const {
         data,

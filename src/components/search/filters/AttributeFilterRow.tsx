@@ -1,8 +1,8 @@
 // // src/components/search/FilterRow.tsx
-import { FilterToggle } from "@/components/search/FilterToggle"
+import { FilterToggle } from "@/components/search/filters/FilterToggle"
 import { filterConfig, FilterKey } from "@/consts/filterConfig";
 
-export function FilterRow({
+export function AttributeFilterRow({
     excludedFilters = [],
     styleType = "default" }
     :
