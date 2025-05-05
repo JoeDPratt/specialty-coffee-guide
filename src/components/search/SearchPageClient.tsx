@@ -55,12 +55,26 @@ export default function SearchPageClient({
                 <SearchInputBar />
             </div>
             <div className={cn(
-                "flex flex-col sm:flex-row flex-nowrap",
+                "flex flex-col lg:flex-row flex-nowrap",
                 "mt-10 pb-50 max-w-[1920px] mx-auto",
                 "px-3 md:px-4 lg:px-6",
                 "gap-3 sm:gap-6 lg:gap-12")} >
 
-                {isFilterMenuOpen && <SearchFilterMenu className={"flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />}
+                {isFilterMenuOpen &&
+                    <SearchFilterMenu
+                        className={cn(
+                            // Default (mobile-first): fullscreen modal
+                            "fixed inset-0 z-[1000] p-6 bg-card-100 flex flex-col w-full h-full gap-4",
+                            "overflow-y-auto touch-pan-y overscroll-contain",
+
+                            // Medium screens (centered modal with scroll if content overflows)
+                            "md:top-10 md:bottom-10 md:w-3/4 md:mx-auto md:rounded-md",
+
+                            // Large screens and up: sidebar
+                            "lg:relative lg:z-0 lg:p-0 lg:bg-transparent lg:h-max lg:w-1/4 lg:min-w-70"
+
+                        )} />}
+
                 <div className="@container/grid flex flex-col flex-1">
                     <div className="flex justify-between items-center w-full mb-4">
                         {isLoading || isFetching

@@ -1,10 +1,22 @@
 // src/components/search/SearchFilterMenu.tsx
 import { cn } from "@/utils/classes/merge";
-import { AttributeFilterRow } from "@/components/search/filters/AttributeFilterRow";
 import CupScoreFilter from "@/components/search/filters/CupScoreFilter";
 import SourcingQualityFilter from "./filters/SourcingQualityFilter";
+import { useBreakpointStore } from "@/stores/useBreakpointStore";
+import { useSearchStore } from "@/stores/useSearchStore";
+import { Button } from "../ui/button";
 
 export default function SearchFilterMenu({ className }: { className: string }) {
+
+    const isLg = useBreakpointStore((s) => s.isLg)
+    const { areFiltersOpen, toggleFilters, totalResults } = useSearchStore((s) => ({
+        areFiltersOpen: s.areFiltersOpen,
+        toggleFilters: s.toggleFilters,
+        totalResults: s.totalResults,
+    }))
+    const isFilterMenuOpen = isLg || areFiltersOpen;
+
+    const showBtnText = `Show ${totalResults} ${totalResults > 1 ? "coffees" : "coffee"}`;
 
     return (
         <div className={cn(className)}>
@@ -22,6 +34,11 @@ export default function SearchFilterMenu({ className }: { className: string }) {
                 <hr className="hr-dark"></hr>
 
             </div>
+            {isFilterMenuOpen && <Button
+                variant={"accent"}
+                onClick={toggleFilters}
+                className="w-60 self-end"
+            >{showBtnText}</Button>}
         </div>
     )
 }
