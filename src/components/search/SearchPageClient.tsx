@@ -6,8 +6,6 @@ import SearchResults from '@/components/search/SearchResults';
 import SearchInputBar from '@/components/search/SearchInputBar';
 import type { SearchQueryParams } from '@/types/search';
 import { cn } from '@/utils/classes/merge';
-import { useSearchLogic } from '@/hooks/useSearchLogic';
-import { useBreakpointStore } from '@/stores/useBreakpointStore';
 import { ViewMode, useSearchStore } from '@/stores/useSearchStore';
 import { ToggleWithTooltips, ToggleWithTooltipsProps } from '../shared/buttons/ToggleWithToolTips';
 import { Bars4Icon, Squares2X2Icon } from '@heroicons/react/16/solid';
@@ -17,6 +15,7 @@ import { useSearchQuery } from '@/hooks/useSearchQuery';
 import SCGSpinner from '../shared/loading/SCGSpinner';
 import { useHydrateSearchStores } from '@/hooks/useHydrateSearchStores';
 import { useMemo } from 'react';
+import { useBreakpointStore } from '@/stores/useBreakpointStore';
 
 
 export default function SearchPageClient({
@@ -40,6 +39,8 @@ export default function SearchPageClient({
     }));
 
     const isSm = useBreakpointStore((s) => s.isSm);
+    const isLg = useBreakpointStore((s) => s.isLg);
+    const isFilterMenuOpen = !isLg || areFiltersOpen;
 
     const viewOptions: ToggleWithTooltipsProps<ViewMode>["options"] = useMemo(() => [
         { value: "grid", label: "Grid", icon: <Squares2X2Icon /> },
@@ -59,7 +60,7 @@ export default function SearchPageClient({
                 "px-3 md:px-4 lg:px-6",
                 "gap-3 sm:gap-6 lg:gap-12")} >
 
-                <SearchFilterMenu className={"hidden lg:flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />
+                {isFilterMenuOpen && <SearchFilterMenu className={"flex flex-col w-full lg:w-1/4 min-w-70rounded-md h-max gap-4"} />}
                 <div className="@container/grid flex flex-col flex-1">
                     <div className="flex justify-between items-center w-full mb-4">
                         {isLoading || isFetching

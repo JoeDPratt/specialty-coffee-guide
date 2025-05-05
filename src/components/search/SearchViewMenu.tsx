@@ -11,10 +11,12 @@ export default function SeacrhViewMenu() {
 
     const {
         selectedWeight,
-        setWeight
+        setWeight,
+        toggleFilters,
     } = useSearchStore((s) => ({
         selectedWeight: s.selectedWeight,
-        setWeight: s.setSelectedWeight
+        setWeight: s.setSelectedWeight,
+        toggleFilters: s.toggleFilters,
     }));
 
     const filterCount = useFilterCount();
@@ -26,7 +28,7 @@ export default function SeacrhViewMenu() {
                 variant={"default"}
                 styleType={"outline"}
                 count={filterCount}
-                // onClick={}
+                onClick={toggleFilters}
                 aria-label="Filter Option Button"
                 size={"icon"}
                 className="inline lg:hidden"

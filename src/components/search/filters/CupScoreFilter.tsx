@@ -21,7 +21,7 @@ export default function CupScoreFilter() {
         <div>
             <FilterHeading
                 title={"SCA Cup Score"}
-                subtitle={"Scored according to the Specialty Coffee Association's official cupping protocol"}
+                subtitle={"Filter by the official Specialty Coffee Association's cup score."}
                 handleClear={clearRange}
                 isSet={isSet} />
             <FilterSlider
