@@ -5,9 +5,13 @@ import SourcingQualityFilter from "./filters/SourcingQualityFilter";
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
+import { AnimatePresence, motion } from "framer-motion";
+import { dialogVariants } from "@/utils/animation";
+
+const MotionDialogContent = motion(DialogContent);
 
 function SearchFilterMenuContent({ className }: { className?: string }) {
 
@@ -42,44 +46,53 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
 
     return (
         <>
-            <Dialog open={isLg && areFiltersOpen} onOpenChange={toggleFilters}>
-                <DialogContent className="p-0 h-full md:h-[calc(100vh-40px)] md:max-h-[calc(100vh-40px)] gap-0 rounded-lg bg-card-200 grid grid-rows-[auto_1fr_auto]">
-                    {/* Header */}
-                    <DialogHeader className="relative space-y-0 pt-7.25 pb-3.5 border-b-2 border-pr-900/10">
-                        <DialogTitle className="m-0 text-3xl text-center font-medium font-teko tracking-wide leading-none">
-                            Filters
-                        </DialogTitle>
-                        <DialogClose asChild>
+            <AnimatePresence>
+                <Dialog open={isLg && areFiltersOpen} onOpenChange={toggleFilters}>
+                    <MotionDialogContent
+                        variants={dialogVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        key="filter-dialog"
+                        className="p-0 border-none max-sm:mt-5 h-[calc(100vh-40px)] md:max-h-[calc(100vh-40px)] gap-0 rounded-b-none rounded-t-xl sm:rounded-xl bg-card-200 grid grid-rows-[auto_1fr_auto]
+                        ">
+                        {/* Header */}
+                        <DialogHeader className="relative space-y-0 pt-7.25 pb-3.5 border-b-2 border-pr-900/10 rounded-t-xl">
+                            <DialogTitle className="m-0 text-3xl text-center font-medium font-teko tracking-wide leading-none">
+                                Filters
+                            </DialogTitle>
+                            <DialogClose asChild>
+                                <Button
+                                    variant="ghost"
+                                    size="iconLg"
+                                    className="absolute top-4 right-4 hover:bg-white"
+                                    aria-label="Close"
+                                >
+                                    <XMarkIcon className="size-6" />
+                                </Button>
+                            </DialogClose>
+                        </DialogHeader>
+
+                        {/* Scrollable Content */}
+
+                        <div className="pt-8 pb-20 min-h-0 overflow-y-auto">
+                            <SearchFilterMenuContent className={cn(paddingX)} />
+                        </div>
+                        {/* Footer */}
+                        <div className={cn("flex py-4 w-full bg-card-100 rounded-b-none sm:rounded-b-xl shadow-[0px_-10px_15px_0px_rgba(0,0,0,0.08)]", paddingX)}>
                             <Button
-                                variant="ghost"
-                                size="iconLg"
-                                className="absolute top-4 right-4 hover:bg-white"
-                                aria-label="Close"
+                                variant={"accent"}
+                                size={"lg"}
+                                onClick={toggleFilters}
+                                isLoading={isLoading || isFetching}
+                                className="w-full xs:w-60 xs:ml-auto xs:self-end"
                             >
-                                <XMarkIcon className="size-6" />
+                                {showBtnText}
                             </Button>
-                        </DialogClose>
-                    </DialogHeader>
-
-                    {/* Scrollable Content */}
-
-                    <div className="pt-8 pb-20 min-h-0 overflow-y-auto">
-                        <SearchFilterMenuContent className={cn(paddingX)} />
-                    </div>
-                    {/* Footer */}
-                    <div className={cn("flex py-4 w-full bg-card-100 rounded-b-lg shadow-[0px_-10px_15px_0px_rgba(0,0,0,0.08)]", paddingX)}>
-                        <Button
-                            variant={"accent"}
-                            size={"lg"}
-                            onClick={toggleFilters}
-                            isLoading={isLoading || isFetching}
-                            className="w-60 ml-auto self-end"
-                        >
-                            {showBtnText}
-                        </Button>
-                    </div>
-                </DialogContent>
-            </Dialog>
+                        </div>
+                    </MotionDialogContent>
+                </Dialog>
+            </AnimatePresence>
 
             <div className={cn("hidden lg:flex flex-col gap-7.5",
                 "lg:relative lg:z-0 lg:p-0 lg:bg-transparent lg:h-max lg:w-1/4 lg:min-w-70")}>

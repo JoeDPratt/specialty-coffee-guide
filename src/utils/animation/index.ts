@@ -12,7 +12,7 @@ export const staggerContainer = {
 export const fadeUpItem = {
     hidden: {
         opacity: 0,
-        y: 20, // 👈 More subtle vertical offset
+        y: 20,
     },
     visible: {
         opacity: 1,
@@ -24,13 +24,27 @@ export const fadeUpItem = {
     },
     exit: {
         opacity: 0,
-        y: 4, // 👈 Slight upward movement on exit
+        y: 4,
         transition: {
             duration: 0.2,
             ease: "easeIn",
         },
     },
 }
+
+export const dialogVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.1, ease: 'easeOut' },
+    },
+    exit: {
+        opacity: 0,
+        y: 100,
+        transition: { duration: 0.1, ease: 'easeOut' },
+    },
+};
 
 
 export const subtleSpring = {
