@@ -61,7 +61,7 @@ export default function SearchPageClient({
                 "gap-3 sm:gap-6 lg:gap-12")} >
 
                 {isFilterMenuOpen &&
-                    <SearchFilterMenu isLoading={isLoading || isFetching} />}
+                    <SearchFilterMenu />}
 
                 <div className="@container/grid flex flex-col flex-1">
                     <div className="flex justify-between items-center w-full mb-4">

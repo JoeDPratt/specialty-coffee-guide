@@ -50,5 +50,5 @@ export function useSearchQuery() {
         if (result.isError) setTotalResults(0)
     }, [result.isSuccess, result.isError, result.data, setTotalResults])
 
-    return result          // { data, isLoading, isFetching, ... }
+    return result
 }
