@@ -66,7 +66,7 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         toggleFilters: () => set((s) => ({ areFiltersOpen: !s.areFiltersOpen })),
 
         query: '',
-        setQuery: (query: string) => set({ query: query.trim().replace(/\s+/g, " ").toLowerCase() }),
+        setQuery: (query: string) => set({ query: query.trim() }),
 
         totalResults: 0,
         setTotalResults: (results) => set({ totalResults: results }),

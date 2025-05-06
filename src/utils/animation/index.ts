@@ -33,16 +33,20 @@ export const fadeUpItem = {
 }
 
 export const dialogVariants = {
-    hidden: { opacity: 0, y: 100 },
+    hidden: {
+        opacity: 0.5,
+        y: 100,
+        transition: { duration: 0.5, ease: 'easeOut' },
+    },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.1, ease: 'easeOut' },
+        transition: { duration: 0.5, ease: 'easeOut' },
     },
     exit: {
-        opacity: 0,
+        opacity: 0.5,
         y: 100,
-        transition: { duration: 0.1, ease: 'easeOut' },
+        transition: { duration: 0.5, ease: 'easeOut' },
     },
 };
 

@@ -1,55 +1,43 @@
-import { ToggleWithTooltips } from "../shared/buttons/ToggleWithToolTips";
-import { useSearchStore } from "@/stores/useSearchStore";
-import type { WeightOption } from "@/stores/useSearchStore";
-import { DropdownSort } from "./DropdownSort";
-import { Button } from "../ui/button";
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
-import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";
-import { useFilterCount } from "@/hooks/useFilterCount";
+import { useSearchQuery } from "@/hooks/useSearchQuery";
+import { useSearchResultsCounter } from "@/hooks/useSearchResultsCounter";
+import { useBreakpointStore } from "@/stores/useBreakpointStore";
+import { ViewMode, useSearchStore } from "@/stores/useSearchStore";
+import { ToggleWithTooltips, ToggleWithTooltipsProps } from "@/components/shared/buttons/ToggleWithToolTips";
+import { useMemo } from "react";
+import { Bars4Icon, Squares2X2Icon } from "@heroicons/react/16/solid";
+import SCGSpinner from "@/components/shared/loading/SCGSpinner";
 
-export default function SeacrhViewMenu() {
+export default function SearchViewMenu() {
 
-    const {
-        selectedWeight,
-        setWeight,
-        toggleFilters,
-    } = useSearchStore((s) => ({
-        selectedWeight: s.selectedWeight,
-        setWeight: s.setSelectedWeight,
-        toggleFilters: s.toggleFilters,
+    const { isLoading, isFetching } = useSearchQuery();
+    const resultsString = useSearchResultsCounter();
+
+    const { selectedView, setSelectedView } = useSearchStore((s) => ({
+        selectedView: s.selectedView,
+        setSelectedView: s.setSelectedView,
     }));
 
-    const filterCount = useFilterCount();
+    const isSm = useBreakpointStore((s) => s.isSm);
+
+
+    const viewOptions: ToggleWithTooltipsProps<ViewMode>["options"] = useMemo(() => [
+        { value: "grid", label: "Grid", icon: <Squares2X2Icon /> },
+        { value: "list", label: "List", icon: <Bars4Icon /> },
+    ], []);
 
     return (
-        <div className="flex items-center gap-2 xs:gap-4 md:gap-6">
-            {/* Filter Icon Button, shows below lg */}
-            <ButtonWithBadge
-                variant={"default"}
-                styleType={"outline"}
-                count={filterCount}
-                onClick={toggleFilters}
-                aria-label="Filter Option Button"
-                size={"icon"}
-                className="inline lg:hidden"
-            >
-                <AdjustmentsHorizontalIcon />
-            </ButtonWithBadge>
-
-            <div className="hidden items-center gap-2 lg:flex">
-                <span className="mt-0.5 text-base min-w-max">View prices for:</span>
-                <ToggleWithTooltips<WeightOption>
-                    value={selectedWeight}
-                    onChange={setWeight}
-                    options={[
-                        { value: "250", label: "250g", tooltip: "Compare prices of coffees available in 250g bags" },
-                        { value: "1000", label: "1kg", tooltip: "Compare prices of coffees available in 1kg bags" },
-                    ]}
-                    toggleItemClassName={"py-4.25"}
-                    tooltipOffset={17}
-                />
-            </div>
-            <DropdownSort />
+        <div className="flex justify-between items-center w-full mb-4">
+            {isLoading || isFetching
+                ? <span className="flex items-center gap-2" ><SCGSpinner size={32} />Loading coffees...</span>
+                : <span>{resultsString}</span>
+            }
+            {!isSm && <ToggleWithTooltips<ViewMode>
+                value={selectedView}
+                onChange={setSelectedView}
+                options={viewOptions}
+                showLabel={!isSm}
+                showTooltip={isSm}
+            />}
         </div>
     )
 }

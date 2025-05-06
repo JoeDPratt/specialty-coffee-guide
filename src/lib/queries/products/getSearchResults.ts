@@ -30,7 +30,10 @@ export const getSearchResults =
             .eq('is_deleted', false);
 
         // 3) Your optional filters, with plain `if` blocks
-        if (params.q) builder = builder.textSearch('search_terms', params.q, { type: 'websearch' });
+        if (params.q) {
+            const sanitizedQuery = params.q.replace(/\s+/g, " ").trim().toLowerCase();
+            builder = builder.textSearch('search_terms', sanitizedQuery, { type: 'websearch' });
+        }
 
         for (const key of Object.keys(filterConfig) as FilterKey[]) {
             const isActive = params[key];

@@ -54,15 +54,16 @@ export function DropdownSort({ className }: DropdownSortProps) {
     return (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
             <DropdownMenuTrigger asChild>
-                {isMd ?
+                <div>
                     <Button
+                        className="md:hidden flex"
                         styleType={"outline"}
                         size={"icon"}>
                         <ArrowsUpDownIcon />
-                    </Button> :
+                    </Button>
                     <button
                         className={cn(
-                            "flex items-center justify-between gap-2 px-4 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-colors cursor-pointer min-w-[250px] outline-none",
+                            "hidden md:flex items-center justify-between gap-2 px-4 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-colors cursor-pointer min-w-[250px] outline-none",
                             className
                         )}
                     >
@@ -77,7 +78,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
                             )}
                         />
                     </button>
-                }
+                </div>
             </DropdownMenuTrigger>
 
             <AnimatePresence>

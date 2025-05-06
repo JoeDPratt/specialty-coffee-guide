@@ -2,6 +2,7 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
+@import "tw-animate-css";
 
 @theme {
     /* Colors */
@@ -70,6 +71,8 @@
     --animate-pulse: pulse-soft 1.5s ease-in-out infinite;
     --animate-pulse-medium: pulse-medium 1.5s ease-in-out infinite;
     --animate-bounce-high: bounce-high 0.8s ease-in-out infinite;
+    --animate-fade-in: fade-in 0.5s ease-out forwards;
+    --animate-fade-out: fade-out 0.5s ease-out forwards;
 
     @keyframes pulse-soft {
         0%, 100% {
@@ -86,6 +89,24 @@
         }
         50% {
           opacity: 0.3;
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fade-out {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
         }
       }
 

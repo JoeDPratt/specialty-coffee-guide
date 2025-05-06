@@ -2,10 +2,9 @@
 'use client'
 
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import SearchViewMenu from '@/components/search/SearchViewMenu';
+import SearchBarMenu from '@/components/search/SearchBarMenu';
 import { cn } from "@/utils/classes/merge";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useSearchLogic } from "@/hooks/useSearchLogic";
 import { useEffect, useState } from "react";
 import { useDebouncedEffect } from "@/hooks/useDebounceEffect";
@@ -33,6 +32,7 @@ export default function SearchInputBar() {
                     "focus-within:outline-none focus-within:ring-1 focus-within:ring-ring")}
             // layoutId="searchField"
             >
+                <MagnifyingGlassIcon className="size-6 ml-3 text-pr-900" />
                 <Input
                     ref={inputRef}
                     type="search"
@@ -42,19 +42,12 @@ export default function SearchInputBar() {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     placeholder='Try "Cherry" or "Bourbon"'
-                    className="bg-transparent md:min-w-86"
+                    className="bg-transparent md:min-w-86 pl-2"
                     focus={"parent"}
                 />
-                <Button
-                    variant={"accent"}
-                    onClick={handleSearch}
-                    aria-label="Search Button"
-                    size={"icon"}
-                    className="size-11"
-                ><MagnifyingGlassIcon />
-                </Button>
+
             </div>
-            <SearchViewMenu />
+            <SearchBarMenu />
         </div>
     )
 }
