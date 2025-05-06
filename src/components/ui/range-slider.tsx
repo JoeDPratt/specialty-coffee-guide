@@ -25,7 +25,7 @@ export const RangeSlider = React.forwardRef<
         onValueChange={onValueChange}
         {...props}
     >
-        <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-card-200">
+        <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-card-100">
             <SliderPrimitive.Range className="absolute h-full bg-primary" />
         </SliderPrimitive.Track>
 

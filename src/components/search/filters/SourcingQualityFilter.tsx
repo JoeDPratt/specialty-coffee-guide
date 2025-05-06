@@ -1,6 +1,6 @@
 import { useSearchStore } from "@/stores/useSearchStore";
 import { AttributeFilterRow } from "./AttributeFilterRow";
-import FilterHeading from "./FilterHeading";
+import FilterHeading from "./FilterHeader";
 
 export default function SourcingQualityFilter() {
 

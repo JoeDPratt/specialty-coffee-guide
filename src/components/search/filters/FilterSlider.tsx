@@ -36,14 +36,11 @@ export default function FilterSlider({
         return value >= min && value <= max ? String(value) : "--"
     }
 
-    const labelClass = "text-xl text-pr-900 text-center px-1.5 pt-1 pb-0.75 bg-card-200 rounded-sm"
+    const labelClass = "text-xl text-pr-900 text-center px-1.5 pt-1 pb-0.75 bg-card-100 rounded-sm min-w-12"
 
     return (
-        <div className="w-full max-w-lg mx-auto">
-            <div className="flex justify-between">
-                <label className={cn(labelClass)}>{showInRange(localRange[0])}</label>
-                <label className={cn(labelClass)}>{showInRange(localRange[1])}</label>
-            </div>
+        <div className="flex justify-between gap-2 w-full max-w-lg mx-auto items-center">
+            <label className={cn(labelClass)}>{showInRange(localRange[0])}</label>
             <RangeSlider
                 value={localRange}
                 onValueChange={setLocalRange}
@@ -51,8 +48,9 @@ export default function FilterSlider({
                 min={min - 1}
                 max={max + 1}
                 step={step}
-                className="mt-4"
+                className=""
             />
+            <label className={cn(labelClass)}>{showInRange(localRange[1])}</label>
         </div>
     );
 }

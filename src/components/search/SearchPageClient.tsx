@@ -63,15 +63,7 @@ export default function SearchPageClient({
                 {isFilterMenuOpen &&
                     <SearchFilterMenu
                         className={cn(
-                            // Default (mobile-first): fullscreen modal
-                            "fixed inset-0 z-[1000] p-6 bg-card-100 flex flex-col w-full h-full gap-4",
-                            "overflow-y-auto touch-pan-y overscroll-contain",
-
-                            // Medium screens (centered modal with scroll if content overflows)
-                            "md:top-10 md:bottom-10 md:w-3/4 md:mx-auto md:rounded-md",
-
-                            // Large screens and up: sidebar
-                            "lg:relative lg:z-0 lg:p-0 lg:bg-transparent lg:h-max lg:w-1/4 lg:min-w-70"
+                            ""
 
                         )} />}
 

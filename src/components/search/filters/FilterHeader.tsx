@@ -19,11 +19,11 @@ export default function FilterHeading({
             <div className="flex justify-between items-center">
                 <h3 className="text-2xl leading-none m-0">{title}</h3>
                 {isSet && <Button
-                    variant={"link"}
-                    size={"lg"}
-                    className="px-0 pb-1 h-6 hover:text-pr-600"
+                    variant={"secondary"}
+                    size={"sm"}
+                    className="h-6 px-3"
                     onClick={handleClear}>
-                    <XMarkIcon />
+                    clear
                 </Button>}
             </div>
             {subtitle && <p className="text-base text-pr-900 text-left leading-5 mt-2.5 mb-0">{subtitle}</p>}

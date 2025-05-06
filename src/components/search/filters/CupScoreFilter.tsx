@@ -4,7 +4,7 @@
 import FilterSlider from "@/components/search/filters/FilterSlider";
 import { cupScoreRange } from "@/consts/rangeConfig";
 import { useSearchStore } from "@/stores/useSearchStore";
-import FilterHeading from "@/components/search/filters/FilterHeading";
+import FilterHeading from "@/components/search/filters/FilterHeader";
 
 export default function CupScoreFilter() {
 
