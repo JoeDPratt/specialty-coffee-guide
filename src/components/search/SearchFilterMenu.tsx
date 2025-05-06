@@ -49,14 +49,14 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
     return (
         <>
             <Dialog
-                open={areFiltersOpen}
+                open={isLg && areFiltersOpen}
                 onOpenChange={toggleFilters}>
                 <DialogPortal forceMount>
                     {shouldRender && (
                         <DialogContent
                             forceMount
                             className={cn(
-                                "p-0 border-none max-sm:mt-5 h-[calc(100vh-40px)] md:max-h-[calc(100vh-40px)]",
+                                "p-0 border-none h-full sm:max-h-[calc(100vh-40px)]",
                                 "gap-0 rounded-b-none rounded-t-xl sm:rounded-xl bg-card-200",
                                 "grid grid-rows-[auto_1fr_auto]"
                             )}
