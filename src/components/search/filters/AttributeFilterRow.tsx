@@ -1,4 +1,4 @@
-// // src/components/search/FilterRow.tsx
+// // src/components/search/AttributeFilterRow.tsx
 import { FilterToggle } from "@/components/search/filters/FilterToggle"
 import { filterConfig, FilterKey } from "@/consts/filterConfig";
 

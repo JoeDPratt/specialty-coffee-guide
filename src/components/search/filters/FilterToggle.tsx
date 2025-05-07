@@ -1,10 +1,8 @@
 // src/components/search/FilterToggle.tsx
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/classes/merge";
-
 import { useSearchStore } from "@/stores/useSearchStore";
 import { ScalableIcon } from "../../icons/ScalableIcon";
-
 import { filterConfig, type FilterKey } from "@/consts/filterConfig";
 import { attributeConfig } from "@/consts/attributeConfig";
 import { usePaginationStore } from "@/stores/usePaginationStore";
@@ -31,8 +29,10 @@ export function FilterToggle({
     const isSelected = filters[filterKey] === true;
 
     const handleClick = () => {
-
-        setFilters({ ...filters, [filterKey]: !isSelected });
+        setFilters((prev) => ({
+            ...prev,
+            [filterKey]: !prev[filterKey]
+        }));
         resetPagination();
     };
 

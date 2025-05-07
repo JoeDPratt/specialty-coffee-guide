@@ -1,6 +1,6 @@
 import { useSearchStore } from "@/stores/useSearchStore";
 import { AttributeFilterRow } from "./AttributeFilterRow";
-import FilterHeading from "./FilterHeader";
+import FilterHeader from "@/components/search/filters/FilterHeader";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
 import { initialFilters } from "@/stores/useSearchStore";
 
@@ -15,7 +15,7 @@ export default function SourcingQualityFilter() {
 
     return (
         <div>
-            <FilterHeading
+            <FilterHeader
                 title={"Sourcing & Quality"}
                 handleClear={clearFilters}
                 isSet={isSQFilterSet} />

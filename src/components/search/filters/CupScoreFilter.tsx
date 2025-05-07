@@ -4,7 +4,7 @@
 import FilterSlider from "@/components/search/filters/FilterSlider";
 import { cupScoreRange } from "@/consts/rangeConfig";
 import { useSearchStore } from "@/stores/useSearchStore";
-import FilterHeading from "@/components/search/filters/FilterHeader";
+import FilterHeader from "@/components/search/filters/FilterHeader";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
 
 export default function CupScoreFilter() {
@@ -19,7 +19,7 @@ export default function CupScoreFilter() {
 
     return (
         <div>
-            <FilterHeading
+            <FilterHeader
                 title={"SCA Cup Score"}
                 subtitle={"Filter by the official Specialty Coffee Association's cup score."}
                 handleClear={clearRange}

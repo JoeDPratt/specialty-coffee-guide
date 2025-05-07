@@ -65,8 +65,8 @@ export function ToggleWithTooltips<TValue extends string>({
                         key={option.value}
                         value={option.value}
                         className={cn(
-                            "rounded-none hover:bg-pr-100",
-                            "transition-[fill,font-weight,color] duration-300 ease-in-out",
+                            "rounded-none hover:bg-pr-100 hover:scale-102 hover:shadow-sm hover:animate-pulse active:scale-98",
+                            "transition-all duration-300",
                             toggleItemClass,
                             idx === 0 && "rounded-l-full rounded-r-none pl-4.5",
                             idx === options.length - 1 && "rounded-r-full rounded-l-none pr-4.5"

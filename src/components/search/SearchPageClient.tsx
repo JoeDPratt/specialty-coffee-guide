@@ -29,13 +29,13 @@ export default function SearchPageClient({
                 <SearchInputBar />
             </div>
             <div className={cn(
-                "flex flex-col lg:flex-row flex-nowrap",
-                "mt-10 pb-50 max-w-[1920px] mx-auto",
-                "px-3 md:px-4 lg:px-6",
-                "gap-3 sm:gap-6 lg:gap-12")
+                "flex flex-col gap-3 mt-10 px-3 max-w-[1920px] mx-auto",
+                "sm:gap-6",
+                "md:px-4",
+                "lg:flex-row flex-nowraplg:px-6 lg:gap-12 lg:mt-0")
             } >
-                <SearchFilterMenu />
-                <div className="@container/grid flex flex-col flex-1">
+                <SearchFilterMenu className="lg:pt-6" />
+                <div className="@container/grid flex flex-col flex-1 overflow-y-auto max-h-[calc(100vh-140px)] no-scrollbar lg:pt-6">
                     <SearchViewMenu />
                     <SearchResults />
                 </div>

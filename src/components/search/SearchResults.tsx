@@ -46,7 +46,7 @@ export default function SearchResults() {
                 className={cn(
                     resultsView === 'list' && !isSm
                         ? 'gap-8 sm:gap-4 flex flex-col'
-                        : 'gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4'
+                        : 'gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4',
                 )}
                 variants={staggerContainer}
                 initial="hidden"

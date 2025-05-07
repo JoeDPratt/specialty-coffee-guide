@@ -174,7 +174,6 @@
     }
     .hr-dark {
         @apply border-none h-0.5 bg-pr-900/10;
-
     }
     .hr-light {
         @apply border-none h-0.5 bg-white/25;
@@ -211,6 +210,10 @@
     .hide-search-clear::-webkit-search-results-button,
     .hide-search-clear::-webkit-search-results-decoration {
         display: none;
+    }
+
+    .inner-outline {
+        @apply outline-1 outline-pr-900
     }
 }
   

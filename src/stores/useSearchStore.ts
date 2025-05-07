@@ -30,8 +30,16 @@ type SearchState = {
     totalResults: number;
     setTotalResults: (results: number) => void;
 
-    filters: Record<FilterKey, boolean>;
-    setFilters: (filters: Record<FilterKey, boolean>) => void;
+    filters: Record<FilterKey, boolean>; // Base attribute filters - Organic etc
+    setFilters: (
+        update:
+            | Record<FilterKey, boolean>
+            | ((prev: Record<FilterKey, boolean>) => Record<FilterKey, boolean>)
+    ) => void;
+
+    varietalFilters: string[];
+    setVarietalFilters: (filters: string[]) => void;
+    toggleVarietalFilter: (key: string) => void;
 
     cupScoreRange: [number, number];
     setCupScoreRange: (range: [number, number]) => void;
@@ -74,7 +82,25 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         setTotalResults: (results) => set({ totalResults: results }),
 
         filters: initialFilters,
-        setFilters: (filters) => set({ filters }),
+        setFilters: (update) =>
+            set((state) => ({
+                filters:
+                    typeof update === "function"
+                        ? update(state.filters)
+                        : update,
+            })),
+
+        varietalFilters: [],
+        setVarietalFilters: (filters) => set({ varietalFilters: filters }),
+        toggleVarietalFilter: (key) =>
+            set((state) => {
+                const exists = state.varietalFilters.includes(key);
+                return {
+                    varietalFilters: exists
+                        ? state.varietalFilters.filter((k) => k !== key)
+                        : [...state.varietalFilters, key],
+                };
+            }),
 
         cupScoreRange: outOfBoundsCupScore,
         setCupScoreRange: (range) => set({ cupScoreRange: range }),

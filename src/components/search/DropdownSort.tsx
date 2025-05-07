@@ -13,8 +13,7 @@ import { ArrowsUpDownIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { tooltipMotion } from "@/utils/animation";
-import { useBreakpointStore } from "@/stores/useBreakpointStore";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { usePaginationStore } from "@/stores/usePaginationStore";
 
 interface DropdownSortProps {
@@ -30,7 +29,6 @@ const sortOptions: { label: string; value: SortOption }[] = [
 export function DropdownSort({ className }: DropdownSortProps) {
     const { sortedBy, setSortedBy } = useSearchStore((s) => ({ sortedBy: s.sortedBy, setSortedBy: s.setSortedBy }));
     const resetPagination = usePaginationStore((s) => s.resetPagination)
-    const isMd = useBreakpointStore((s) => s.isMd);
 
     const [isOpen, setIsOpen] = useState(false);
     const [showChevronUp, setShowChevronUp] = useState(false);
@@ -63,7 +61,8 @@ export function DropdownSort({ className }: DropdownSortProps) {
                     </Button>
                     <button
                         className={cn(
-                            "hidden md:flex items-center justify-between gap-2 px-4 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-colors cursor-pointer min-w-[250px] outline-none",
+                            "hidden md:flex items-center justify-between gap-2 px-4 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-all cursor-pointer min-w-[250px] outline-none",
+                            "hover:scale-102 hover:shadow-sm hover:animate-pulse active:scale-98",
                             className
                         )}
                     >
@@ -98,6 +97,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
                                     onClick={() => handleSort(option.value)}
                                     className={cn(
                                         "flex items-center px-3 pb-3.25 pt-3.75 rounded-none text-pr-700 hover:bg-pr-100 hover:text-pr-700 cursor-pointer text-lg md:text-base",
+                                        "hover:animate-pulse active:scale-98 transition-all",
                                         sortedBy === option.value && "bg-pr-300 text-pr-700 font-bold",
 
                                     )}

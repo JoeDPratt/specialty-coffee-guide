@@ -10,6 +10,7 @@ import { Dialog, DialogClose, DialogContent, DialogHeader, DialogPortal, DialogT
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
+import VarietalsFilter from "./filters/VarietalsFilter";
 
 function SearchFilterMenuContent({ className }: { className?: string }) {
 
@@ -25,6 +26,8 @@ function SearchFilterMenuContent({ className }: { className?: string }) {
             </div>
             <hr className="hr-dark"></hr>
             <CupScoreFilter />
+            <hr className="hr-dark"></hr>
+            <VarietalsFilter />
             <hr className="hr-dark"></hr>
 
         </div>
@@ -43,7 +46,8 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
     const { isLoading, isFetching } = useSearchQuery();
     const { isAnyFilterSet } = useActiveFilters();
 
-    const showBtnText = `Show ${totalResults} ${totalResults > 1 ? "coffees" : "coffee"}`;
+    const numberOfCoffees = totalResults > 99 ? "99+" : String(totalResults);
+    const showBtnText = `Show ${numberOfCoffees} ${totalResults > 1 ? "coffees" : "coffee"}`;
     const paddingX = "px-4 xs:px-6 lg:px-0"
 
 
@@ -64,13 +68,6 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
 
                         {/* Header */}
                         <DialogHeader className="relative space-y-0 pt-7.25 pb-3.5 border-b-2 border-pr-900/10 rounded-t-xl">
-                            {isAnyFilterSet && <Button
-                                variant={"secondary"}
-                                size={"sm"}
-                                className="absolute top-7.25 left-6 h-6 px-3 "
-                                onClick={clearAllFilters}>
-                                clear all
-                            </Button>}
                             <DialogTitle className="m-0 text-3xl text-center font-medium font-teko tracking-wide leading-none">
                                 Filters
                             </DialogTitle>
@@ -92,13 +89,20 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                             <SearchFilterMenuContent className={cn(paddingX)} />
                         </div>
                         {/* Footer */}
-                        <div className={cn("flex items-center py-4 w-full bg-card-100 rounded-b-none sm:rounded-b-xl shadow-[0px_-10px_15px_0px_rgba(0,0,0,0.08)]", paddingX)}>
+                        <div className={cn("flex items-center gap-4 py-4 w-full bg-card-100 rounded-b-none sm:rounded-b-xl shadow-[0px_-10px_15px_0px_rgba(0,0,0,0.08)]", paddingX)}>
+                            {isAnyFilterSet && <Button
+                                variant={"secondary"}
+                                size={"sm"}
+                                className="h-7 px-3"
+                                onClick={clearAllFilters}>
+                                Clear all
+                            </Button>}
                             <Button
                                 variant={"accent"}
                                 size={"lg"}
                                 onClick={toggleFilters}
                                 isLoading={isLoading || isFetching}
-                                className="w-full xs:w-60 xs:ml-auto xs:self-end"
+                                className="w-full text-lg xs:text-xl xs:w-60 xs:ml-auto xs:self-end"
                             >
                                 {showBtnText}
                             </Button>
@@ -109,7 +113,8 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
 
             <div className={cn("hidden lg:flex flex-col",
                 // "lg:relative lg:z-0 lg:p-0 lg:bg-transparent lg:h-max lg:w-1/4 lg:min-w-70",
-                "lg:sticky lg:top-29 lg:z-0 lg:p-0 lg:bg-transparent lg:h-[calc(100vh-7.25rem)] lg:w-1/4 lg:min-w-70 ",
+                "lg:sticky lg:top-29 lg:z-0 lg:p-0 lg:bg-transparent lg:max-h-[calc(100vh-140px)] lg:w-1/4 lg:min-w-70 ",
+                className
 
             )}>
                 <div className="">
@@ -126,7 +131,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                     <hr className="hr-dark"></hr>
                 </div>
                 <div className="flex-1 overflow-y-auto pt-7.5 pb-5 no-scrollbar">
-                    <SearchFilterMenuContent />
+                    <SearchFilterMenuContent className="p-0.5" />
 
                 </div>
             </div>

@@ -7,7 +7,7 @@ interface FilterHeadingProps {
     handleClear: () => void;
     isSet: boolean;
 }
-export default function FilterHeading({
+export default function FilterHeader({
     title,
     subtitle,
     handleClear,
@@ -17,13 +17,13 @@ export default function FilterHeading({
     return (
         <div className="-mt-0.25 mb-5.25">
             <div className="flex justify-between items-center">
-                <h3 className="text-2xl leading-none m-0">{title}</h3>
+                <h3 className="text-2xl leading-none m-0 py-0.5">{title}</h3>
                 {isSet && <Button
                     variant={"secondary"}
                     size={"sm"}
-                    className="h-6 px-3"
+                    className="h-7 px-3"
                     onClick={handleClear}>
-                    clear
+                    Clear
                 </Button>}
             </div>
             {subtitle && <p className="text-base text-pr-900 text-left leading-5 mt-2.5 mb-0">{subtitle}</p>}
