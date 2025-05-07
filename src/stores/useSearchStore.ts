@@ -46,9 +46,11 @@ type SearchState = {
     setSortedBy: (sort: SortOption) => void;
 
     hydrate: (params: SearchQueryParams) => void;
+
+    clearAllFilters: () => void;
 };
 
-const initialFilters: Record<FilterKey, boolean> = Object.keys(filterConfig).reduce((acc, key) => {
+export const initialFilters: Record<FilterKey, boolean> = Object.keys(filterConfig).reduce((acc, key) => {
     acc[key as FilterKey] = false;
     return acc;
 }, {} as Record<FilterKey, boolean>);
@@ -99,6 +101,13 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
                 sortedBy: sort_by ?? get().sortedBy,
                 filters: useHydrateFilters(params),
                 cupScoreRange,
+            });
+        },
+
+        clearAllFilters: () => {
+            set({
+                filters: initialFilters,
+                cupScoreRange: outOfBoundsCupScore,
             });
         }
     }),

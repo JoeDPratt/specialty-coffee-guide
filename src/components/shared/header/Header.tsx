@@ -35,7 +35,7 @@ export function DefaultHeader() {
             ([entry]) => {
                 setIsScrolled(!entry.isIntersecting)
             },
-            { threshold: 1, rootMargin: '0px 0px -91% 0px' }
+            { threshold: 1, rootMargin: '0px 0px 0px 0px' }
         )
 
         if (sentinelRef.current) observer.observe(sentinelRef.current)

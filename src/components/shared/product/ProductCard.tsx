@@ -62,7 +62,7 @@ export default function ProductCard({
     return (
         <div
             onClick={() => router.push(getProductPath(slug))}
-            className="@container/card group flex flex-col h-full bg-card-100 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer"
+            className="@container/card group flex flex-col h-full bg-card-100 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer hover:scale-101 active:scale-99"
         >
             {/* Image */}
             <motion.div

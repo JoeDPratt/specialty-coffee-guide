@@ -1,21 +1,16 @@
 import { useSearchStore } from "@/stores/useSearchStore";
 import { AttributeFilterRow } from "./AttributeFilterRow";
 import FilterHeading from "./FilterHeader";
+import { useActiveFilters } from "@/hooks/useActiveFilters";
+import { initialFilters } from "@/stores/useSearchStore";
 
 export default function SourcingQualityFilter() {
 
-
-    const { filters, setFilters } = useSearchStore((s) => ({ filters: s.filters, setFilters: s.setFilters }));
-    const isSet = Object.entries(filters).some((filter) => filter[1] === true);
+    const { setFilters } = useSearchStore((s) => ({ setFilters: s.setFilters }));
+    const { isSQFilterSet } = useActiveFilters();
 
     function clearFilters() {
-        setFilters({
-            is_decaf: false,
-            is_fairtrade: false,
-            is_mycotoxin_free: false,
-            is_organic: false,
-            is_single_origin: false
-        })
+        setFilters(initialFilters)
     }
 
     return (
@@ -23,7 +18,7 @@ export default function SourcingQualityFilter() {
             <FilterHeading
                 title={"Sourcing & Quality"}
                 handleClear={clearFilters}
-                isSet={isSet} />
+                isSet={isSQFilterSet} />
             <AttributeFilterRow />
         </div>
     )

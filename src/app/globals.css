@@ -215,8 +215,11 @@
 }
   
 
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sofia-sans), Helvetica, sans-serif;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }

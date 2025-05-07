@@ -72,7 +72,7 @@ export default function ProductListItem({
         <div
             onClick={() => router.push(getProductPath(slug))}
             className={cn(
-                "@container/card group w-full flex flex-col items-center transition-all overflow-hidden cursor-pointer rounded-md hover:shadow-md",
+                "@container/card group w-full flex flex-col items-center transition-all overflow-hidden cursor-pointer rounded-md hover:shadow-md hover:scale-101 active:scale-99",
                 "sm:flex-row sm:items-stretch sm:bg-card-200",
                 "xs:max-sm:items-end")}
         >

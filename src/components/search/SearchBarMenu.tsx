@@ -5,7 +5,7 @@ import { DropdownSort } from "./DropdownSort";
 import { Button } from "../ui/button";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
 import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";
-import { useFilterCount } from "@/hooks/useFilterCount";
+import { useActiveFilters } from "@/hooks/useActiveFilters";
 
 export default function SeacrhBarMenu() {
 
@@ -19,7 +19,7 @@ export default function SeacrhBarMenu() {
         toggleFilters: s.toggleFilters,
     }));
 
-    const filterCount = useFilterCount();
+    const { filterCount } = useActiveFilters();
 
     return (
         <div className="flex items-center gap-2 xs:gap-4 md:gap-6">
