@@ -23,15 +23,15 @@ export default function SearchPageClient({
     return (
         <HydrationBoundary state={dehydratedState}>
             <div className={cn(
-                "flex flex-col gap-3 max-w-[1920px] mx-auto",
+                "flex flex-col gap-3 p-0 my-0 max-w-[1920px] mx-auto",
                 "sm:gap-6",
-                "lg:flex-row flex-nowrap lg:gap-0 lg:p-0")
+                "lg:flex-row flex-nowrap lg:gap-0")
             } >
                 <SearchFilterMenu className="lg:pt-8" />
                 <div className="@container/grid flex flex-col flex-1">
                     <SearchViewMenu />
                     <div className="relative overflow-hidden shadow-[inset_0_2px_5px_rgba(0,0,0,0.02)]">
-                        <SearchResults className="overflow-y-auto h-[calc(100dvh-120px)] scrollbar-thin pt-6 px-3 sm:px-4 lg:px-6 pb-10" />
+                        <SearchResults className="overflow-y-auto h-[calc(100dvh-120px)] scrollbar-thin pt-6 px-3 sm:px-4 lg:px-6 pb-10 m-0" />
                     </div>
                 </div>
             </div>
