@@ -10,14 +10,14 @@ import { HeaderLogo } from './HeaderLogo'
 import { HeaderSearchButton } from '@/components/shared/header/HeaderSearchButton'
 import { Button } from '@/components/ui/button';
 import { Bars3Icon } from '@heroicons/react/16/solid';
-import { SearchHeader } from '@/components/shared/header/HeaderSearch';
+import { HeaderSearch } from '@/components/shared/header/HeaderSearch';
 
 export default function Header() {
     const pathname = usePathname();
     const isSearchPage = pathname === "/search"
     return (
         <>
-            {isSearchPage ? <SearchHeader /> : <DefaultHeader />}
+            {isSearchPage ? <HeaderSearch /> : <DefaultHeader />}
         </>
     )
 }

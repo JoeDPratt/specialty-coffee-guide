@@ -1,6 +1,6 @@
 import Link from "next/link"
-import SCGLogoBig from "@public/logos/scg-logo-stacked.svg"
-import SCGLogoSmall from "@public/logos/scg-logo-mark.svg"
+import SCGLogoBig from "@/components/icons/scg-logo-stacked.svg";
+import SCGLogoSmall from "@/components/icons/scg-logo-mark.svg"
 import { cn } from "@/utils/classes/merge"
 
 type HeaderLogoProps = {

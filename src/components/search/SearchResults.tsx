@@ -28,7 +28,7 @@ export default function SearchResults({ className }: { className?: string; }) {
 
     return (
         <div className={cn(className)}>
-            <div className={cn("overflow-y-auto overscroll-contain h-full scrollbar-thin pt-3 sm:pt-6 pb-10 px-3 sm:px-4 lg:px-6 m-0", className)}>
+            <div className={cn("lg:overflow-y-auto overscroll-contain h-full scrollbar-thin pt-3 sm:pt-6 pb-4 lg:pb-19 px-3 sm:px-4 lg:px-6 m-0", className)}>
                 <ResultsContent
                     results={data?.results || []}
                     isLoading={isLoading || isFetching}
@@ -37,7 +37,7 @@ export default function SearchResults({ className }: { className?: string; }) {
 
 
                 {showPagination && (
-                    <div className="sm:fixed w-full bottom-0 z-100 justify-center py-3">
+                    <div className="sm:fixed w-full bottom-0 z-100 justify-center py-4 lg:py-3">
                         <PaginationControl
                             page={page}
                             setPage={setPage}
