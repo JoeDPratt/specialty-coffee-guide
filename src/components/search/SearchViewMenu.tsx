@@ -33,8 +33,8 @@ export default function SearchViewMenu({ className }: { className?: string; }) {
             className
         )}>
             {isLoading || isFetching
-                ? <span className="flex items-center gap-2" ><SCGSpinner size={32} />Loading coffees...</span>
-                : <span>{resultsString}</span>
+                ? <span className="flex text-lg items-center gap-2" ><SCGSpinner size={32} />Loading coffees...</span>
+                : <span className="pt-0.5 text-lg">{resultsString}</span>
             }
             <div className="flex items-center sm:gap-3 lg:gap-4">
                 <SeacrhBarMenu />
