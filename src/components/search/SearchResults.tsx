@@ -28,25 +28,26 @@ export default function SearchResults({ className }: { className?: string; }) {
 
     return (
         <div className={cn(className)}>
-            <div className={cn("overflow-y-auto overscroll-contain h-full scrollbar-thin pt-6 pb-10 px-3 sm:px-4 lg:px-6 m-0", className)}>
+            <div className={cn("overflow-y-auto overscroll-contain h-full scrollbar-thin pt-3 sm:pt-6 pb-10 px-3 sm:px-4 lg:px-6 m-0", className)}>
                 <ResultsContent
                     results={data?.results || []}
                     isLoading={isLoading || isFetching}
                     isError={isError}
                 />
-            </div>
 
-            {showPagination && (
-                <div className="fixed w-full bottom-0 z-100 justify-center py-3">
-                    <PaginationControl
-                        page={page}
-                        setPage={setPage}
-                        totalPages={data.totalPages ?? 0}
-                        nextPage={data.nextPage}
-                        className="flex bg-pr-300/60 rounded-full max-w-min items-center"
-                    />
-                </div>
-            )}
+
+                {showPagination && (
+                    <div className="sm:fixed w-full bottom-0 z-100 justify-center py-3">
+                        <PaginationControl
+                            page={page}
+                            setPage={setPage}
+                            totalPages={data.totalPages ?? 0}
+                            nextPage={data.nextPage}
+                            className="flex bg-pr-300/60 rounded-full max-w-min items-center"
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
