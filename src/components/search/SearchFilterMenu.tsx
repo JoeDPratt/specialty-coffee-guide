@@ -112,8 +112,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
             </Dialog>
 
             <div className={cn("hidden lg:flex flex-col",
-                // "lg:relative lg:z-0 lg:p-0 lg:bg-transparent lg:h-max lg:w-1/4 lg:min-w-70",
-                " lg:px-6 lg:max-h-[calc(100dvh-64px)] lg:w-1/4 lg:min-w-70 lg:bg-pr-200",
+                " lg:px-6 lg:h-full lg:w-1/4 lg:min-w-70 lg:bg-pr-200",
                 className
 
             )}>
@@ -130,7 +129,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                     </div>
                     <hr className="hr-dark"></hr>
                 </div>
-                <div className="flex-1 overflow-y-auto pt-7.5 pb-5 no-scrollbar">
+                <div className="flex-1 min-h-0 overflow-y-auto pt-7.5 pb-5 no-scrollbar">
                     <SearchFilterMenuContent className="p-0.5" />
 
                 </div>

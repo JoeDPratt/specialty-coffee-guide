@@ -28,7 +28,7 @@ export default function SearchResults({ className }: { className?: string; }) {
 
     return (
         <div className={cn(className)}>
-            <div className={cn("overflow-y-auto h-full scrollbar-thin pt-6 pb-10 px-3 sm:px-4 lg:px-6 m-0", className)}>
+            <div className={cn("overflow-y-auto overscroll-contain h-full scrollbar-thin pt-6 pb-10 px-3 sm:px-4 lg:px-6 m-0", className)}>
                 <ResultsContent
                     results={data?.results || []}
                     isLoading={isLoading || isFetching}

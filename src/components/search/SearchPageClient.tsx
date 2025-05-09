@@ -23,7 +23,7 @@ export default function SearchPageClient({
     return (
         <HydrationBoundary state={dehydratedState}>
             <div className={cn(
-                "flex flex-col gap-3 p-0 my-0 max-w-[1920px] mx-auto overflow-hidden h-[calc(100dvh-64px)]",
+                "flex flex-col gap-3 p-0 my-0 max-w-[1920px] mx-auto overflow-hidden h-full",
                 "sm:gap-6",
                 "lg:flex-row flex-nowrap lg:gap-0")
             } >
