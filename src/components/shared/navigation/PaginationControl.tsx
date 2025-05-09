@@ -9,37 +9,41 @@ import {
 } from "@/components/ui/pagination";
 import PageNumbers from "./PageNumbers";
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
+import { cn } from "@/utils/classes/merge";
 
 export default function PaginationControl({
     page,
     setPage,
     totalPages,
     nextPage,
+    className,
 }: {
     page: number;
     setPage: (page: number) => void;
     totalPages: number;
     nextPage?: number;
+    className?: string;
 }) {
     const isSm = useBreakpointStore((s) => s.isSm)
+
     return (
-        <Pagination className="mt-8">
+        <Pagination className={cn(className)}>
             <PaginationContent>
                 {/* Previous Button */}
                 <PaginationItem>
                     <PaginationPrevious
-                        // className="bg-whicursor-pointer"
                         onClick={() => setPage(Math.max(page - 1, 1))}
                         disabled={page === 1}
                     />
                 </PaginationItem>
 
                 {/* Page Numbers */}
-                {!isSm && <PageNumbers
+                <PageNumbers
                     page={page}
                     totalPages={totalPages}
                     setPage={setPage}
-                />}
+                    maxPages={isSm ? 1 : 5}
+                />
 
                 {/* Next Button */}
                 <PaginationItem>

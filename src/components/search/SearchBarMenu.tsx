@@ -2,10 +2,10 @@ import { ToggleWithTooltips } from "../shared/buttons/ToggleWithToolTips";
 import { useSearchStore } from "@/stores/useSearchStore";
 import type { WeightOption } from "@/stores/useSearchStore";
 import { DropdownSort } from "./DropdownSort";
-import { Button } from "../ui/button";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
 import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
+import { useBreakpointStore } from "@/stores/useBreakpointStore";
 
 export default function SeacrhBarMenu() {
 
@@ -18,11 +18,11 @@ export default function SeacrhBarMenu() {
         setWeight: s.setSelectedWeight,
         toggleFilters: s.toggleFilters,
     }));
-
+    const isSm = useBreakpointStore((s) => s.isSm);
     const { filterCount } = useActiveFilters();
 
     return (
-        <div className="flex items-center gap-2 xs:gap-4 md:gap-6">
+        <div className="flex items-center gap-3 lg:gap-4">
             {/* Filter Icon Button, shows below lg */}
             <ButtonWithBadge
                 variant={"default"}
@@ -30,13 +30,14 @@ export default function SeacrhBarMenu() {
                 count={filterCount}
                 onClick={toggleFilters}
                 aria-label="Filter Option Button"
-                size={"icon"}
+                size={isSm ? "icon" : "default"}
                 className="inline lg:hidden"
             >
                 <AdjustmentsHorizontalIcon />
+                <span className="hidden sm:inline pl-0.5">Filters</span>
             </ButtonWithBadge>
 
-            <div className="hidden items-center gap-2 lg:flex">
+            {/* <div className="hidden items-center gap-2 lg:flex">
                 <span className="mt-0.5 text-base min-w-max">View prices for:</span>
                 <ToggleWithTooltips<WeightOption>
                     value={selectedWeight}
@@ -48,7 +49,7 @@ export default function SeacrhBarMenu() {
                     toggleItemClassName={"py-4.25"}
                     tooltipOffset={17}
                 />
-            </div>
+            </div> */}
             <DropdownSort />
         </div>
     )

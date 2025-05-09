@@ -4,9 +4,9 @@ import SkeletonBase from "@/components/skeleton/SkeletonBase";
 
 export default function SkeletonProductCard() {
     return (
-        <div className="bg-card-100 dark:bg-pr-300">
+        <div className="bg-card-100 dark:bg-pr-300 rounded-lg">
             {/* Image placeholder with your SVG */}
-            <div className="relative w-full aspect-square bg-card-100 overflow-hidden">
+            <div className="relative w-full aspect-square bg-card-100 overflow-hidden rounded-t-lg">
                 <img
                     src="/placeholders/coffee-placeholder.svg"
                     alt="Loading coffee"

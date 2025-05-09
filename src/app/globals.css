@@ -186,6 +186,7 @@
         font-family: var(--font-sofia-sans), sans-serif;
         @apply bg-pr-700 text-white dark:bg-pr-100 dark:text-pr-900 shadow-md max-w-50 text-base px-4 pt-3 pb-3 z-500;
     }
+    /* Scroll bars */
     .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
@@ -193,6 +194,27 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    .scrollbar-thin::-webkit-scrollbar {
+        @apply size-3
+      }
+      
+      .scrollbar-thin::-webkit-scrollbar-track {
+       @apply bg-white/15
+      }
+      
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-clip: padding-box;
+        @apply bg-pr-700/30 border-2 border-transparent rounded-md
+        
+      }
+      
+      /* Firefox */
+      .scrollbar-thin {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(64,6,0,0.30) transparent;
+      }
+
     /* Fonts */
     .font-teko {
         font-family: var(--font-teko), sans-serif;

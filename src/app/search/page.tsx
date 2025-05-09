@@ -22,7 +22,7 @@ export default async function Page({
         readonly ['search', SearchQueryParams]
     >({
         queryKey: ['search', { ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 }] as const,
-        queryFn: () => getSearchResults({ ...plainParams, page: 1 }),
+        queryFn: () => getSearchResults({ ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 }),
     });
 
     const dehydratedState = dehydrate(queryClient);

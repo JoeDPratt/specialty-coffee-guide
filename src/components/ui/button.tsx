@@ -45,7 +45,7 @@ const buttonVariants = cva(
             {
                 variant: "soft",
                 styleType: ["outline", "outlineLight"],
-                className: "border-pr-700/30 text-pr-700 hover:bg-white/20",
+                className: "border-pr-700/20 text-pr-700 hover:bg-white/20",
             },
             // SECONDARY outline
             {

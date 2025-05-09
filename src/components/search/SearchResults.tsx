@@ -1,20 +1,12 @@
 // components/search/SearchResults.tsx
 'use client';
 
-import { cn } from '@/utils/classes/merge';
-import { motion } from 'framer-motion';
-import { staggerContainer, fadeUpItem } from '@/utils/animation';
-import { useSearchStore } from '@/stores/useSearchStore';
 import { usePaginationStore } from '@/stores/usePaginationStore';
-import ProductListItem from '@/components/shared/product/ProductListItem';
-import ProductCard from '@/components/shared/product/ProductCard';
 import PaginationControl from "@/components/shared/navigation/PaginationControl";
-import { useSyncUrlParams } from '@/hooks/useSyncUrlParams';
-import { useBreakpointStore } from '@/stores/useBreakpointStore';
-import SkeletonSearchResults from '../skeleton/SkeletonSearchResults';
 import { useSearchQuery } from '@/hooks/useSearchQuery';
+import ResultsContent from './ResultsContent';
 
-export default function SearchResults() {
+export default function SearchResults({ className }: { className?: string; }) {
 
     const {
         page,
@@ -24,11 +16,6 @@ export default function SearchResults() {
         setPage: s.setPage
     }));
 
-    const resultsView = useSearchStore((s) => s.selectedView);
-    const isSm = useBreakpointStore((s) => s.isSm);
-
-    // useSyncUrlParams();
-
     const {
         data,
         isLoading,
@@ -36,41 +23,28 @@ export default function SearchResults() {
         isError,
     } = useSearchQuery();
 
-    if (isLoading || isFetching) return <div><SkeletonSearchResults view={resultsView} /></div>;
-    if (isError) return <div>Error loading results</div>;
-    if (!data?.results.length) return <div>No results</div>;
+    const showPagination = !!data?.results?.length && (data.totalPages ?? 0) > 1;
 
     return (
-        <div>
-            <motion.div
-                className={cn(
-                    resultsView === 'list' && !isSm
-                        ? 'gap-8 sm:gap-4 flex flex-col'
-                        : 'gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4',
-                )}
-                variants={staggerContainer}
-                initial="hidden"
-                animate="visible"
-            >
-                {data.results.map((product) => (
-                    <motion.div
-                        key={product.slug}
-                        variants={fadeUpItem}
-                        className="flex flex-col h-full"
-                    >
-                        {resultsView === 'list' && !isSm
-                            ? <ProductListItem product={product} />
-                            : <ProductCard product={product} />}
-                    </motion.div>
-                ))}
-            </motion.div>
-
-            <PaginationControl
-                page={page}
-                setPage={setPage}
-                totalPages={data.totalPages ?? 0}
-                nextPage={data.nextPage}
-            />
+        <div className="relative h-full">
+            <div className={className}>
+                <ResultsContent
+                    results={data?.results || []}
+                    isLoading={isLoading || isFetching}
+                    isError={isError}
+                />
+            </div>
+            {showPagination && (
+                <div className="fixed w-full bottom-0 z-10 justify-center py-3">
+                    <PaginationControl
+                        page={page}
+                        setPage={setPage}
+                        totalPages={data.totalPages ?? 0}
+                        nextPage={data.nextPage}
+                        className="flex bg-pr-300/60 rounded-full max-w-min items-center"
+                    />
+                </div>
+            )}
         </div>
     );
 }

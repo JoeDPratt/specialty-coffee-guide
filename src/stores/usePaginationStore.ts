@@ -2,6 +2,7 @@
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/shallow';
 import { SearchQueryParams } from '@/types/search';
+import { DEFAULT_PAGE_SIZE } from '@/consts/paginationConfig';
 
 interface PaginationState {
     page: number;
@@ -15,7 +16,7 @@ interface PaginationState {
 export const usePaginationStore = createWithEqualityFn<PaginationState>()(
     (set, get) => ({
         page: 1,
-        pageSize: 24,
+        pageSize: DEFAULT_PAGE_SIZE,
         setPage: (page) => set({ page }),
         setPageSize: (size) => set({ pageSize: size }),
         resetPagination: () => set({ page: 1 }),

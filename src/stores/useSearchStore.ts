@@ -134,6 +134,7 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
             set({
                 filters: initialFilters,
                 cupScoreRange: outOfBoundsCupScore,
+                varietalFilters: [],
             });
         }
     }),

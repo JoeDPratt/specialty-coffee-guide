@@ -21,7 +21,7 @@ const PaginationContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <ul
         ref={ref}
-        className={cn("flex flex-row items-center gap-1.5 min-w-[432px] justify-between", className)}
+        className={cn("flex flex-row items-center gap-1.5 justify-between", className)}
         {...props}
     />
 ))
@@ -53,10 +53,10 @@ const PaginationLink = ({
     <Button
         variant={isActive
             ? "default"
-            : isNumber ? "ghost" : "secondary"}
+            : "ghost"}
         size={size}
         disabled={disabled}
-        className={className}
+        className={cn(className)}
         {...props}
     />
 )
@@ -71,7 +71,7 @@ const PaginationPrevious = ({
     <PaginationLink
         aria-label="Go to previous page"
         size="iconLg"
-        className={cn("[&_svg]:size-10", className)}
+        className={cn(className)}
         disabled={disabled}
         isNumber={false}
         {...props}
@@ -89,7 +89,7 @@ const PaginationNext = ({
     <PaginationLink
         aria-label="Go to next page"
         size="iconLg"
-        className={cn("[&_svg]:size-10", className)}
+        className={cn(className)}
         disabled={disabled}
         isNumber={false}
         {...props}

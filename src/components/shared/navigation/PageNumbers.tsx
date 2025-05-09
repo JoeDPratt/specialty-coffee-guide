@@ -8,22 +8,24 @@ export default function PageNumbers({
     page,
     totalPages,
     setPage,
+    maxPages = 5
 }: {
     page: number;
     totalPages: number;
     setPage: (page: number) => void;
+    maxPages?: number;
 }) {
 
     const pages: (number | 'ellipsis')[] = [];
 
-    const maxVisiblePages = 5;
-
-    if (totalPages <= maxVisiblePages) {
+    if (maxPages === 1) {
+        pages.push(page);
+    } else if (totalPages <= maxPages && maxPages !== 1) {
         // simple case: show all pages
         for (let i = 1; i <= totalPages; i++) {
             pages.push(i);
         }
-    } else {
+    } else if (maxPages !== 1) {
         const siblings = 1;
 
         const startPage = Math.max(2, page - siblings);
@@ -60,8 +62,9 @@ export default function PageNumbers({
                 <PaginationLink
                     isActive={p === page}
                     onClick={() => setPage(p)}
+                    size={maxPages === 1 ? "default" : "icon"}
                 >
-                    {p}
+                    {maxPages === 1 ? p + " of " + totalPages : p}
                 </PaginationLink>
             </PaginationItem>
         );

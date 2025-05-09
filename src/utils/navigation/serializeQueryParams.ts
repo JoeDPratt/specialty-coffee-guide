@@ -2,6 +2,7 @@
 import type { SearchQueryParams } from '@/types/search';
 import { filterConfig, type FilterKey } from "@/consts/filterConfig";
 import { cupScoreRange } from '@/consts/rangeConfig';
+import { DEFAULT_PAGE_SIZE } from "@/consts/paginationConfig";
 
 export function serializeQueryParams(params: SearchQueryParams) {
     const qs = new URLSearchParams();
@@ -35,7 +36,7 @@ export function parseQueryParams(
         q: Array.isArray(params.q) ? params.q[0] : params.q ?? undefined,
         sort_by: Array.isArray(params.sort_by) ? params.sort_by[0] as any : params.sort_by as any,
         page: params.page ? Number(params.page) : 1,
-        page_size: params.page_size ? Number(params.page_size) : 24,
+        page_size: params.page_size ? Number(params.page_size) : DEFAULT_PAGE_SIZE,
         cup_score_min: params.cup_score_min ? Number(params.cup_score_min) : undefined,
         cup_score_max: params.cup_score_max ? Number(params.cup_score_max) : undefined,
     };

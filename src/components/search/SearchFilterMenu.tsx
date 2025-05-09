@@ -60,7 +60,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                     <DialogContent
                         forceMount
                         className={cn(
-                            "p-0 border-none h-full sm:max-h-[calc(100vh-40px)]",
+                            "p-0 border-none h-full sm:max-h-[calc(100dvh-40px)]",
                             "gap-0 rounded-b-none rounded-t-xl sm:rounded-xl bg-card-200",
                             "grid grid-rows-[auto_1fr_auto]"
                         )}
@@ -85,7 +85,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
 
                         {/* Scrollable Content */}
 
-                        <div className="pt-8 pb-20 min-h-0 overflow-y-auto">
+                        <div className="pt-8 pb-20 min-h-0 overflow-y-auto scrollbar-thin">
                             <SearchFilterMenuContent className={cn(paddingX)} />
                         </div>
                         {/* Footer */}
@@ -113,19 +113,19 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
 
             <div className={cn("hidden lg:flex flex-col",
                 // "lg:relative lg:z-0 lg:p-0 lg:bg-transparent lg:h-max lg:w-1/4 lg:min-w-70",
-                "lg:sticky lg:top-29 lg:z-0 lg:p-0 lg:bg-transparent lg:max-h-[calc(100vh-140px)] lg:w-1/4 lg:min-w-70 ",
+                " lg:px-6 lg:max-h-[calc(100dvh-64px)] lg:w-1/4 lg:min-w-70 lg:bg-pr-200",
                 className
 
             )}>
-                <div className="">
-                    <div className="flex items-center justify-between pt-0.5 mb-6">
-                        <h2 className="text-3xl leading-none">Filters</h2>
+                <div>
+                    <div className="flex items-center justify-between pt-0.5 mb-4">
+                        <h2 className="text-3xl leading-none m-0">Filters</h2>
                         {isAnyFilterSet && <Button
                             variant={"secondary"}
                             size={"sm"}
-                            className="h-6 px-3"
+                            className="h-7 px-3"
                             onClick={clearAllFilters}>
-                            clear all
+                            Clear all
                         </Button>}
                     </div>
                     <hr className="hr-dark"></hr>

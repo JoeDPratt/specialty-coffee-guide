@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { tooltipMotion } from "@/utils/animation";
 import { Button } from "@/components/ui/button";
 import { usePaginationStore } from "@/stores/usePaginationStore";
+import { useBreakpointStore } from "@/stores/useBreakpointStore";
 
 interface DropdownSortProps {
     className?: string;
@@ -29,6 +30,7 @@ const sortOptions: { label: string; value: SortOption }[] = [
 export function DropdownSort({ className }: DropdownSortProps) {
     const { sortedBy, setSortedBy } = useSearchStore((s) => ({ sortedBy: s.sortedBy, setSortedBy: s.setSortedBy }));
     const resetPagination = usePaginationStore((s) => s.resetPagination)
+    const isSm = useBreakpointStore((s) => s.isSm);
 
     const [isOpen, setIsOpen] = useState(false);
     const [showChevronUp, setShowChevronUp] = useState(false);
@@ -54,17 +56,15 @@ export function DropdownSort({ className }: DropdownSortProps) {
             <DropdownMenuTrigger asChild>
                 <div>
                     <Button
-                        className="md:hidden flex"
+                        className="md:hidden flex sm:pl-3 sm:pr-4"
                         styleType={"outline"}
-                        size={"icon"}>
+                        size={isSm ? "icon" : "default"}>
                         <ArrowsUpDownIcon />
+                        <span className="hidden sm:inline">Sort</span>
                     </Button>
-                    <button
-                        className={cn(
-                            "hidden md:flex items-center justify-between gap-2 px-4 pb-1.75 pt-2.25 rounded-full bg-white text-pr-700 hover:bg-pr-100 text-base font-semibold transition-all cursor-pointer min-w-[250px] outline-none",
-                            "hover:scale-102 hover:shadow-sm hover:animate-pulse active:scale-98",
-                            className
-                        )}
+                    <Button
+                        styleType={"outline"}
+                        className="hidden md:inline-flex min-w-[250px] justify-between"
                     >
                         <span className="flex items-center gap-2" >
                             <ArrowsUpDownIcon className="size-5" />
@@ -76,7 +76,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
                                 showChevronUp && "rotate-180"
                             )}
                         />
-                    </button>
+                    </Button>
                 </div>
             </DropdownMenuTrigger>
 
@@ -84,7 +84,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
                 {isOpen && (
                     <DropdownMenuContent
                         align="end"
-                        sideOffset={10}
+                        sideOffset={4}
                         className={cn(
                             "rounded-md bg-white shadow-md p-0 xs:min-w-[250px] border-none",
                             "max-xs:w-screen")}
@@ -96,7 +96,7 @@ export function DropdownSort({ className }: DropdownSortProps) {
                                     key={option.value}
                                     onClick={() => handleSort(option.value)}
                                     className={cn(
-                                        "flex items-center px-3 pb-3.25 pt-3.75 rounded-none text-pr-700 hover:bg-pr-100 hover:text-pr-700 cursor-pointer text-lg md:text-base",
+                                        "flex items-center px-3 pb-4.25 pt-4.75 rounded-none text-pr-700 hover:bg-pr-100 hover:text-pr-700 cursor-pointer text-xl md:text-lg",
                                         "hover:animate-pulse active:scale-98 transition-all",
                                         sortedBy === option.value && "bg-pr-300 text-pr-700 font-bold",
 

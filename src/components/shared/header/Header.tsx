@@ -3,15 +3,14 @@ import { useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useStickyStore } from '@/stores/useStickyStore'
 import { useSearchStore } from '@/stores/useSearchStore';
-import ExpandedSearch from '../search/ExpandedSearch'
+import ExpandedSearch from '@/components/shared/search/ExpandedSearch'
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import { cn } from '@/utils/classes/merge'
 import { HeaderLogo } from './HeaderLogo'
-import SCGLogoSmall from "@public/logos/scg-logo-mark.svg"
-import { HeaderSearchButton } from './HeaderSearchButton'
+import { HeaderSearchButton } from '@/components/shared/header/HeaderSearchButton'
 import { Button } from '@/components/ui/button';
 import { Bars3Icon } from '@heroicons/react/16/solid';
+import { SearchHeader } from '@/components/shared/header/HeaderSearch';
 
 export default function Header() {
     const pathname = usePathname();
@@ -99,7 +98,7 @@ export function DefaultHeader() {
                         )}
                         >
                             {/* Hamburger */}
-                            {!isSearchOpen && <Button variant={"secondary"} styleType={"outline"} size={"icon"}><Bars3Icon /></Button>}
+                            {!isSearchOpen && <Button variant={"ghostDark"} size={"icon"}><Bars3Icon /></Button>}
                         </div>
                     </motion.div>
 
@@ -129,49 +128,3 @@ export function DefaultHeader() {
 }
 
 
-export function SearchHeader() {
-
-    return (
-
-        <header
-            className=""
-            role="banner"
-            aria-label="SCG site header"
-
-        >
-            <div className={cn("relative bg-pr-900")}>
-                <motion.div
-                    className={cn(
-                        "flex justify-between items-center gap-3 sm:gap-4 md:gap-6 px-3 md:px-6 py-2 transition-colors duration-300",
-                    )}
-                >
-                    {/* Logo */}
-                    <div className={cn("max-w-min")}>
-                        <Link href="/">
-                            <SCGLogoSmall className="h-12 w-auto" />
-                        </Link>
-                    </div>
-
-                    {/* Right Menu Buttons */}
-                    <div
-                        className={cn(
-                            "md:flex justify-end hidden",
-                            "sm:max-w-min"
-                        )}>
-                        {/* Login */}
-                        <Button variant={"secondary"} styleType={"outline"} >Log in</Button>
-                    </div>
-                    <div className={cn(
-                        "md:hidden justify-end flex",
-                        "max-w-min"
-                    )}
-                    >
-                        {/* Hamburger */}
-                        <Button variant={"secondary"} styleType={"outline"} size={"icon"}><Bars3Icon /></Button>
-                    </div>
-                </motion.div>
-
-            </div>
-        </header>
-    )
-}
