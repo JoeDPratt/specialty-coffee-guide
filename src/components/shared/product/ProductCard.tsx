@@ -70,6 +70,17 @@ export default function ProductCard({
                 transition={subtleSpring}
                 className="relative w-full aspect-[1/1] bg-card-100"
             >
+                <div className="absolute z-10 -bottom-3 w-full flex justify-between items-center @min-card-sm/gap-2 px-3 @min-card-sm/card:px-4 ">
+                    <AttributeSection
+                        attributeData={attributes}
+                        variant={"icon"}
+                        className={"-ml-2 gap-1 @min-card-sm/card:gap-3"}
+                        hasBackground={true}
+                        showInactive={false}
+                    />
+
+                    {sca_cup_score && <CupScoreBadge className="shadow-sm rounded-xs" score={sca_cup_score} variant={"card"} />}
+                </div>
                 <Image
                     loader={cloudinaryLoader}
                     src={imageUrl}
@@ -80,27 +91,27 @@ export default function ProductCard({
                     placeholder="blur"
                     blurDataURL={blurredImage}
                 />
+
             </motion.div>
 
             {/* Attriibutes and tags */}
-            <div className="flex justify-between items-center gap-2 px-4 py-3 @min-card-sm/card:px-6 bg-card-200 inset-shadow-xs">
-                {/* Tags (optional icons) */}
+            {/* <div className="flex justify-between items-center @min-card-sm/gap-2 px-4 py-2 @min-card-sm/card:px-6 bg-card-200 inset-shadow-xs">
                 <AttributeSection
                     attributeData={attributes}
                     variant={"icon"}
-                    className={"-ml-2 gap-2 @min-card-sm/card:gap-3"}
-                    hasBackground={true} />
+                    className={"-ml-3 gap-0 @min-card-sm/card:gap-3"}
+                    hasBackground={false} />
                 <CupScoreBadge score={sca_cup_score} variant={"card"} />
-            </div>
+            </div> */}
 
             {/* Text Content */}
             <div className={cn(
-                "px-4 @min-card-sm/card:px-6 pt-4 flex flex-col flex-grow overflow-hidden",
+                "px-4 @min-card-sm/card:px-6 pt-5 flex flex-col flex-grow overflow-hidden",
                 isSm ? "mb-5" : "min-h-40"
             )}>
 
                 {/* Product name */}
-                <h3 className="mt-2.75 mb-0 text-3xl font-semibold text-pr-900 leading-7 line-clamp-2">
+                <h3 className="mt-2.75 mb-0 text-3xl font-semibold text-pr-900 leading-7 line-clamp-2 ">
                     {product_name.toUpperCase()}
                 </h3>
 

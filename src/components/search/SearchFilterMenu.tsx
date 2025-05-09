@@ -112,7 +112,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
             </Dialog>
 
             <div className={cn("hidden lg:flex flex-col",
-                " lg:px-6 lg:h-full lg:w-1/4 lg:min-w-70 lg:bg-pr-200",
+                " lg:px-6 lg:h-full lg:w-1/4 lg:min-w-70 lg:max-w-98 lg:bg-pr-200",
                 className
 
             )}>

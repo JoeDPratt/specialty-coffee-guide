@@ -37,7 +37,7 @@ export default function SearchResults({ className }: { className?: string; }) {
 
 
                 {showPagination && (
-                    <div className="sm:fixed w-full bottom-0 z-100 justify-center py-4 lg:py-3">
+                    <div className="sm:fixed w-full bottom-0 z-100 justify-center py-4">
                         <PaginationControl
                             page={page}
                             setPage={setPage}

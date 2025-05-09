@@ -54,7 +54,7 @@ export default function CupScoreBadge({
                                     className={cn(
                                         "mb-0.5 ml-0.5",
                                         isScore ? "fill-pr-900" : "fill-disabled-400",
-                                        hasTitle ? "h-7" : "h-5.5"
+                                        hasTitle ? "h-7" : "h-5"
                                     )}
                                 />
                                 {hasTitle && <div className={cn(
@@ -65,7 +65,7 @@ export default function CupScoreBadge({
                                 </div>}
                             </div>
                             <div className={cn(
-                                "font-teko text-[31px] sm:max-md:text-[28px] tracking-wider leading-6 pt-0.75",
+                                "font-teko text-[31px] sm:max-md:text-[28px] leading-6 pt-0.75",
                                 isScore ? "text-pr-900 font-semibold" : "text-disabled-400 font-light",
                                 hasTitle ? "pl-2 text-4xl leading-2 pt-1" : "pl-0",
                                 isStacked ? "pb-2.25" : ""
