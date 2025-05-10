@@ -62,15 +62,27 @@ export default function ProductCard({
     return (
         <div
             onClick={() => router.push(getProductPath(slug))}
-            className="@container/card group flex flex-col h-full bg-card-100 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer hover:scale-101 active:scale-99"
+            className="@container/card group flex flex-col h-full bg-card-200 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer hover:scale-101 active:scale-99"
         >
             {/* Image */}
             <motion.div
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
-                className="relative w-full aspect-[1/1] bg-card-100"
+                className="relative w-full aspect-[1/1] bg-card-200"
             >
-                <div className="absolute z-10 -bottom-3 w-full flex justify-between items-center @min-card-sm/gap-2 px-3 @min-card-sm/card:px-4 ">
+                <h3 className={cn("absolute z-10 top-6 text-3xl font-semibold text-pr-900 leading-7 w-9/10")}>
+                    <span className="bg-card-200 box-decoration-clone pl-3 pr-2 rounded-sm rounded-tl-none">
+                        {product_name.toUpperCase()}
+                    </span>
+                    <Link
+                        href={getRoasterPath(roaster.slug)}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="text-base font-normal text-pr-900 hover:text-pr-500">
+                            <span className="bg-card-200 box-decoration-clone py-1 pl-3 pr-2 rounded-sm rounded-bl-none">{roaster.name}</span></div>
+                    </Link>
+                </h3>
+                <div className="absolute z-10 bottom-2 w-full flex justify-between items-center @min-card-sm/gap-2 px-3 @min-card-sm/card:px-4 ">
                     <AttributeSection
                         attributeData={attributes}
                         variant={"icon"}
@@ -106,25 +118,23 @@ export default function ProductCard({
 
             {/* Text Content */}
             <div className={cn(
-                "px-4 @min-card-sm/card:px-6 pt-5 flex flex-col flex-grow overflow-hidden",
-                isSm ? "mb-5" : "min-h-40"
+                "px-4 @min-card-sm/card:px-6 pt-4 flex flex-col flex-grow overflow-hidden",
+                isSm ? "mb-5" : "min-h-16"
             )}>
 
                 {/* Product name */}
-                <h3 className="mt-2.75 mb-0 text-3xl font-semibold text-pr-900 leading-7 line-clamp-2 ">
-                    {product_name.toUpperCase()}
-                </h3>
+
 
                 {/* Roaster */}
-                <Link
+                {/* <Link
                     href={getRoasterPath(roaster.slug)}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="text-base text-pr-800/80 hover:text-pr-500"><FireIcon className="w-4 h-4 inline -mt-0.75 mr-0.5" />by {roaster.name}</div>
-                </Link>
+                </Link> */}
                 {/* Flavours */}
                 {flavourText && (
-                    <div className="text-base font-light text-pr-800/80 tracking-wide mt-0.25 mb-1.25">{flavourText}</div>
+                    <div className="text-base font-normal text-pr-800/80 mb-1.25">{flavourText}</div>
                 )}
 
                 {/* Roasts */}
@@ -174,6 +184,6 @@ export default function ProductCard({
 
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
