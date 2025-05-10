@@ -16,6 +16,8 @@ interface CupScoreBadgeProps {
     hasBackground?: boolean;
     hasTitle?: boolean;
     isStacked?: boolean;
+    backgroundColor?: "light" | "dark"
+    padding?: string;
 }
 
 export default function CupScoreBadge({
@@ -24,11 +26,35 @@ export default function CupScoreBadge({
     variant = "default",
     hasBackground = true,
     hasTitle = false,
-    isStacked = false
+    isStacked = false,
+    backgroundColor = "light",
+    padding = "px-2"
 }: CupScoreBadgeProps): JSX.Element | null {
 
     const isScore: boolean = Boolean(score)
 
+    let bgColorActive;
+    let bgColorInactive;
+    let textColorActive;
+    let textColorInactive;
+    let logoColorActive;
+    let logoColorInactive;
+
+    if (backgroundColor === "light") {
+        bgColorActive = "bg-card-100";
+        bgColorInactive = "bg-card-200"
+        textColorActive = "text-pr-900"
+        textColorInactive = "text-disabled-400"
+        logoColorActive = "fill-pr-900"
+        logoColorInactive = "fill-disabled-400"
+    } else {
+        bgColorActive = "bg-pr-900";
+        bgColorInactive = "bg-pr-900"
+        textColorActive = "text-white"
+        textColorInactive = "text-disabled-400"
+        logoColorActive = "fill-white"
+        logoColorInactive = "fill-disabled-400"
+    }
 
     if (variant === "card") {
         return (
@@ -39,9 +65,13 @@ export default function CupScoreBadge({
                         <div className={cn(
                             "text-center flex gap-1.5 items-center max-w-max rounded-sm",
                             hasBackground ?
-                                [isScore ? "bg-card-100 " : "bg-card-200 shadow-none", "pt-1.5 pb-0.75"]
+                                [isScore
+                                    ? bgColorActive
+                                    : bgColorInactive, "shadow-none pt-1.5 pb-0.75"]
                                 : "bg-transparent shadow-none p-0",
-                            hasTitle ? "px-3 pt-1.75 pb-1.25" : "px-2",
+                            hasTitle
+                                ? "px-3 pt-1.75 pb-1.25"
+                                : padding,
                             isStacked ? "flex-col px-2.5" : "flex-row"
                         )}>
                             <div className={cn(
@@ -53,20 +83,20 @@ export default function CupScoreBadge({
                                     aria-label="Specialty Coffee Association cup score logo"
                                     className={cn(
                                         "mb-0.5 ml-0.5",
-                                        isScore ? "fill-pr-900" : "fill-disabled-400",
+                                        isScore ? logoColorActive : logoColorInactive,
                                         hasTitle ? "h-7" : "h-5"
                                     )}
                                 />
                                 {hasTitle && <div className={cn(
-                                    "text-sm font-medium text-left ",
+                                    "text-sm font-medium text-left",
                                     isStacked ? "pl-0.5" : "pl-1 pr-4 border-r-2 border-card-200")}>
-                                    <div className="leading-4">CUP</div>
-                                    <div className="leading-4">SCORE</div>
+                                    <div className="leading-4 textColorActive">CUP</div>
+                                    <div className="leading-4 textColorActive">SCORE</div>
                                 </div>}
                             </div>
                             <div className={cn(
                                 "font-teko text-[31px] sm:max-md:text-[28px] leading-6 pt-0.75",
-                                isScore ? "text-pr-900 font-semibold" : "text-disabled-400 font-light",
+                                isScore ? [textColorActive, "font-semibold"] : [textColorInactive, "font-light"],
                                 hasTitle ? "pl-2 text-4xl leading-2 pt-1" : "pl-0",
                                 isStacked ? "pb-2.25" : ""
                             )}>

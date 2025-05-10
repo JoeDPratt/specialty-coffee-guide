@@ -79,9 +79,10 @@ export default function RoastLabel({
     variant?: "default" | "outline" | "text";
     className?: string
 }): JSX.Element | null {
+
     if (!roasts || roasts.length === 0) return null;
     return (
-        <div id="roasts" className={cn("flex flex-row gap-1", className)}>
+        <div id="roasts" className={cn("flex flex-row gap-1.5", className)}>
             {roasts.slice(0, limit).map((roast) => (
                 <RoastTag roast={roast} key={roast} size={size} variant={variant} />
             ))}

@@ -62,37 +62,50 @@ export default function ProductCard({
     return (
         <div
             onClick={() => router.push(getProductPath(slug))}
-            className="@container/card group flex flex-col h-full bg-card-200 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer hover:scale-101 active:scale-99"
+            className="@container/card group flex flex-col h-full bg-card-100 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer hover:scale-101 active:scale-99"
         >
             {/* Image */}
             <motion.div
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
-                className="relative w-full aspect-[1/1] bg-card-200"
+                className="relative w-full aspect-[1/1] bg-card-100"
             >
-                <h3 className={cn("absolute z-10 top-6 text-3xl font-semibold text-pr-900 leading-7 w-9/10")}>
-                    <span className="bg-card-200 box-decoration-clone pl-3 pr-2 rounded-sm rounded-tl-none">
+                <div className={cn(
+                    "absolute z-10 top-10 max-w-9/10",
+                    "@card-sm:top-10",
+                    "@card-md:top-20"
+                )}>
+                    <span className={cn(
+                        "font-teko tracking-wide font-semibold leading-8 text-3xl rounded-sm rounded-l-none",
+                        "bg-pr-900 text-white box-decoration-clone pl-3 pr-2 pt-1",
+                        "@card-sm:pl-6 @card-sm:pr-3 @card-sm:leading-9 @card-sm:text-4xl",
+                        "@card-md:pt-0.5 @card-md:pb-0.25 @card-md:pr-4 @card-md:leading-12 @card-md:text-5xl "
+                    )}>
                         {product_name.toUpperCase()}
                     </span>
+
                     <Link
                         href={getRoasterPath(roaster.slug)}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="text-base font-normal text-pr-900 hover:text-pr-500">
-                            <span className="bg-card-200 box-decoration-clone py-1 pl-3 pr-2 rounded-sm rounded-bl-none">{roaster.name}</span></div>
+                        <div className="hover:text-pr-500 -mt-0.75">
+                            <span className={cn(
+                                "bg-pr-900 box-decoration-clone w-full text-base font-normal tracking-wide text-white py-1 pl-3 pr-2 rounded-r-sm ",
+                                "@card-sm:pl-6 @card-sm:py-1.5 @card-sm:pr-3",
+                                "@card-md:text-lg @card-md:py-2.75 @card-md:pr-4",
+                            )}>{roaster.name}</span></div>
                     </Link>
-                </h3>
-                <div className="absolute z-10 bottom-2 w-full flex justify-between items-center @min-card-sm/gap-2 px-3 @min-card-sm/card:px-4 ">
-                    <AttributeSection
-                        attributeData={attributes}
-                        variant={"icon"}
-                        className={"-ml-2 gap-1 @min-card-sm/card:gap-3"}
-                        hasBackground={true}
-                        showInactive={false}
-                    />
-
-                    {sca_cup_score && <CupScoreBadge className="shadow-sm rounded-xs" score={sca_cup_score} variant={"card"} />}
                 </div>
+                {sca_cup_score && <CupScoreBadge
+                    score={sca_cup_score}
+                    variant={"card"}
+                    backgroundColor={"light"}
+                    padding={"px-2.5 pt-2.25 pb-1.75"}
+                    className={cn(
+                        "absolute -bottom-1 left-3 z-10 round-b-none",
+                        "@card-sm:left-4",
+                        "@card-md:left-6")}
+                />}
                 <Image
                     loader={cloudinaryLoader}
                     src={imageUrl}
@@ -107,56 +120,52 @@ export default function ProductCard({
             </motion.div>
 
             {/* Attriibutes and tags */}
-            {/* <div className="flex justify-between items-center @min-card-sm/gap-2 px-4 py-2 @min-card-sm/card:px-6 bg-card-200 inset-shadow-xs">
-                <AttributeSection
-                    attributeData={attributes}
-                    variant={"icon"}
-                    className={"-ml-3 gap-0 @min-card-sm/card:gap-3"}
-                    hasBackground={false} />
-                <CupScoreBadge score={sca_cup_score} variant={"card"} />
-            </div> */}
+            <div className="flex-col items-start justify-center px-4 pt-5 pb-2 @card-sm:px-6 bg-card-100 inset-shadow-xs">
+                <div className="flex flex-row flex-wrap items-center gap-1 w-full mb-1">
+                    {roasts && (
+                        <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"outline"} className={"w-auto pr-2 my-1.75"} />
+                    )}
+                    <AttributeSection
+                        attributeData={attributes}
+                        variant={"icon"}
+                        className={"-ml-3"}
+                        hasBackground={false}
+                        iconSize={"md"}
+                        showInactive={false}
+                    />
+                </div>
+                {flavourText && (
+                    <div className={cn(
+                        "text-base text-left capitalize text-pr-800 line-clamp-1 py-1 mb-2",
 
-            {/* Text Content */}
+                    )}>{flavourText}</div>
+                )}
+                {/* Roasts */}
+
+            </div>
+            {/* Spacer, evens out uneven height cards */}
             <div className={cn(
-                "px-4 @min-card-sm/card:px-6 pt-4 flex flex-col flex-grow overflow-hidden",
-                isSm ? "mb-5" : "min-h-16"
+                "px-4 @card-sm:px-6 pt-0 flex flex-col flex-grow overflow-hidden",
+
             )}>
 
-                {/* Product name */}
 
-
-                {/* Roaster */}
-                {/* <Link
-                    href={getRoasterPath(roaster.slug)}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div className="text-base text-pr-800/80 hover:text-pr-500"><FireIcon className="w-4 h-4 inline -mt-0.75 mr-0.5" />by {roaster.name}</div>
-                </Link> */}
-                {/* Flavours */}
-                {flavourText && (
-                    <div className="text-base font-normal text-pr-800/80 mb-1.25">{flavourText}</div>
-                )}
-
-                {/* Roasts */}
-                {roasts && (
-                    <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"outline"} />
-                )}
             </div>
             {/* Comparison section */}
-            <div className="px-4 @min-card-sm/card:px-6 pt-2 pb-6">
+            <div className="px-4 @card-sm:px-6 pb-8">
 
                 {/* Cup Score Price */}
-                <div className="flex justify-between items-end">
+                <div className="flex justify-between items-end border-t-2 border-pr-300 pt-4">
 
-                    <div className={cn("-mb-0.25",
+                    {/* <div className={cn("-mb-0.25",
                         !isBestValue && "opacity-0"
                     )}
                     >
                         <BestValueTag />
-                    </div>
+                    </div> */}
                     <Tooltip>
                         <TooltipTrigger asChild >
-                            <div className="flex flex-col items-end text-right gap-1">
+                            <div className="flex flex-col items-start text-left gap-1">
                                 <div className="flex items-end gap-1.25 pt-1 font-medium text-pr-900">
                                     <span className={cn(
                                         "text-3xl font-bold",
