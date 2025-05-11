@@ -43,7 +43,7 @@ export function RoastTag({
                 ? "text-sm pl-1.5 pr-2 pt-1.5 pb-1 leading-3"
                 : "text-base pl-1.5 pr-2 pt-2.25 pb-1.75 leading-3",
             variant === "text"
-                ? ["text-base text-left font-normal tracking-normal bg-transparent border-none p-0", textColor]
+                ? ["text-lg text-left font-normal tracking-normal bg-transparent border-none p-0 leading-4", textColor]
                 : "text-center font-normal"
         )}>
             <FireIcon className={cn(

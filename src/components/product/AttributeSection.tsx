@@ -203,7 +203,7 @@ function AttributeItemPill({
                     className={cn(
                         "flex items-center shadow-none p-1 gap-0 rounded-lg border-1",
                         borderColorClass,
-                        hasLabel && "p-0.75 gap-0.5 pl-2 pr-2.5",
+                        hasLabel && "p-0.75 gap-0.5 px-2.5",
                         isActive
                             ? hasBackground && bgColorClass
                             : "bg-transparent",
@@ -219,7 +219,7 @@ function AttributeItemPill({
                         )}
                     /> */}
                     {hasLabel && <span className={cn(
-                        "capitalize mt-0.25 ml-1 text-sm",
+                        "capitalize text-base",
                         isActive
                             ? textColorClass
                             : "text-disabled-400",)}
@@ -276,7 +276,7 @@ export default function AttributeSection({
         return (
 
             <div
-                className={cn("flex justify-center w-full gap-1.5", className)}
+                className={cn("flex justify-center w-full gap-2", className)}
                 role="region"
                 aria-label="Coffee attribute icons"
             >

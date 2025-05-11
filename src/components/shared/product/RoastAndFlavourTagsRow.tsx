@@ -31,12 +31,11 @@ export default function RoastAndFlavourTagsRow({
             ))}
             {showPipe && <span className="px-1">|</span>}
             {flavours.map((flavour, idx) => (
-                <span>
+                <span key={`flavour-${flavour}`}>
                     <FlavourTag
-                        key={`flavour-${flavour}`}
                         flavour={flavour}
+                        lastItem={(idx + 1) === flavours.length}
                     />
-                    {(idx + 1) < flavours.length && ","}
                 </span>
             ))}
         </div>

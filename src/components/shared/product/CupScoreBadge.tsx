@@ -18,6 +18,7 @@ interface CupScoreBadgeProps {
     isStacked?: boolean;
     backgroundColor?: "light" | "dark"
     padding?: string;
+    flagStyle?: boolean;
 }
 
 export default function CupScoreBadge({
@@ -28,7 +29,8 @@ export default function CupScoreBadge({
     hasTitle = false,
     isStacked = false,
     backgroundColor = "light",
-    padding = "px-2"
+    padding = "px-2",
+    flagStyle = false
 }: CupScoreBadgeProps): JSX.Element | null {
 
     const isScore: boolean = Boolean(score)
@@ -72,7 +74,8 @@ export default function CupScoreBadge({
                             hasTitle
                                 ? "px-3 pt-1.75 pb-1.25"
                                 : padding,
-                            isStacked ? "flex-col px-2.5" : "flex-row"
+                            isStacked ? "flex-col px-2.5" : "flex-row",
+                            flagStyle ? "rounded-r-md rounded-l-none" : "rounded-md"
                         )}>
                             <div className={cn(
                                 "flex gap-1.5 items-center",
@@ -96,7 +99,7 @@ export default function CupScoreBadge({
                             </div>
                             <div className={cn(
                                 "font-teko text-[31px] sm:max-md:text-[28px] leading-6 pt-0.75",
-                                isScore ? [textColorActive, "font-semibold"] : [textColorInactive, "font-light"],
+                                isScore ? [textColorActive, "font-medium tracking-wide"] : [textColorInactive, "font-light"],
                                 hasTitle ? "pl-2 text-4xl leading-2 pt-1" : "pl-0",
                                 isStacked ? "pb-2.25" : ""
                             )}>

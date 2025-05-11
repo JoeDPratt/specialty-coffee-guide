@@ -82,11 +82,19 @@ export default function ProductListItem({
                 transition={subtleSpring}
                 className={cn(
                     "relative aspect-square",
-                    "max-xs:w-24 max-xs:-mb-12 max-sm:border-4 max-sm:border-card-100 max-sm:rounded-sm ",
+                    "max-xs:w-24 max-xs:-mb-12 border-4 border-card-200 rounded-sm",
                     "xs:max-sm:mr-4 xs:max-sm:w-25 xs:max-sm:-mb-21",
-                    "sm:w-auto sm:h-[198px] xl:h-[136px]"
+                    "sm:w-auto sm:h-[178px] md:h-[198px] xl:h-[144px]"
                 )}
             >
+                {sca_cup_score && <CupScoreBadge
+                    score={sca_cup_score}
+                    variant={"card"}
+                    className={"absolute top-4 left-0 mb-1.5 z-10"}
+                    hasBackground={true}
+                    backgroundColor={"dark"}
+                    flagStyle={true}
+                />}
                 <Image
                     loader={cloudinaryLoader}
                     src={imageUrl}
@@ -171,13 +179,6 @@ export default function ProductListItem({
                             )}>{flavourText}</div>
                         )}
                     </div>
-                    {(isXs && sca_cup_score) && <CupScoreBadge
-                        score={sca_cup_score}
-                        variant={"card"}
-                        className={"mb-1.5"}
-                        hasBackground={true}
-                        hasTitle={true}
-                    />}
 
                     <div className={cn(
                         "flex items-center gap-2 sm:-ml-2",
@@ -185,19 +186,11 @@ export default function ProductListItem({
                         "max-sm:w-full max-xs:flex-col max-sm:border-t-2 max-sm:border-card-100 max-sm:pt-5 max-sm:mt-1",
                         'xs:max-sm:flex-wrap'
                     )}>
-                        {((!isXs) && (sca_cup_score || !isSm)) && <CupScoreBadge
-                            score={sca_cup_score}
-                            variant={"card"}
-                            className={"flex-shrink mt-1 mr-1"}
-                            hasBackground={isSm}
-                            hasTitle={isSm}
-                            isStacked={isSm}
-                        />}
                         <AttributeSection
                             attributeData={attributes}
                             variant={"icon"}
                             className={cn(
-                                "-ml-2 gap-1 flex",
+                                "xl:-ml-2 gap-1 flex",
                                 "sm:max-xl:px-0 sm:max-xl:gap-0",
                                 "max-sm:gap-y-4 max-sm:px-0 max-sm:flex-wrap max-sm:items-start max-sm:ml-0 max-xs:w-full xs:max-sm:w-2/3",
                                 "xs:max-sm:flex-1 xs:max-sm:min-w-0"
@@ -206,7 +199,7 @@ export default function ProductListItem({
                             hasBackground={false}
                             hasLabel={isSm ? true : false}
                             showInactive={isSm ? true : false}
-                            hasColorIcons={isSm}
+                            hasColorIcons={true}
                         />
 
                     </div>
@@ -238,15 +231,7 @@ export default function ProductListItem({
                                     )}>
                                         £{variant?.price?.toFixed(2) ?? "--.--"}
                                     </span>
-                                    <span className={cn(
-                                        "mb-1.25 py-1.25 px-0.25 rounded-xs",
-                                        isInStock ? "border-green-400 border-1 text-green-400" : "bg-disabled-400 text-white")}>
-                                        {isInStock ? (
-                                            <CheckIcon className="w-3 h-3" title="In stock" />
-                                        ) : (
-                                            <XMarkIcon className="w-3 h-3" title="Out of stock" />
-                                        )}
-                                    </span>
+
                                 </div>
                             </div>
                         </TooltipTrigger>

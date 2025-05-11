@@ -69,7 +69,7 @@ export default function ProductCard({
         >
             <div className={cn(
                 "absolute z-10 top-10 max-w-9/10",
-                "@card-sm:top-10 ",
+                "@card-sm:top-14",
                 "@card-md:top-20"
             )}>
                 <span className={cn(
@@ -129,7 +129,7 @@ export default function ProductCard({
             </motion.div>
 
             {/* Attriibutes and tags */}
-            <div className="flex flex-col items-center gap-y-4 px-4 pt-6 pb-6 @card-sm:px-6">
+            <div className="flex flex-col items-center gap-y-3.25 px-4 pt-5.75 pb-6.5 @card-sm:px-6">
                 <RoastAndFlavourTagsRow roasts={roasts} flavours={flavours} variant={"text"} />
                 <AttributeSection
                     attributeData={attributes}
@@ -142,26 +142,22 @@ export default function ProductCard({
             {/* Spacer, evens out uneven height cards */}
             <div className={cn(
                 "px-4 @card-sm:px-6 pt-0 flex flex-col flex-grow overflow-hidden",
-
-            )}>
-
-
-            </div>
+            )}></div>
 
             {/* Comparison section */}
             <div className={cn(
                 "flex flex-col items-end justify-end gap-1.75 pb-6 mx-4 pt-3 border-t-2 border-pr-300",
-                "@card-md:mx-6"
+                "@card-sm:mx-6"
             )}>
                 <Tooltip>
                     <TooltipTrigger asChild >
                         <div className={cn(
                             "flex items-center gap-2 mt-1.5 ",
-                            "max-sm:w-full",
-                            isInStock ? "max-sm:justify-end" : "max-sm:justify-between"
+                            "w-full",
+                            isInStock ? "justify-end" : "justify-between"
                         )}>
-                            {(isSm && !isInStock) &&
-                                <span className="text-disabled-400 uppercase text-lg font-bold mt-0.75">
+                            {!isInStock &&
+                                <span className="text-disabled-400 text-lg font-normal mt-0.75">
                                     Out of Stock
                                 </span>}
                             <div className="flex items-end gap-2">
@@ -170,15 +166,6 @@ export default function ProductCard({
                                     isInStock ? "text-pr-900" : "text-disabled-400"
                                 )}>
                                     £{variant?.price?.toFixed(2) ?? "--.--"}
-                                </span>
-                                <span className={cn(
-                                    "mb-1.25 py-1.25 px-0.25 rounded-xs",
-                                    isInStock ? "border-green-400 border-1 text-green-400" : "bg-disabled-400 text-white")}>
-                                    {isInStock ? (
-                                        <CheckIcon className="w-3 h-3" title="In stock" />
-                                    ) : (
-                                        <XMarkIcon className="w-3 h-3" title="Out of stock" />
-                                    )}
                                 </span>
                             </div>
                         </div>
