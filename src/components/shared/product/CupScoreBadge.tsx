@@ -63,7 +63,7 @@ export default function CupScoreBadge({
                     <TooltipTrigger asChild >
 
                         <div className={cn(
-                            "text-center flex gap-1.5 items-center max-w-max rounded-sm",
+                            "text-center flex gap-1.5 items-center max-w-max rounded-md",
                             hasBackground ?
                                 [isScore
                                     ? bgColorActive

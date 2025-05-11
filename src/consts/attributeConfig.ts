@@ -23,6 +23,12 @@ export const attributeConfig = {
         icon: FairtradeIcon,
         color: "tan",
     },
+    is_mycotoxin_free: {
+        label: "Mycotoxin Free",
+        description: "Tested free from mycotoxins.",
+        icon: MycoIcon,
+        color: "aqua",
+    },
     is_decaf: {
         label: "Decaf",
         description: "Coffee with most of the caffeine removed",
@@ -34,12 +40,6 @@ export const attributeConfig = {
         description: "Reduced caffeine content but still maintains some natural energy.",
         icon: DecafIcon,
         color: "blue",
-    },
-    is_mycotoxin_free: {
-        label: "Mycotoxin Free",
-        description: "Tested free from mycotoxins.",
-        icon: MycoIcon,
-        color: "aqua",
     },
 
 } as const;

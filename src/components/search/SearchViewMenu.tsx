@@ -29,7 +29,7 @@ export default function SearchViewMenu({ className }: { className?: string; }) {
 
     return (
         <div className={cn(
-            "max-lg:sticky max-lg:top-[64px] z-100 flex justify-between items-center w-full bg-pr-200 py-2 px-3 sm:px-4 lg:px-6 lg:border-l-1 border-pr-300 max-lg:shadow-sm",
+            "max-lg:sticky max-lg:top-[64px] z-100 flex justify-between items-center w-full bg-pr-200 py-2 px-4 lg:px-6 lg:border-l-1 border-pr-300 max-lg:shadow-sm",
             className
         )}>
             {isLoading || isFetching

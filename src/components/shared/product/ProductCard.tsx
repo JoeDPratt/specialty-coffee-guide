@@ -13,7 +13,7 @@ import AttributeSection from "@/components/product/AttributeSection";
 import RoastLabel from "@/components/shared/product/RoastLabel";
 import BestValueTag from "@/components/shared/product/BestValueTag";
 import CupScoreBadge from "@/components/shared/product/CupScoreBadge";
-import { CheckCircleIcon, XCircleIcon, FireIcon } from "@heroicons/react/16/solid";
+import { CheckCircleIcon, XCircleIcon, FireIcon, CheckIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useBreakpointStore } from '@/stores/useBreakpointStore'
 import { cn } from "@/utils/classes/merge";
 import {
@@ -21,6 +21,8 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
+import { useSearchStore } from "@/stores/useSearchStore";
+import RoastAndFlavourTagsRow from "./RoastAndFlavourTagsRow";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -43,6 +45,7 @@ export default function ProductCard({
 
     const router = useRouter();
     const variantDisplayWeight = 250;
+    const selectedWeight = useSearchStore((s) => s.selectedWeight);
 
     const isSm = useBreakpointStore((s) => s.isSm)
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
@@ -62,56 +65,62 @@ export default function ProductCard({
     return (
         <div
             onClick={() => router.push(getProductPath(slug))}
-            className="@container/card group flex flex-col h-full bg-card-100 hover:shadow-xl transition-all overflow-hidden rounded-md cursor-pointer hover:scale-101 active:scale-99"
+            className="@container/card relative group max-w-[460px] flex flex-col h-full w-full mx-auto bg-card-100 hover:shadow-xl transition-all overflow-hidden rounded-xl cursor-pointer hover:scale-101 active:scale-99"
         >
+            <div className={cn(
+                "absolute z-10 top-10 max-w-9/10",
+                "@card-sm:top-10 ",
+                "@card-md:top-20"
+            )}>
+                <span className={cn(
+                    "font-teko tracking-wide font-semibold leading-8 text-3xl rounded-sm rounded-l-none",
+                    "bg-pr-900 text-white box-decoration-clone pl-3 pr-2.5 pt-1",
+                    "@card-sm:pl-4 @card-sm:pr-3 @card-sm:leading-9 @card-sm:text-4xl",
+                    "@card-md:pt-0.5 @card-md:pb-0.25 @card-md:pr-4 @card-md:leading-12 @card-md:text-5xl "
+                )}>
+                    {product_name.toUpperCase()}
+                </span>
+
+                <Link
+                    href={getRoasterPath(roaster.slug)}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div className="hover:text-pr-500 -mt-0.75">
+                        <span className={cn(
+                            "bg-pr-900 box-decoration-clone w-full text-base font-normal tracking-wide text-white py-1 pl-3 pr-2 rounded-r-sm ",
+                            "@card-sm:pl-4 @card-sm:py-1.5 @card-sm:pr-3",
+                            "@card-md:text-lg @card-md:py-2.75 @card-md:pr-4",
+                        )}>{roaster.name}</span></div>
+                </Link>
+            </div>
+
+
             {/* Image */}
             <motion.div
                 layoutId={`product-image-${product.slug}`}
                 transition={subtleSpring}
-                className="relative w-full aspect-[1/1] bg-card-100"
+                className={cn(
+                    "relative w-full aspect-[1/1] bg-card-100 border-6 border-card-100 rounded-lg",
+                    "@card-sm:border-6"
+                )}
             >
-                <div className={cn(
-                    "absolute z-10 top-10 max-w-9/10",
-                    "@card-sm:top-10",
-                    "@card-md:top-20"
-                )}>
-                    <span className={cn(
-                        "font-teko tracking-wide font-semibold leading-8 text-3xl rounded-sm rounded-l-none",
-                        "bg-pr-900 text-white box-decoration-clone pl-3 pr-2 pt-1",
-                        "@card-sm:pl-6 @card-sm:pr-3 @card-sm:leading-9 @card-sm:text-4xl",
-                        "@card-md:pt-0.5 @card-md:pb-0.25 @card-md:pr-4 @card-md:leading-12 @card-md:text-5xl "
-                    )}>
-                        {product_name.toUpperCase()}
-                    </span>
-
-                    <Link
-                        href={getRoasterPath(roaster.slug)}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="hover:text-pr-500 -mt-0.75">
-                            <span className={cn(
-                                "bg-pr-900 box-decoration-clone w-full text-base font-normal tracking-wide text-white py-1 pl-3 pr-2 rounded-r-sm ",
-                                "@card-sm:pl-6 @card-sm:py-1.5 @card-sm:pr-3",
-                                "@card-md:text-lg @card-md:py-2.75 @card-md:pr-4",
-                            )}>{roaster.name}</span></div>
-                    </Link>
-                </div>
                 {sca_cup_score && <CupScoreBadge
                     score={sca_cup_score}
                     variant={"card"}
-                    backgroundColor={"light"}
-                    padding={"px-2.5 pt-2.25 pb-1.75"}
+                    backgroundColor={"dark"}
+                    padding={"px-2.5 pt-2.25 pb-1.75 @card-sm:px-3 @card-sm:pt-2.5 @card-sm:pb-2"}
                     className={cn(
-                        "absolute -bottom-1 left-3 z-10 round-b-none",
-                        "@card-sm:left-4",
-                        "@card-md:left-6")}
+                        "absolute -bottom-4 right-3 z-10 rounded-lg border-3 border-card-100",
+                        "@card-sm:right-4",
+                        "@card-md:right-6")}
                 />}
+
                 <Image
                     loader={cloudinaryLoader}
                     src={imageUrl}
                     alt={product_name}
                     fill
-                    className="object-cover"
+                    className="object-cover rounded-lg bg-card-100"
                     sizes="(min-width: 768px) 25vw, 100vw"
                     placeholder="blur"
                     blurDataURL={blurredImage}
@@ -120,27 +129,14 @@ export default function ProductCard({
             </motion.div>
 
             {/* Attriibutes and tags */}
-            <div className="flex-col items-start justify-center px-4 pt-5 pb-2 @card-sm:px-6 bg-card-100 inset-shadow-xs">
-                <div className="flex flex-row flex-wrap items-center gap-1 w-full mb-1">
-                    {roasts && (
-                        <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"outline"} className={"w-auto pr-2 my-1.75"} />
-                    )}
-                    <AttributeSection
-                        attributeData={attributes}
-                        variant={"icon"}
-                        className={"-ml-3"}
-                        hasBackground={false}
-                        iconSize={"md"}
-                        showInactive={false}
-                    />
-                </div>
-                {flavourText && (
-                    <div className={cn(
-                        "text-base text-left capitalize text-pr-800 line-clamp-1 py-1 mb-2",
-
-                    )}>{flavourText}</div>
-                )}
-                {/* Roasts */}
+            <div className="flex flex-col items-center gap-y-4 px-4 pt-6 pb-6 @card-sm:px-6">
+                <RoastAndFlavourTagsRow roasts={roasts} flavours={flavours} variant={"text"} />
+                <AttributeSection
+                    attributeData={attributes}
+                    variant={"pill"}
+                    className={"flex-wrap"}
+                    showInactive={false}
+                />
 
             </div>
             {/* Spacer, evens out uneven height cards */}
@@ -151,46 +147,65 @@ export default function ProductCard({
 
 
             </div>
+
             {/* Comparison section */}
-            <div className="px-4 @card-sm:px-6 pb-8">
-
-                {/* Cup Score Price */}
-                <div className="flex justify-between items-end border-t-2 border-pr-300 pt-4">
-
-                    {/* <div className={cn("-mb-0.25",
-                        !isBestValue && "opacity-0"
-                    )}
-                    >
-                        <BestValueTag />
-                    </div> */}
-                    <Tooltip>
-                        <TooltipTrigger asChild >
-                            <div className="flex flex-col items-start text-left gap-1">
-                                <div className="flex items-end gap-1.25 pt-1 font-medium text-pr-900">
-                                    <span className={cn(
-                                        "text-3xl font-bold",
-                                        isInStock ? "text-pr-900" : "text-disabled-400"
-                                    )}>
-                                        £{variant?.price?.toFixed(2) ?? "--.--"}</span>
-                                    <span className="pb-2">
-                                        {isInStock ? (
-                                            <CheckCircleIcon className="w-4 h-4 text-green-400" title="In stock" />
-                                        ) : (
-                                            <XCircleIcon className="w-4 h-4 text-disabled-400" title="Out of stock" />
-                                        )}
-                                    </span>
-                                </div>
-                                <div className={cn(
-                                    "text-base leading-2 font-light",
+            <div className={cn(
+                "flex flex-col items-end justify-end gap-1.75 pb-6 mx-4 pt-3 border-t-2 border-pr-300",
+                "@card-md:mx-6"
+            )}>
+                <Tooltip>
+                    <TooltipTrigger asChild >
+                        <div className={cn(
+                            "flex items-center gap-2 mt-1.5 ",
+                            "max-sm:w-full",
+                            isInStock ? "max-sm:justify-end" : "max-sm:justify-between"
+                        )}>
+                            {(isSm && !isInStock) &&
+                                <span className="text-disabled-400 uppercase text-lg font-bold mt-0.75">
+                                    Out of Stock
+                                </span>}
+                            <div className="flex items-end gap-2">
+                                <span className={cn(
+                                    "text-3xl font-bold leading-9 -mb-0.5",
                                     isInStock ? "text-pr-900" : "text-disabled-400"
-                                )}>{variant?.weight}g - {pricePerKg} /kg
-
-                                </div>
+                                )}>
+                                    £{variant?.price?.toFixed(2) ?? "--.--"}
+                                </span>
+                                <span className={cn(
+                                    "mb-1.25 py-1.25 px-0.25 rounded-xs",
+                                    isInStock ? "border-green-400 border-1 text-green-400" : "bg-disabled-400 text-white")}>
+                                    {isInStock ? (
+                                        <CheckIcon className="w-3 h-3" title="In stock" />
+                                    ) : (
+                                        <XMarkIcon className="w-3 h-3" title="Out of stock" />
+                                    )}
+                                </span>
                             </div>
-                        </TooltipTrigger>
-                        <DefaultTooltip description={isInStock ? "In-stock" : "Out of stock"} align="end" />
-                    </Tooltip>
+                        </div>
+                    </TooltipTrigger>
+                    <DefaultTooltip description={isInStock ? "In-stock" : "Out of stock"} align="end" />
+                </Tooltip>
+                <div className={cn(
+                    "flex max-sm:w-full max-sm:items-center",
+                    isBestValue && isInStock
+                        ? "max-sm:justify-between"
+                        : "max-sm:justify-end"
+                )}>
+                    {(isSm && isInStock && isBestValue) && <BestValueTag variant="outline" />}
 
+                    <div className="flex items-center gap-1 border-1 border-pr-300 rounded-sm">
+                        <span className={cn(
+                            "bg-pr-300 px-2 pt-0.25",
+                            isInStock ? "text-pr-700" : "text-card-100"
+                        )}>
+                            {selectedWeight === "1000" ? "1kg" : selectedWeight + "g"}
+                        </span>
+                        <span className={cn(
+                            "text-base leading-4 font-normal px-2 pt-0.25",
+                            isInStock ? "text-pr-700" : "text-disabled-400"
+                        )}>{pricePerKg} /kg
+                        </span>
+                    </div>
                 </div>
             </div>
         </div >

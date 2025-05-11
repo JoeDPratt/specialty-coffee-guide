@@ -5,14 +5,16 @@ import {
     FireIcon
 } from "@heroicons/react/16/solid";
 
-function RoastTag({
+export function RoastTag({
     roast,
     size,
-    variant
+    variant,
+    lastItem
 }: {
     roast: string;
     size: string;
     variant?: "default" | "outline" | "text";
+    lastItem?: boolean;
 }): JSX.Element | null {
 
     if (!roast) return null;
@@ -33,33 +35,31 @@ function RoastTag({
 
     return (
         <div className={cn(
-            "font-sofia-sans rounded-sm flex items-center gap-0.75",
+            "font-sofia-sans rounded-sm flex items-center gap-1",
             variant === "outline"
                 ? [borderColor, textColor, "border-1"]
                 : [bgColor, "text-white"],
             isSmall
                 ? "text-sm pl-1.5 pr-2 pt-1.5 pb-1 leading-3"
-                : "text-base px-3 pt-3 pb-2.5 leading-3",
+                : "text-base pl-1.5 pr-2 pt-2.25 pb-1.75 leading-3",
             variant === "text"
                 ? ["text-base text-left font-normal tracking-normal bg-transparent border-none p-0", textColor]
-                : "text-center font-bold tracking-wider"
+                : "text-center font-normal"
         )}>
             <FireIcon className={cn(
-                "w-4 h-4 -mt-0.5",
+                variant === "outline" ? "size-4.5 -mt-0.5" : "size-4 -mt-0.5",
                 variant === "outline" || "text" ? textColor : "text-white")} />
             <span
                 aria-label={`${roast} roast`}
                 className={cn(
                     variant === "text"
                         ? "capitalize"
-                        : "uppercase"
+                        : "capitalize"
                 )}
             >
-                {roast}
+                {roast}{!lastItem && ","}
             </span>
-            <span className="-ml-0.75">
-                {variant === "text" && ","}
-            </span>
+
         </div>
 
     );

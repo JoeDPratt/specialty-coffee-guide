@@ -30,7 +30,7 @@ export default function SearchPageClient({
                 <SearchFilterMenu className="lg:pt-8" />
                 <div className="@container/grid flex flex-col flex-1 min-h-0">
                     <SearchViewMenu />
-                    <SearchResults className="relative flex-1 min-h-0 lg:shadow-[inset_0_2px_5px_rgba(0,0,0,0.02)]" />
+                    <SearchResults className="relative flex-1 w-full min-h-0 lg:shadow-[inset_0_2px_5px_rgba(0,0,0,0.02)]" />
                 </div>
             </div>
         </HydrationBoundary>

@@ -16,7 +16,7 @@ interface IconProps {
 }
 
 type IconSize = "base" | "md" | "lg";
-type Variant = "default" | "icon";
+type Variant = "default" | "icon" | "pill";
 
 interface AttributeItemProps {
     flagName: AttributeKey;
@@ -63,6 +63,22 @@ const bgClassMap = {
     aqua: "bg-aqua-100",
     orange: "bg-orange-100",
     tan: "bg-tan-100",
+} as const;
+
+const borderColorMap = {
+    green: "border-green-400",
+    blue: "border-blue-400",
+    aqua: "border-aqua-400",
+    orange: "border-orange-400",
+    tan: "border-tan-400",
+} as const;
+
+const textColorMap = {
+    green: "text-green-400",
+    blue: "text-blue-400",
+    aqua: "text-aqua-400",
+    orange: "text-orange-400",
+    tan: "text-tan-400",
 } as const;
 
 const iconSizeMap = {
@@ -163,20 +179,73 @@ function AttributeItemIcon({
     );
 }
 
+// Attributte icon with background highlight (white)
+function AttributeItemPill({
+    flagName,
+    isActive = false,
+    config,
+    iconSize = "base",
+    hasBackground = true,
+    hasLabel = true,
+    hasColorIcons = true
+}: AttributeItemProps): JSX.Element {
+
+    const { label, description, icon: Icon, color } = config;
+    const iconColorClass = colorClassMap[color]
+    const textColorClass = textColorMap[color]
+    const borderColorClass = borderColorMap[color]
+    const bgColorClass = bgClassMap[color]
+
+    return (
+        <Tooltip>
+            <TooltipTrigger asChild >
+                <div
+                    className={cn(
+                        "flex items-center shadow-none p-1 gap-0 rounded-lg border-1",
+                        borderColorClass,
+                        hasLabel && "p-0.75 gap-0.5 pl-2 pr-2.5",
+                        isActive
+                            ? hasBackground && bgColorClass
+                            : "bg-transparent",
+                    )}
+                    aria-label={`${attributeConfig[flagName].label} ${isActive ? "active" : "inactive"}`}
+                >
+                    {/* <Icon
+                        className={cn(
+                            isActive
+                                ? hasColorIcons ? iconColorClass : "fill-pr-900"
+                                : "text-disabled-400",
+                            "size-5.5"
+                        )}
+                    /> */}
+                    {hasLabel && <span className={cn(
+                        "capitalize mt-0.25 ml-1 text-sm",
+                        isActive
+                            ? textColorClass
+                            : "text-disabled-400",)}
+                    >{label}</span>}
+                </div>
+            </TooltipTrigger>
+            <AttributeTooltip title={label} icon={Icon} description={description} iconColorClass={iconColorClass} />
+        </Tooltip>
+    );
+}
+
 export default function AttributeSection({
     attributeData,
     variant = "default",
     className = "",
-    iconSize = "base",
-    hasBackground = false,
-    hasLabel = false,
+    iconSize,
+    hasBackground,
+    hasLabel,
     showInactive = true,
-    hasColorIcons = true
+    hasColorIcons
 }: AttributeSectionProps): JSX.Element {
 
     const entries = (Object.keys(attributeData) as AttributeKey[])
         .filter((key) => attributeConfig[key])
         .map((key) => [key, attributeData[key]] as const);
+
 
     if (variant === "icon") {
         return (
@@ -203,6 +272,30 @@ export default function AttributeSection({
         );
     }
 
+    if (variant === "pill") {
+        return (
+
+            <div
+                className={cn("flex justify-center w-full gap-1.5", className)}
+                role="region"
+                aria-label="Coffee attribute icons"
+            >
+                {entries.map(([flagName, isActive]) => (
+                    (showInactive || isActive) &&
+                    <AttributeItemPill
+                        key={flagName}
+                        flagName={flagName}
+                        config={attributeConfig[flagName]}
+                        isActive={isActive ?? false}
+                        iconSize={iconSize}
+                        hasBackground={hasBackground}
+                        hasLabel={hasLabel}
+                        hasColorIcons={hasColorIcons}
+                    />
+                ))}
+            </div>
+        );
+    }
 
     return (
         <div
