@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import type { RuleSetRule } from "webpack";
 
 const nextConfig: NextConfig = {
+    transpilePackages: ['@tanstack/react-query', '@tanstack/react-query-devtools', '@tanstack/query-core', 'zustand'],
     images: {
         loader: "custom",
         deviceSizes: [420, 640, 768, 1024, 1280, 1920],
@@ -15,6 +16,8 @@ const nextConfig: NextConfig = {
     },
 
     webpack(config, { dev, isServer }) {
+        config.resolve = config.resolve || {};
+        config.resolve.conditionNames = ['require', 'node'];
         // ↓ Only in dev on the client side, override webpack's file‐watcher options
         if (dev && !isServer) {
             config.watchOptions = {

@@ -18,11 +18,11 @@ export default function SkeletonSearchResults({
 }: SkeletonSearchResultsProps) {
     // Prepare an array of placeholders
     const placeholders = Array.from({ length: count });
-    const isLg = useBreakpointStore((s) => s.isLg)
+    const isSm = useBreakpointStore((s) => s.isSm)
 
     // Determine container classes matching SearchResults
     const containerClass = cn(
-        view === "list" && !isLg
+        view === "list" && !isSm
             ? "gap-8 sm:gap-4 flex flex-col"
             : "gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4"
     );
@@ -32,7 +32,7 @@ export default function SkeletonSearchResults({
             <div className={containerClass}>
                 {placeholders.map((_, idx) => (
                     <div key={idx} className="flex flex-col h-full">
-                        {view === "list" && !isLg ? (
+                        {view === "list" && !isSm ? (
                             <SkeletonProductListItem />
                         ) : (
                             // Grid/card-style skeleton item

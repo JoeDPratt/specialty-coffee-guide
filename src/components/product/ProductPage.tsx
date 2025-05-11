@@ -81,7 +81,7 @@ export default function ProductPage({
             <motion.main
                 role="main"
                 id="main-content"
-                className="text-pr-800 dark:text-white pt-1 mt-7.5"
+                className="text-pr-800 dark:text-white pt-1 mt-7.5 overscroll-none"
                 initial="hidden"
                 animate="visible"
                 variants={staggerContainer}

@@ -13,16 +13,7 @@ import { Bars3Icon } from '@heroicons/react/16/solid';
 import { HeaderSearch } from '@/components/shared/header/HeaderSearch';
 
 export default function Header() {
-    const pathname = usePathname();
-    const isSearchPage = pathname === "/search"
-    return (
-        <>
-            {isSearchPage ? <HeaderSearch /> : <DefaultHeader />}
-        </>
-    )
-}
 
-export function DefaultHeader() {
     const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
     const setIsScrolled = useStickyStore((state) => state.setIsScrolled);
     const isScrolled = useStickyStore((state) => state.isScrolled);
@@ -43,7 +34,7 @@ export function DefaultHeader() {
 
     return (
         <>
-            <div ref={sentinelRef} className="absolute top-14 md:top-12 h-1 w-full pointer-events-none" />
+            <div ref={sentinelRef} className="absolute top-1 md:top-12 h-1 w-full pointer-events-none" />
 
             <motion.header
                 className="sticky top-0 z-20"
