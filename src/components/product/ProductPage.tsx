@@ -96,7 +96,7 @@ export default function ProductPage({
 
                     {/* Hero Section */}
                     <motion.div
-                        className="flex flex-col z-1 relative w-full items-center justify-center gap-4 pb-24"
+                        className="flex flex-col z-1 relative w-full items-center justify-center gap-4 pb-30 lg:pb-24"
                         variants={fadeUpItem}
                     >
                         {/* Background + Content Layer */}
@@ -142,12 +142,12 @@ export default function ProductPage({
                     id="coffee-details"
                     aria-labelledby="product-title"
                     role="region"
-                    className="section-layout flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-x-16 gap-12 md:mt-10 lg:mt-20.5"
+                    className="section-layout flex flex-col lg:flex-wrap lg:flex-row w-full xl:gap-x-16 gap-12 -mt-16 lg:mt-20.5"
                 >
 
                     {/* LEFT COLUMN: Product image */}
                     <motion.div
-                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-card-200 sm:p-6 p-4 border-1 border-card-100 rounded-md"
+                        className="flex flex-col lg:top-36 lg:sticky lg:self-start lg:flex-1 bg-card-200 p-1 border-1 border-card-100 rounded-xl z-11"
                         variants={fadeUpItem}
                     >
                         <motion.div
@@ -155,10 +155,6 @@ export default function ProductPage({
                             transition={subtleSpring}
                             className="w-full relative aspect-square order-2"
                         >
-                            <CupScoreBadge
-                                score={product.sca_cup_score}
-                                className="absolute bottom-0 -mb-8 lg:top-0 lg:-mt-8.5 left-1/2 -translate-x-1/2 lg:left-8/10 z-10 px-4 rounded-full"
-                            />
                             <Image
                                 loader={cloudinaryLoader}
                                 src={
@@ -167,7 +163,7 @@ export default function ProductPage({
                                 }
                                 alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
                                 fill
-                                className="object-cover bg-pr-100"
+                                className="object-cover bg-pr-100 rounded-lg"
                             />
                         </motion.div>
                     </motion.div>

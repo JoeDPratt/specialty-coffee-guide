@@ -70,7 +70,7 @@ export default function ProductCard({
             <div className={cn(
                 "absolute z-10 top-10 max-w-9/10",
                 "@card-sm:top-14",
-                "@card-md:top-20"
+                "@card-md:top-18"
             )}>
                 <span className={cn(
                     "font-teko tracking-wide font-semibold leading-8 text-3xl rounded-sm rounded-l-none",
