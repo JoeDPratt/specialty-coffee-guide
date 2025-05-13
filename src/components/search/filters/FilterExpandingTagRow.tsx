@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FilterTag from "./FilterTag";
 import ShowMoreButton from "@/components/shared/buttons/ShowMoreButton";
-
+import type { DefaultFilterItem } from "@/types/search";
 
 export default function FilterExpandingTagRow({
     filterTags,
@@ -10,7 +10,7 @@ export default function FilterExpandingTagRow({
     isTagSelected,
     availableTags,
 }: {
-    filterTags: string[]
+    filterTags: DefaultFilterItem[]
     visibleCount?: number
     isTagSelected: (key: string) => boolean;
     onToggle: (key: string) => void;
@@ -28,12 +28,12 @@ export default function FilterExpandingTagRow({
             <div className="flex flex-wrap gap-2 mb-5">
                 {visibleTags.map((tagKey) => (
                     <FilterTag
-                        key={tagKey}
+                        key={tagKey.value}
                         tagKey={tagKey}
                         onToggle={onToggle}
                         isTagSelected={isTagSelected}
-                        isTagAvailable={availableTags.includes((tagKey.toLowerCase()))}
-                    // config={filterConfig[filterKey]}
+                        isTagAvailable={availableTags.includes((tagKey.value))}
+
                     />
                 ))}
             </div>

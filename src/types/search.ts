@@ -29,8 +29,13 @@ export interface SearchResultsResponse {
     previousPage?: number;
 }
 
+export interface DefaultFilterItem {
+    label: string; // display_name
+    value: string; // normalized_name
+}
+
 export interface DefaultFilterOptions {
-    varietals: string[];
-    processes: string[];
-    countries: string[];
+    varietals: DefaultFilterItem[];
+    processes: DefaultFilterItem[];
+    countries: DefaultFilterItem[];
 }

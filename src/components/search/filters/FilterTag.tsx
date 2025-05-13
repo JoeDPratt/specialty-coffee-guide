@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { usePaginationStore } from "@/stores/usePaginationStore";
 import { cn } from "@/utils/classes/merge";
+import type { DefaultFilterItem } from "@/types/search";
 
 type FilterTagProps = {
-    tagKey: string;
+    tagKey: DefaultFilterItem;
     isTagSelected: (key: string) => boolean;
     isTagAvailable: boolean
     onToggle: (key: string) => void;
@@ -19,9 +20,9 @@ export default function FilterTag({
 ) {
 
     const resetPagination = usePaginationStore((s) => s.resetPagination)
-    const isTagSet = isTagSelected(tagKey)
+    const isTagSet = isTagSelected(tagKey.value)
     const handleClick = () => {
-        onToggle(tagKey.toLowerCase())
+        onToggle(tagKey.value)
         resetPagination()
     }
 
@@ -38,7 +39,7 @@ export default function FilterTag({
             className={cn(classes)}
             disabled={!isTagAvailable}
         >
-            {tagKey}
+            {tagKey.label}
         </Button>
     )
 }
