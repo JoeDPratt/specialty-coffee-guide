@@ -3,8 +3,7 @@
 // import { FilterToggle } from "@/components/search/filters/FilterToggle";
 import FilterHeader from "@/components/search/filters/FilterHeader";
 import FilterExpandingTagRow from "./FilterExpandingTagRow";
-import { useIsVarietalSelected } from "@/hooks/useIsVarietalSelected";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
 import { useDefaultFilterOptions } from "@/hooks/useDefaultFilters";
 
@@ -12,10 +11,12 @@ import { useDefaultFilterOptions } from "@/hooks/useDefaultFilters";
 export default function VarietalsFilter() {
 
     const {
+        varietalFilters,
         setVarietalFilters,
         toggleVarietalFilter,
         availableVarietals,
-    } = useSearchStore((s) => ({
+    } = useSearchStore((s: SearchState) => ({
+        varietalFilters: s.varietalFilters,
         setVarietalFilters: s.setVarietalFilters,
         toggleVarietalFilter: s.toggleVarietalFilter,
         availableVarietals: s.availableVarietals,
@@ -25,7 +26,7 @@ export default function VarietalsFilter() {
         select: (data) => data.varietals,
     });
 
-    const isVarietalSelected = useIsVarietalSelected;
+    const isVarietalSelected = (key: string) => varietalFilters.includes(key);
     const { areVarietalsSet } = useActiveFilters();
 
 

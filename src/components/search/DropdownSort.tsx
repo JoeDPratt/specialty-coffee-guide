@@ -7,7 +7,7 @@ import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown";
 import { cn } from "@/utils/classes/merge";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { SortOption } from "@/stores/useSearchStore";
 import { ArrowsUpDownIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ const sortOptions: { label: string; value: SortOption }[] = [
 ];
 
 export function DropdownSort({ className }: DropdownSortProps) {
-    const { sortedBy, setSortedBy } = useSearchStore((s) => ({ sortedBy: s.sortedBy, setSortedBy: s.setSortedBy }));
+    const { sortedBy, setSortedBy } = useSearchStore((s: SearchState) => ({ sortedBy: s.sortedBy, setSortedBy: s.setSortedBy }));
     const resetPagination = usePaginationStore((s) => s.resetPagination)
     const isSm = useBreakpointStore((s) => s.isSm);
 

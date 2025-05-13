@@ -14,7 +14,6 @@ import AttributeSection from "@/components/product/AttributeSection";
 import RoastLabel from "@/components/shared/product/RoastLabel";
 import BestValueTag from "@/components/shared/product/BestValueTag";
 import CupScoreBadge from "@/components/shared/product/CupScoreBadge";
-import { XMarkIcon, CheckIcon, NoSymbolIcon, FireIcon } from "@heroicons/react/16/solid";
 import { useBreakpointStore } from '@/stores/useBreakpointStore'
 import { cn } from "@/utils/classes/merge";
 import {
@@ -22,9 +21,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
-import { useState } from "react";
-
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -46,7 +43,7 @@ export default function ProductListItem({
     } = product;
 
 
-    const selectedWeight = useSearchStore((s) => s.selectedWeight);
+    const selectedWeight = useSearchStore((s: SearchState) => s.selectedWeight);
     const router = useRouter();
     // const variantDisplayWeight = 250;
 

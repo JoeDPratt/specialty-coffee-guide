@@ -7,7 +7,7 @@ import {
     useQueryClient,
     keepPreviousData,
 } from '@tanstack/react-query'
-import { useSearchStore } from '@/stores/useSearchStore'
+import { SearchState, useSearchStore } from '@/stores/useSearchStore'
 import { fetchSearchResults } from '@/lib/fetchers/products'
 import type {
     SearchQueryParams,
@@ -21,11 +21,15 @@ export function useSearchQuery() {
     const { page, ...filterParams } = queryParams;
     const {
         setTotalResults,
-        setAvailableVarietals
-    } = useSearchStore((s) =>
+        setAvailableVarietals,
+        setAvailableProcesses,
+        setAvailableCountries
+    } = useSearchStore((s: SearchState) =>
     ({
         setTotalResults: s.setTotalResults,
-        setAvailableVarietals: s.setAvailableVarietals
+        setAvailableVarietals: s.setAvailableVarietals,
+        setAvailableProcesses: s.setAvailableProcesses,
+        setAvailableCountries: s.setAvailableCountries
     }));
 
     const queryClient = useQueryClient()
@@ -58,8 +62,17 @@ export function useSearchQuery() {
         // Collect varietals from all products
         const varietals = result.data?.results.flatMap(p => p.varietals || []);
         const uniqueVarietals = Array.from(new Set(varietals)).sort();
-
         setAvailableVarietals(uniqueVarietals);
+
+        // Collect processes from all products
+        const processes = result.data?.results.flatMap(p => p.processes || []);
+        const uniqueProcesses = Array.from(new Set(processes)).sort();
+        setAvailableProcesses(uniqueProcesses);
+
+        // Collect countries from all products
+        const countries = result.data?.results.flatMap(p => p.countries || []);
+        const uniqueCountries = Array.from(new Set(countries)).sort();
+        setAvailableCountries(uniqueCountries);
 
         if (result.isError) setTotalResults(0)
     }, [result.isSuccess, result.isError, result.data, setTotalResults])

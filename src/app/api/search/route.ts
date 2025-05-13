@@ -18,6 +18,12 @@ export async function GET(req: NextRequest) {
         varietals: sp.get("varietals")
             ? sp.get("varietals")!.split(",").map((v) => v.trim()).filter(Boolean)
             : [],
+        processes: sp.get("processes")
+            ? sp.get("processes")!.split(",").map((v) => v.trim()).filter(Boolean)
+            : [],
+        countries: sp.get("countries")
+            ? sp.get("countries")!.split(",").map((v) => v.trim()).filter(Boolean)
+            : [],
     };
 
     // 🔑 dynamically map every filter key (current & future)

@@ -2,7 +2,7 @@
 "use client";
 
 import { startTransition, useCallback, useEffect, useRef, useState } from "react";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { usePaginationStore } from "@/stores/usePaginationStore";
 import { usePathname, useRouter } from "next/navigation";
 import { serializeQueryParams } from "@/utils/navigation/serializeQueryParams";
@@ -22,16 +22,20 @@ export function useSearchLogic() {
         closeSearch,
         filters,
         varietalFilters,
+        processFilters,
+        countryFilters,
         query,
         setQuery,
         cupScoreRange,
         resetPagination
     } = {
-        ...useSearchStore((s) => ({
+        ...useSearchStore((s: SearchState) => ({
             toggleSearch: s.toggleSearch,
             closeSearch: s.closeSearch,
             filters: s.filters,
             varietalFilters: s.varietalFilters,
+            processFilters: s.processFilters,
+            countryFilters: s.countryFilters,
             query: s.query,
             setQuery: s.setQuery,
             cupScoreRange: s.cupScoreRange,
@@ -65,6 +69,8 @@ export function useSearchLogic() {
             ...filters,
             q: query || undefined,
             varietals: varietalFilters.length > 0 ? varietalFilters : undefined,
+            processes: processFilters.length > 0 ? processFilters : undefined,
+            countries: countryFilters.length > 0 ? countryFilters : undefined,
             page: 1,
             ...(min !== (defaultMin - 1) || max !== (defaultMax + 1) ? {
                 cup_score_min: min,
@@ -81,7 +87,7 @@ export function useSearchLogic() {
                 router.replace(target);
             });
         }
-    }, [filters, query, cupScoreRange, varietalFilters]);
+    }, [filters, query, cupScoreRange, varietalFilters, processFilters, countryFilters]);
 
     const handleSearch = () => {
         setQuery(query);

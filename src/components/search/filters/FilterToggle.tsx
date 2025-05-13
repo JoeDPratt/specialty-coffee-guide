@@ -1,7 +1,7 @@
 // src/components/search/FilterToggle.tsx
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/classes/merge";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { ScalableIcon } from "../../icons/ScalableIcon";
 import { filterConfig, type FilterKey } from "@/consts/filterConfig";
 import { attributeConfig } from "@/consts/attributeConfig";
@@ -21,7 +21,7 @@ export function FilterToggle({
 }: FilterToggleProps) {
 
     const resetPagination = usePaginationStore((s) => s.resetPagination)
-    const { filters, setFilters } = useSearchStore((s) => ({
+    const { filters, setFilters } = useSearchStore((s: SearchState) => ({
         filters: s.filters,
         setFilters: s.setFilters
     }));

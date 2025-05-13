@@ -17,7 +17,7 @@ export default function FilterHeader({
     return (
         <div className="-mt-0.25 mb-5.25">
             <div className="flex justify-between items-center">
-                <h3 className="text-2xl leading-none m-0 py-0.5">{title}</h3>
+                <h3 className="text-3xl lg:text-2xl leading-none m-0 py-0.5">{title}</h3>
                 {isSet && <Button
                     variant={"secondary"}
                     size={"sm"}

@@ -1,5 +1,5 @@
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { fadeUpItem, staggerContainer } from "@/utils/animation";
 import { motion } from "framer-motion";
 import ProductListItem from '@/components/shared/product/ProductListItem';
@@ -17,7 +17,7 @@ export default function ResultsContent({
     isLoading: boolean;
     isError: boolean;
 }) {
-    const resultsView = useSearchStore((s) => s.selectedView);
+    const resultsView = useSearchStore((s: SearchState) => s.selectedView);
     const isSm = useBreakpointStore((s) => s.isSm);
 
     if (isLoading) return <SkeletonSearchResults view={resultsView} />;

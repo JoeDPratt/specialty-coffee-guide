@@ -13,7 +13,7 @@ export default function SeacrhBarMenu() {
         selectedWeight,
         setWeight,
         toggleFilters,
-    } = useSearchStore((s) => ({
+    } = useSearchStore((s: SearchState) => ({
         selectedWeight: s.selectedWeight,
         setWeight: s.setSelectedWeight,
         toggleFilters: s.toggleFilters,

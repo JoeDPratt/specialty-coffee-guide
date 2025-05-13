@@ -43,6 +43,18 @@ export type SearchState = {
     availableVarietals: string[];
     setAvailableVarietals: (varietals: string[]) => void,
 
+    processFilters: string[];
+    setProcessFilters: (filters: string[]) => void;
+    toggleProcessFilter: (key: string) => void;
+    availableProcesses: string[];
+    setAvailableProcesses: (processes: string[]) => void,
+
+    countryFilters: string[];
+    setCountryFilters: (filters: string[]) => void;
+    toggleCountryFilter: (key: string) => void;
+    availableCountries: string[];
+    setAvailableCountries: (countries: string[]) => void,
+
     cupScoreRange: [number, number];
     setCupScoreRange: (range: [number, number]) => void;
 
@@ -94,6 +106,8 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
 
         varietalFilters: [],
         setVarietalFilters: (filters) => set({ varietalFilters: filters }),
+        availableVarietals: [],
+        setAvailableVarietals: (varietals) => set({ availableVarietals: varietals }),
         toggleVarietalFilter: (key) =>
             set((state) => {
                 const exists = state.varietalFilters.includes(key);
@@ -103,8 +117,35 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
                         : [...state.varietalFilters, key],
                 };
             }),
-        availableVarietals: [],
-        setAvailableVarietals: (varietals) => set({ availableVarietals: varietals }),
+
+
+        processFilters: [],
+        setProcessFilters: (filters) => set({ processFilters: filters }),
+        availableProcesses: [],
+        setAvailableProcesses: (processes) => set({ availableProcesses: processes }),
+        toggleProcessFilter: (key) =>
+            set((state) => {
+                const exists = state.processFilters.includes(key);
+                return {
+                    processFilters: exists
+                        ? state.processFilters.filter((k) => k !== key)
+                        : [...state.processFilters, key],
+                };
+            }),
+
+        countryFilters: [],
+        setCountryFilters: (filters) => set({ countryFilters: filters }),
+        availableCountries: [],
+        setAvailableCountries: (countries) => set({ availableCountries: countries }),
+        toggleCountryFilter: (key) =>
+            set((state) => {
+                const exists = state.countryFilters.includes(key);
+                return {
+                    countryFilters: exists
+                        ? state.countryFilters.filter((k) => k !== key)
+                        : [...state.countryFilters, key],
+                };
+            }),
 
         cupScoreRange: outOfBoundsCupScore,
         setCupScoreRange: (range) => set({ cupScoreRange: range }),
@@ -121,6 +162,8 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         hydrate: (params: SearchQueryParams) => {
             const { q, sort_by, cup_score_min, cup_score_max, ...rest } = params;
             const varietals = params.varietals as string | string[] | undefined;
+            const processes = params.processes as string | string[] | undefined;
+            const countries = params.countries as string | string[] | undefined;
 
             const cupScoreRange: [number, number] = [
                 cup_score_min != null ? Number(cup_score_min) : outOfBoundsCupScore[0],
@@ -135,6 +178,12 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
                 varietalFilters: Array.isArray(varietals)
                     ? varietals
                     : varietals?.split(",") ?? [],
+                processFilters: Array.isArray(processes)
+                    ? processes
+                    : processes?.split(",") ?? [],
+                countryFilters: Array.isArray(countries)
+                    ? countries
+                    : countries?.split(",") ?? [],
             });
         },
 
@@ -143,6 +192,8 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
                 filters: initialFilters,
                 cupScoreRange: outOfBoundsCupScore,
                 varietalFilters: [],
+                processFilters: [],
+                countryFilters: [],
             });
         }
     }),

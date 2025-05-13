@@ -2,10 +2,9 @@
 
 import { Breadcrumbs } from './Breadcrumbs';
 import { useStickyStore } from '@/stores/useStickyStore';
-import { useSearchStore } from '@/stores/useSearchStore'
-import { motion } from 'framer-motion'
+import { SearchState, useSearchStore } from '@/stores/useSearchStore'
 import { cn } from '@/utils/classes/merge';
-import { fadeUpItem } from '@/utils/animation';
+
 
 interface BreadcrumbItem {
     label: string;
@@ -19,7 +18,7 @@ interface Props {
 
 export function BreadcrumbsClientWrapper({ crumbs, className }: Props) {
     const isScrolled = useStickyStore((s) => s.isScrolled);
-    const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
+    const isSearchOpen = useSearchStore((s: SearchState) => s.isSearchOpen);
 
     return (
         <>

@@ -2,19 +2,17 @@
 import { useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useStickyStore } from '@/stores/useStickyStore'
-import { useSearchStore } from '@/stores/useSearchStore';
+import { SearchState, useSearchStore } from '@/stores/useSearchStore';
 import ExpandedSearch from '@/components/shared/search/ExpandedSearch'
-import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/classes/merge'
 import { HeaderLogo } from './HeaderLogo'
 import { HeaderSearchButton } from '@/components/shared/header/HeaderSearchButton'
 import { Button } from '@/components/ui/button';
 import { Bars3Icon } from '@heroicons/react/16/solid';
-import { HeaderSearch } from '@/components/shared/header/HeaderSearch';
 
 export default function Header() {
 
-    const isSearchOpen = useSearchStore((s) => s.isSearchOpen);
+    const isSearchOpen = useSearchStore((s: SearchState) => s.isSearchOpen);
     const setIsScrolled = useStickyStore((state) => state.setIsScrolled);
     const isScrolled = useStickyStore((state) => state.isScrolled);
     const sentinelRef = useRef<HTMLDivElement>(null)

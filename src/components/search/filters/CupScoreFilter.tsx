@@ -3,14 +3,14 @@
 'use client'
 import FilterSlider from "@/components/search/filters/FilterSlider";
 import { cupScoreRange } from "@/consts/rangeConfig";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import FilterHeader from "@/components/search/filters/FilterHeader";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
 
 export default function CupScoreFilter() {
 
     const { min, max } = cupScoreRange;
-    const { cupScoreRange: committedRange, setCupScoreRange } = useSearchStore((s) => ({ cupScoreRange: s.cupScoreRange, setCupScoreRange: s.setCupScoreRange }));
+    const { cupScoreRange: committedRange, setCupScoreRange } = useSearchStore((s: SearchState) => ({ cupScoreRange: s.cupScoreRange, setCupScoreRange: s.setCupScoreRange }));
 
     const { isCupScoreSet } = useActiveFilters();
     function clearRange() {

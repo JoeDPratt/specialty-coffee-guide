@@ -1,4 +1,4 @@
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { AttributeFilterRow } from "./AttributeFilterRow";
 import FilterHeader from "@/components/search/filters/FilterHeader";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
@@ -6,7 +6,7 @@ import { initialFilters } from "@/stores/useSearchStore";
 
 export default function SourcingQualityFilter() {
 
-    const { setFilters } = useSearchStore((s) => ({ setFilters: s.setFilters }));
+    const { setFilters } = useSearchStore((s: SearchState) => ({ setFilters: s.setFilters }));
     const { isSQFilterSet } = useActiveFilters();
 
     function clearFilters() {

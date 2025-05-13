@@ -1,7 +1,7 @@
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { useSearchResultsCounter } from "@/hooks/useSearchResultsCounter";
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
-import { ViewMode, useSearchStore } from "@/stores/useSearchStore";
+import { ViewMode, useSearchStore, SearchState } from "@/stores/useSearchStore";
 import { ToggleWithTooltips, ToggleWithTooltipsProps } from "@/components/shared/buttons/ToggleWithToolTips";
 import { useMemo } from "react";
 import { Bars4Icon, Squares2X2Icon } from "@heroicons/react/16/solid";
@@ -14,7 +14,7 @@ export default function SearchViewMenu({ className }: { className?: string; }) {
     const { isLoading, isFetching } = useSearchQuery();
     const resultsString = useSearchResultsCounter();
 
-    const { selectedView, setSelectedView } = useSearchStore((s) => ({
+    const { selectedView, setSelectedView } = useSearchStore((s: SearchState) => ({
         selectedView: s.selectedView,
         setSelectedView: s.setSelectedView,
     }));

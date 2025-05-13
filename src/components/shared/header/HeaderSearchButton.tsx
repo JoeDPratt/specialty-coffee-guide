@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid'
 import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/classes/merge'
-import { useSearchStore } from '@/stores/useSearchStore'
+import { SearchState, useSearchStore } from '@/stores/useSearchStore'
 import { useBreakpointStore } from '@/stores/useBreakpointStore'
 
 type HeaderSearchButtonProps = {
@@ -13,7 +13,7 @@ type HeaderSearchButtonProps = {
 }
 
 export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButtonProps) {
-    const toggleSearch = useSearchStore((s) => s.toggleSearch);
+    const toggleSearch = useSearchStore((s: SearchState) => s.toggleSearch);
     const isXs = useBreakpointStore((s) => s.isXs);
 
     return (

@@ -4,7 +4,7 @@ import { cn } from "@/utils/classes/merge";
 import CupScoreFilter from "@/components/search/filters/CupScoreFilter";
 import SourcingQualityFilter from "./filters/SourcingQualityFilter";
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogPortal, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -13,6 +13,8 @@ import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
 import VarietalsFilter from "./filters/VarietalsFilter";
 import { useRef } from "react";
+import ProcessesFilter from "./filters/ProcessesFilters";
+import CountriesFilter from "./filters/CountriesFilter";
 
 function SearchFilterMenuContent({ className }: { className?: string }) {
 
@@ -24,13 +26,16 @@ function SearchFilterMenuContent({ className }: { className?: string }) {
             <SourcingQualityFilter />
             <hr className="hr-dark"></hr>
             <div>
-                <h3 className="text-2xl leading-none mt-0 mb-0">Price</h3>
+                <h3 className="text-3xl leading-none mt-0 mb-0">Price</h3>
             </div>
             <hr className="hr-dark"></hr>
             <CupScoreFilter />
             <hr className="hr-dark"></hr>
             <VarietalsFilter />
             <hr className="hr-dark"></hr>
+            <ProcessesFilter />
+            <hr className="hr-dark"></hr>
+            <CountriesFilter />
 
         </div>
     )
@@ -39,7 +44,7 @@ function SearchFilterMenuContent({ className }: { className?: string }) {
 
 export default function SearchMenuFilter({ className }: { className?: string }) {
     const isLg = useBreakpointStore((s) => s.isLg)
-    const { areFiltersOpen, toggleFilters, totalResults, clearAllFilters } = useSearchStore((s) => ({
+    const { areFiltersOpen, toggleFilters, totalResults, clearAllFilters } = useSearchStore((s: SearchState) => ({
         areFiltersOpen: s.areFiltersOpen,
         toggleFilters: s.toggleFilters,
         totalResults: s.totalResults,
@@ -76,8 +81,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                         {/* Header */}
                         <DialogHeader id="dialog-title" className="relative space-y-0 pt-7.25 pb-3.5 border-b-2 border-pr-900/10 rounded-t-xl">
                             <DialogTitle
-
-                                className="m-0 text-3xl text-center font-medium font-teko tracking-wide leading-none">
+                                className="m-0 text-4xl text-center font-medium font-teko tracking-wide leading-none">
                                 Filters
                             </DialogTitle>
                             <DialogDescription asChild>

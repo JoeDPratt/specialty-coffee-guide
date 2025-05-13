@@ -22,6 +22,18 @@ export function serializeQueryParams(params: SearchQueryParams) {
             continue;
         }
 
+        // Processes: serialize as comma-separated string
+        if (key === "processFilters" && Array.isArray(value)) {
+            qs.set("processes", value.join(","));
+            continue;
+        }
+
+        // Countries: serialize as comma-separated string
+        if (key === "countryFilters" && Array.isArray(value)) {
+            qs.set("countries", value.join(","));
+            continue;
+        }
+
         // // Skip cup score if default
         if (key === "cup_score_min" && Number(value) === cupScoreRange.min - 1) continue;
         if (key === "cup_score_max" && Number(value) === cupScoreRange.max + 1) continue;
@@ -46,6 +58,8 @@ export function parseQueryParams(
         cup_score_min: params.cup_score_min ? Number(params.cup_score_min) : undefined,
         cup_score_max: params.cup_score_max ? Number(params.cup_score_max) : undefined,
         varietals: [],
+        processes: [],
+        countries: [],
     };
 
     for (const key of Object.keys(filterConfig) as FilterKey[]) {
@@ -59,6 +73,19 @@ export function parseQueryParams(
         const raw = Array.isArray(params.varietals) ? params.varietals[0] : params.varietals;
         result.varietals = raw.split(',').map((v) => v.trim()).filter(Boolean);
     }
+
+    // Processes: parse from comma-separated string
+    if (params.processes) {
+        const raw = Array.isArray(params.processes) ? params.processes[0] : params.processes;
+        result.processes = raw.split(',').map((v) => v.trim()).filter(Boolean);
+    }
+
+    // Countries: parse from comma-separated string
+    if (params.countries) {
+        const raw = Array.isArray(params.countries) ? params.countries[0] : params.countries;
+        result.countries = raw.split(',').map((v) => v.trim()).filter(Boolean);
+    }
+
 
     return result;
 }

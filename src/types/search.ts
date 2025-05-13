@@ -9,6 +9,8 @@ export type SearchQueryParams = {
     cup_score_min?: number;
     cup_score_max?: number;
     varietals?: string[];
+    processes?: string[];
+    countries?: string[];
 } & {
         [K in FilterKey]?: boolean;
     };

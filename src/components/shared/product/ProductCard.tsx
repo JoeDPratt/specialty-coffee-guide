@@ -10,18 +10,11 @@ import { getProductPath, getRoasterPath } from "@/utils/navigation/paths";
 import { motion } from "framer-motion";
 import { subtleSpring } from "@/utils/animation";
 import AttributeSection from "@/components/product/AttributeSection";
-import RoastLabel from "@/components/shared/product/RoastLabel";
 import BestValueTag from "@/components/shared/product/BestValueTag";
 import CupScoreBadge from "@/components/shared/product/CupScoreBadge";
-import { CheckCircleIcon, XCircleIcon, FireIcon, CheckIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useBreakpointStore } from '@/stores/useBreakpointStore'
 import { cn } from "@/utils/classes/merge";
-import {
-    Tooltip,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
-import { useSearchStore } from "@/stores/useSearchStore";
+import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import RoastAndFlavourTagsRow from "./RoastAndFlavourTagsRow";
 
 interface ProductCardProps {
@@ -45,7 +38,7 @@ export default function ProductCard({
 
     const router = useRouter();
     const variantDisplayWeight = 250;
-    const selectedWeight = useSearchStore((s) => s.selectedWeight);
+    const selectedWeight = useSearchStore((s: SearchState) => s.selectedWeight);
 
     const isSm = useBreakpointStore((s) => s.isSm)
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
@@ -59,7 +52,7 @@ export default function ProductCard({
         ? `£${variant?.price_per_kg.toFixed(2)}`
         : null;
 
-    const isBestValue = true; // Add logic for best value
+    const isBestValue = false; // Add logic for best value
     const isInStock = product?.is_instock ?? false;
 
     return (

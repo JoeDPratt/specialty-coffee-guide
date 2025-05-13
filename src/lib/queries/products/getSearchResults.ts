@@ -54,7 +54,16 @@ export const getSearchResults =
         // varietals filters
         if (params.varietals?.length) {
             builder = builder.overlaps('search_varietals', params.varietals);
-            // OR for exact subset: builder = builder.contains('varietals', params.varietalFilters);
+        }
+
+        // processes filters
+        if (params.processes?.length) {
+            builder = builder.overlaps('search_processes', params.processes);
+        }
+
+        // countries filters
+        if (params.countries?.length) {
+            builder = builder.overlaps('search_countries', params.countries);
         }
 
         // Cup score filters
