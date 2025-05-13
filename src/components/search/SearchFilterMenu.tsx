@@ -36,7 +36,6 @@ function SearchFilterMenuContent({ className }: { className?: string }) {
             <ProcessesFilter />
             <hr className="hr-dark"></hr>
             <CountriesFilter />
-
         </div>
     )
 }
@@ -129,13 +128,13 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
             </Dialog>
 
             <aside
-                className={cn("hidden lg:flex flex-col",
+                className={cn("hidden lg:flex lg:flex-col",
                     " lg:px-6 lg:h-full lg:w-1/4 lg:min-w-70 lg:max-w-98 lg:bg-pr-200",
                     className)}
                 aria-labelledby="filters-sidebar-title"
             >
-                <div>
-                    <div className="flex items-center justify-between pt-0.5 mb-4">
+                <div className="min-h-0">
+                    <div className="flex items-center justify-between pt-8.5 mb-4">
                         <h2 id="filters-sidebar-title" className="text-3xl leading-none m-0">Filters</h2>
                         {isAnyFilterSet && <Button
                             variant={"secondary"}
@@ -149,7 +148,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                     <hr className="hr-dark"></hr>
                 </div>
                 <div className="flex-1 min-h-0 overflow-y-auto pt-7.5 pb-5 no-scrollbar">
-                    <SearchFilterMenuContent className="p-0.5" />
+                    <SearchFilterMenuContent className="p-0.5 " />
 
                 </div>
             </aside>

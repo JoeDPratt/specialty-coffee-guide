@@ -1,6 +1,5 @@
 import { ToggleWithTooltips } from "../shared/buttons/ToggleWithToolTips";
-import { useSearchStore } from "@/stores/useSearchStore";
-import type { WeightOption } from "@/stores/useSearchStore";
+import { useSearchStore, type SearchState, type WeightOption } from "@/stores/useSearchStore";
 import { DropdownSort } from "./DropdownSort";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
 import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";

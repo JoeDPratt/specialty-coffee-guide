@@ -1,9 +1,9 @@
-import Header from "@/components/shared/header/Header";
+// src/app/search/layout.tsx
 import { HeaderSearch } from "@/components/shared/header/HeaderSearch";
 
 export default function SearchLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex flex-col lg:h-screen lg:overflow-hidden">
+        <div className="lg:fixed lg:inset-0 flex flex-col lg:h-screen lg:overflow-hidden">
             <HeaderSearch />
             <main
                 tabIndex={-1}
