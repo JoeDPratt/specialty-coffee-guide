@@ -130,7 +130,7 @@ export default function ProductCard({
 
             {/* Attriibutes and tags */}
             <div className="flex flex-col items-center gap-y-3.25 px-4 pt-5.75 pb-6.5 @card-sm:px-6">
-                <RoastAndFlavourTagsRow roasts={roasts} flavours={flavours} variant={"text"} />
+                <RoastAndFlavourTagsRow roasts={roasts} flavours={flavours} variant={"text"} size={"lg"} />
                 <AttributeSection
                     attributeData={attributes}
                     variant={"pill"}

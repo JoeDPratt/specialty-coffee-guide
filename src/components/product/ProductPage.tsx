@@ -123,7 +123,7 @@ export default function ProductPage({
 
                         <div
                             id="roast-flavours"
-                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-xl text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3"
+                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-xl text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3 capitalize"
                         >
                             {flavors}
                         </div>

@@ -19,7 +19,7 @@ export default function RoastAndFlavourTagsRow({
 }: Props) {
     const showPipe = flavours.length > 0 && roasts.length > 0;
     return (
-        <div className={cn("flex flex-wrap gap-1 items-center justify-center", className)}>
+        <div className={cn("flex flex-wrap gap-0.5 items-center justify-center", className)}>
             {roasts.map((roast, idx) => (
                 <RoastTag
                     key={`roast-${roast}`}
@@ -29,7 +29,7 @@ export default function RoastAndFlavourTagsRow({
                     lastItem={(idx + 1) === roasts.length}
                 />
             ))}
-            {showPipe && <span className="px-1">|</span>}
+            {showPipe && <span className="pl-0.5 pr-1.25">|</span>}
             {flavours.map((flavour, idx) => (
                 <span key={`flavour-${flavour}`}>
                     <FlavourTag

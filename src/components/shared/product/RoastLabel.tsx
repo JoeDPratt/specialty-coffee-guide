@@ -35,30 +35,33 @@ export function RoastTag({
 
     return (
         <div className={cn(
-            "font-sofia-sans rounded-sm flex items-center gap-1",
+            "font-sofia-sans rounded-sm flex items-center gap-0",
             variant === "outline"
                 ? [borderColor, textColor, "border-1"]
                 : [bgColor, "text-white"],
             isSmall
-                ? "text-sm pl-1.5 pr-2 pt-1.5 pb-1 leading-3"
-                : "text-base pl-1.5 pr-2 pt-2.25 pb-1.75 leading-3",
+                ? "text-base px-1.5 pt-1.5 pb-1 leading-3"
+                : "text-lg px-2.5 pt-2.25 pb-1.75 leading-3",
             variant === "text"
-                ? ["text-lg text-left font-normal tracking-normal bg-transparent border-none p-0 leading-4", textColor]
-                : "text-center font-normal"
+                ? ["text-left tracking-normal bg-transparent border-none p-0 pr-0.5 leading-4", textColor]
+                : "text-center"
         )}>
-            <FireIcon className={cn(
-                variant === "outline" ? "size-4.5 -mt-0.5" : "size-4 -mt-0.5",
-                variant === "outline" || "text" ? textColor : "text-white")} />
             <span
                 aria-label={`${roast} roast`}
                 className={cn(
+                    "pr-0.5",
                     variant === "text"
                         ? "capitalize"
                         : "capitalize"
                 )}
             >
-                {roast}{!lastItem && ","}
+                {roast}
             </span>
+            <FireIcon className={cn(
+                variant === "outline" ? "size-4.5 -mt-0.5" : "size-4 -mt-0.5",
+                variant === "default" ? "text-white" : textColor)}
+            />
+            {variant === "text" && !lastItem && <span className="pr-0.5 -ml-0.5">,</span>}
 
         </div>
 
@@ -82,7 +85,7 @@ export default function RoastLabel({
 
     if (!roasts || roasts.length === 0) return null;
     return (
-        <div id="roasts" className={cn("flex flex-row gap-1.5", className)}>
+        <div id="roasts" className={cn("flex flex-row gap-1", className)}>
             {roasts.slice(0, limit).map((roast) => (
                 <RoastTag roast={roast} key={roast} size={size} variant={variant} />
             ))}

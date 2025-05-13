@@ -163,12 +163,12 @@ export default function ProductListItem({
                     "xl:flex-col-reverse xl:gap-0.75 xl:pt-0 xl:justify-center xl:mb-1.25")}>
 
                     <div className={cn(
-                        "flex items-center gap-1",
+                        "flex items-center gap-0",
                         "max-xs:pb-1 max-sm:flex-wrap max-sm:w-full max-xs:justify-center",
                         "xs:max-sm:items-start xs:max-sm:pb-0")}>
                         {/* Roasts */}
                         {hasRoasts && (
-                            <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-xs:justify-center max-sm:gap-1 max-sm:inline-flex"} />
+                            <RoastLabel roasts={roasts} limit={2} size={"sm"} variant={"text"} className={"max-xs:justify-center gap-0 max-sm:inline-flex"} />
                         )}
                         {/* Flavours */}
                         {flavourText && (
