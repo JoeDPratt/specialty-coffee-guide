@@ -58,8 +58,8 @@ export default function ProductCard({
     const pricePerKg = variant?.price_per_kg
         ? `£${variant?.price_per_kg.toFixed(2)}`
         : null;
-    const flavourText = flavours?.join(" · ");
-    const isBestValue = false; // Add logic for best value
+
+    const isBestValue = true; // Add logic for best value
     const isInStock = product?.is_instock ?? false;
 
     return (
@@ -149,37 +149,33 @@ export default function ProductCard({
                 "flex flex-col items-end justify-end gap-1.75 pb-6 mx-4 pt-3 border-t-2 border-pr-300",
                 "@card-sm:mx-6"
             )}>
-                <Tooltip>
-                    <TooltipTrigger asChild >
-                        <div className={cn(
-                            "flex items-center gap-2 mt-1.5 ",
-                            "w-full",
-                            isInStock ? "justify-end" : "justify-between"
-                        )}>
-                            {!isInStock &&
-                                <span className="text-disabled-400 text-lg font-normal mt-0.75">
-                                    Out of Stock
-                                </span>}
-                            <div className="flex items-end gap-2">
-                                <span className={cn(
-                                    "text-3xl font-bold leading-9 -mb-0.5",
-                                    isInStock ? "text-pr-900" : "text-disabled-400"
-                                )}>
-                                    £{variant?.price?.toFixed(2) ?? "--.--"}
-                                </span>
-                            </div>
-                        </div>
-                    </TooltipTrigger>
-                    <DefaultTooltip description={isInStock ? "In-stock" : "Out of stock"} align="end" />
-                </Tooltip>
+
                 <div className={cn(
-                    "flex max-sm:w-full max-sm:items-center",
+                    "flex items-center gap-2 mt-1.5 ",
+                    "w-full",
+                    !isInStock || isBestValue ? "justify-between" : "justify-end"
+                )}>
+                    {!isInStock &&
+                        <span className="text-disabled-400 text-lg font-normal mt-0.75">
+                            Out of Stock
+                        </span>}
+                    {(isInStock && isBestValue) && <BestValueTag />}
+                    <div className="flex items-end gap-2">
+                        <span className={cn(
+                            "text-3xl font-bold leading-9 -mb-0.5",
+                            isInStock ? "text-pr-900" : "text-disabled-400"
+                        )}>
+                            £{variant?.price?.toFixed(2) ?? "--.--"}
+                        </span>
+                    </div>
+                </div>
+
+                <div className={cn(
+                    "flex ",
                     isBestValue && isInStock
                         ? "max-sm:justify-between"
                         : "max-sm:justify-end"
                 )}>
-                    {(isSm && isInStock && isBestValue) && <BestValueTag variant="outline" />}
-
                     <div className="flex items-center gap-1 border-1 border-pr-300 rounded-sm">
                         <span className={cn(
                             "bg-pr-300 px-2 pt-0.25",

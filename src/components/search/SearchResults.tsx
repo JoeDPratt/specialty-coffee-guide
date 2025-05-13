@@ -31,12 +31,12 @@ export default function SearchResults({ className }: { className?: string; }) {
     const isLg = useBreakpointStore((s) => s.isLg)
     const scrollRef = useRef<HTMLDivElement>(null);
     const scrollTarget = isLg ? "window" : scrollRef;
-    console.log("target", scrollTarget)
-    useDebounceScrollTop({
-        isSuccess: !!data,
-        isFetching,
-        target: scrollTarget
-    })
+
+    // useDebounceScrollTop({
+    //     isSuccess: !!data,
+    //     isFetching,
+    //     target: scrollTarget
+    // })
 
     const showPagination = !!data?.results?.length && (data.totalPages ?? 0) > 1;
 

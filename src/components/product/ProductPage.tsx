@@ -163,6 +163,7 @@ export default function ProductPage({
                                 }
                                 alt={`${product.images[0]?.alt_text || product.product_name} specialty coffee product`}
                                 fill
+                                priority
                                 className="object-cover bg-pr-100 rounded-lg"
                             />
                         </motion.div>

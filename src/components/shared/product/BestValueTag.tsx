@@ -6,7 +6,7 @@ export default function BestValueTag({
     variant?: "default" | "outline"
 }) {
 
-    const baseClass = "text-sm font-bold tracking-wide rounded-xs pt-0.5 pb-0 px-1.5 max-h-6";
+    const baseClass = "text-sm font-bold tracking-wide rounded-xs pt-0.75 pb-0 px-1.75 h-6";
 
     if (variant === "outline") {
         return (

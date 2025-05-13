@@ -37,7 +37,7 @@ export default function SeacrhBarMenu() {
                 <span className="hidden sm:inline pl-0.5">Filters</span>
             </ButtonWithBadge>
 
-            {/* <div className="hidden items-center gap-2 lg:flex">
+            <div className="hidden items-center gap-2 lg:flex">
                 <span className="mt-0.5 text-base min-w-max">View prices for:</span>
                 <ToggleWithTooltips<WeightOption>
                     value={selectedWeight}
@@ -49,7 +49,7 @@ export default function SeacrhBarMenu() {
                     toggleItemClassName={"py-4.25"}
                     tooltipOffset={17}
                 />
-            </div> */}
+            </div>
             <DropdownSort />
         </div>
     )
