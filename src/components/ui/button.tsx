@@ -16,7 +16,7 @@ const buttonVariants = cva(
                 secondary: "bg-white text-pr-700 hover:bg-white/80",
                 ghost: "hover:bg-pr-100 text-pr-700 hover:shadow-none",
                 ghostDark: "hover:bg-white/20 text-white hover:shadow-none",
-                link: "text-pr-900 underline-offset-4 hover:underline hover:shadow-none",
+                link: "text-pr-900 underline-offset-2 underline hover:shadow-none",
             },
             styleType: {
                 solid: "",
@@ -28,7 +28,8 @@ const buttonVariants = cva(
                 sm: "h-8 px-4 text-base [&_svg]:size-4 pt-0.25",
                 lg: "h-12 px-8 text-xl [&_svg]:size-7",
                 icon: "size-10 aspect-square gap-0",
-                iconLg: "size-12 aspect-square [&_svg]:size-6 gap-0"
+                iconLg: "size-12 aspect-square [&_svg]:size-6 gap-0",
+                none: "text-base p-0"
             },
             iconPosition: {
                 left: "[&_svg]:-ml-1",

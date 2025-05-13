@@ -162,5 +162,9 @@ export function transformProductCard(raw: RawProductCard): ProductCard {
             logo_layout: primaryLogo?.logo_layout ?? "wide", // or type-safe default
         },
         product_variants: variants,
+        varietals: raw.search_varietals ?? [],
+        processes: raw.search_processes ?? [],
+        countries: raw.search_countries ?? [],
+
     };
 }

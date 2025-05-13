@@ -114,5 +114,8 @@ export interface ProductCard {
         logo_layout: LogoLayout;
     };
     product_variants?: ProductVariant[];
+    varietals: string[];
+    processes: string[];
+    countries: string[];
     likes_count?: number | null;
 }

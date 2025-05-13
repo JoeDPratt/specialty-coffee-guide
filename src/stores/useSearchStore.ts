@@ -13,7 +13,7 @@ export type SortOption = "price_low" | "price_high" | "cup_score_high";
 const defaultCupScoreRange: [number, number] = [cupScoreConfig.min, cupScoreConfig.max];
 const outOfBoundsCupScore = [(defaultCupScoreRange[0] - 1), (defaultCupScoreRange[1] + 1)] as [number, number]
 
-type SearchState = {
+export type SearchState = {
     isSearchOpen: boolean;
     openSearch: () => void;
     closeSearch: () => void;
@@ -40,6 +40,8 @@ type SearchState = {
     varietalFilters: string[];
     setVarietalFilters: (filters: string[]) => void;
     toggleVarietalFilter: (key: string) => void;
+    availableVarietals: string[];
+    setAvailableVarietals: (varietals: string[]) => void,
 
     cupScoreRange: [number, number];
     setCupScoreRange: (range: [number, number]) => void;
@@ -101,6 +103,8 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
                         : [...state.varietalFilters, key],
                 };
             }),
+        availableVarietals: [],
+        setAvailableVarietals: (varietals) => set({ availableVarietals: varietals }),
 
         cupScoreRange: outOfBoundsCupScore,
         setCupScoreRange: (range) => set({ cupScoreRange: range }),
@@ -114,8 +118,9 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         sortedBy: "price_low",
         setSortedBy: (sort) => set({ sortedBy: sort }),
 
-        hydrate: (params) => {
+        hydrate: (params: SearchQueryParams) => {
             const { q, sort_by, cup_score_min, cup_score_max, ...rest } = params;
+            const varietals = params.varietals as string | string[] | undefined;
 
             const cupScoreRange: [number, number] = [
                 cup_score_min != null ? Number(cup_score_min) : outOfBoundsCupScore[0],
@@ -127,6 +132,9 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
                 sortedBy: sort_by ?? get().sortedBy,
                 filters: useHydrateFilters(params),
                 cupScoreRange,
+                varietalFilters: Array.isArray(varietals)
+                    ? varietals
+                    : varietals?.split(",") ?? [],
             });
         },
 

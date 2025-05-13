@@ -8,8 +8,8 @@ export function useSearchParams(): Omit<SearchQueryParams, 'page' | 'page_size'>
     page: number;
     page_size: number;
 } {
-    const [cupScoreRange, query, filters, sortedBy] = useSearchStore(
-        s => [s.cupScoreRange, s.query, s.filters, s.sortedBy] as const
+    const [cupScoreRange, query, filters, sortedBy, varietalFilters] = useSearchStore(
+        s => [s.cupScoreRange, s.query, s.filters, s.sortedBy, s.varietalFilters] as const
     );
 
     const [page, pageSize] = usePaginationStore(
@@ -19,6 +19,7 @@ export function useSearchParams(): Omit<SearchQueryParams, 'page' | 'page_size'>
     return useMemo(() => ({
         q: query || undefined,
         ...filters,
+        varietals: varietalFilters,
         sort_by: sortedBy,
         page,
         page_size: pageSize,

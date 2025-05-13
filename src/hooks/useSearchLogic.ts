@@ -21,6 +21,7 @@ export function useSearchLogic() {
         toggleSearch,
         closeSearch,
         filters,
+        varietalFilters,
         query,
         setQuery,
         cupScoreRange,
@@ -30,6 +31,7 @@ export function useSearchLogic() {
             toggleSearch: s.toggleSearch,
             closeSearch: s.closeSearch,
             filters: s.filters,
+            varietalFilters: s.varietalFilters,
             query: s.query,
             setQuery: s.setQuery,
             cupScoreRange: s.cupScoreRange,
@@ -62,6 +64,7 @@ export function useSearchLogic() {
         const params = {
             ...filters,
             q: query || undefined,
+            varietals: varietalFilters.length > 0 ? varietalFilters : undefined,
             page: 1,
             ...(min !== (defaultMin - 1) || max !== (defaultMax + 1) ? {
                 cup_score_min: min,
@@ -78,7 +81,7 @@ export function useSearchLogic() {
                 router.replace(target);
             });
         }
-    }, [filters, query, cupScoreRange]);
+    }, [filters, query, cupScoreRange, varietalFilters]);
 
     const handleSearch = () => {
         setQuery(query);

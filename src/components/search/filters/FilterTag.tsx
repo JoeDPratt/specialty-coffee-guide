@@ -5,12 +5,14 @@ import { cn } from "@/utils/classes/merge";
 type FilterTagProps = {
     tagKey: string;
     isTagSelected: (key: string) => boolean;
+    isTagAvailable: boolean
     onToggle: (key: string) => void;
 };
 
 export default function FilterTag({
     tagKey,
     isTagSelected,
+    isTagAvailable,
     onToggle
 }:
     FilterTagProps
@@ -19,7 +21,7 @@ export default function FilterTag({
     const resetPagination = usePaginationStore((s) => s.resetPagination)
     const isTagSet = isTagSelected(tagKey)
     const handleClick = () => {
-        onToggle(tagKey)
+        onToggle(tagKey.toLowerCase())
         resetPagination()
     }
 
@@ -34,6 +36,7 @@ export default function FilterTag({
             styleType={"outlineLight"}
             size={"sm"}
             className={cn(classes)}
+            disabled={!isTagAvailable}
         >
             {tagKey}
         </Button>

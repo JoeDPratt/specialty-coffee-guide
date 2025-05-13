@@ -1,5 +1,6 @@
 // app/search/page.tsx
 import { getSearchResults } from '@/lib/queries/products/getSearchResults';
+import { getDefaultFilterOptions } from "@/lib/queries/products/getDefaultFilterOptions";
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import SearchPageClient from '@/components/search/SearchPageClient';
 import { parseQueryParams } from '@/utils/navigation/serializeQueryParams';
@@ -14,16 +15,31 @@ export default async function Page({
     const plainParams = JSON.parse(JSON.stringify(parsedParams));
     const queryClient = new QueryClient();
 
-    // Prefetch page 1
-    await queryClient.prefetchQuery<
-        SearchResultsResponse,
-        Error,
-        SearchResultsResponse,
-        readonly ['search', SearchQueryParams]
-    >({
-        queryKey: ['search', { ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 }] as const,
-        queryFn: () => getSearchResults({ ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 }),
-    });
+    await Promise.all([
+        (async () => {
+            try {
+                const result = await getSearchResults({ ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 });
+                await queryClient.prefetchQuery({
+                    queryKey: ['search', { ...plainParams, page: 1, page_size: plainParams.page_size ?? 24 }],
+                    queryFn: () => Promise.resolve(result),
+                });
+            } catch (err) {
+                console.error("Failed to load search results:", err);
+            }
+        })(),
+
+        (async () => {
+            try {
+                const result = await getDefaultFilterOptions();
+                await queryClient.prefetchQuery({
+                    queryKey: ["default-filter-options"],
+                    queryFn: () => Promise.resolve(result),
+                });
+            } catch (err) {
+                console.error("Failed to load default filter options:", err);
+            }
+        })(),
+    ]);
 
     const dehydratedState = dehydrate(queryClient);
 

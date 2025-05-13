@@ -8,6 +8,7 @@ export type SearchQueryParams = {
     page_size?: number;
     cup_score_min?: number;
     cup_score_max?: number;
+    varietals?: string[];
 } & {
         [K in FilterKey]?: boolean;
     };
@@ -26,4 +27,10 @@ export interface SearchResultsResponse {
     totalPages?: number;
     nextPage?: number;
     previousPage?: number;
+}
+
+export interface DefaultFilterOptions {
+    varietals: string[];
+    processes: string[];
+    countries: string[];
 }

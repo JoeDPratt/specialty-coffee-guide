@@ -3,5 +3,5 @@ import { FilterKey } from "@/consts/filterConfig";
 
 export function useIsVarietalSelected(key: string) {
     const varietals = useSearchStore((s) => s.varietalFilters);
-    return varietals.includes(key);
+    return varietals.includes(key.toLowerCase());
 }

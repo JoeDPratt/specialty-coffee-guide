@@ -1,17 +1,12 @@
-import { useState } from "react";
+// src/components/search/filters/VarietalsFilter.tsx
+
 // import { FilterToggle } from "@/components/search/filters/FilterToggle";
 import FilterHeader from "@/components/search/filters/FilterHeader";
 import FilterExpandingTagRow from "./FilterExpandingTagRow";
 import { useIsVarietalSelected } from "@/hooks/useIsVarietalSelected";
 import { useSearchStore } from "@/stores/useSearchStore";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
-
-// Define your varietal keys here (or import from a config)
-const varietalKeys = [
-    "bourbon", "geisha", "sl28", "caturra", "typica",
-    "catimor", "maragogype", "pacamara", "villa_sarchi",
-    "castillo", "catuai"
-];
+import { useDefaultFilterOptions } from "@/hooks/useDefaultFilters";
 
 
 export default function VarietalsFilter() {
@@ -19,10 +14,16 @@ export default function VarietalsFilter() {
     const {
         setVarietalFilters,
         toggleVarietalFilter,
+        availableVarietals,
     } = useSearchStore((s) => ({
         setVarietalFilters: s.setVarietalFilters,
-        toggleVarietalFilter: s.toggleVarietalFilter
+        toggleVarietalFilter: s.toggleVarietalFilter,
+        availableVarietals: s.availableVarietals,
     }));
+
+    const { data: defaultVarietals } = useDefaultFilterOptions({
+        select: (data) => data.varietals,
+    });
 
     const isVarietalSelected = useIsVarietalSelected;
     const { areVarietalsSet } = useActiveFilters();
@@ -36,8 +37,8 @@ export default function VarietalsFilter() {
                 isSet={areVarietalsSet}
             />
             <FilterExpandingTagRow
-                filterTags={varietalKeys}
-                visibleCount={9}
+                filterTags={defaultVarietals ?? []}
+                availableTags={availableVarietals ?? []}
                 onToggle={toggleVarietalFilter}
                 isTagSelected={isVarietalSelected}
             />

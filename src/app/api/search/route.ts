@@ -15,6 +15,9 @@ export async function GET(req: NextRequest) {
         page_size: sp.has("page_size") ? Number(sp.get("page_size")) : undefined,
         cup_score_min: sp.has("cup_score_min") ? Number(sp.get("cup_score_min")) : undefined,
         cup_score_max: sp.has("cup_score_max") ? Number(sp.get("cup_score_max")) : undefined,
+        varietals: sp.get("varietals")
+            ? sp.get("varietals")!.split(",").map((v) => v.trim()).filter(Boolean)
+            : [],
     };
 
     // 🔑 dynamically map every filter key (current & future)

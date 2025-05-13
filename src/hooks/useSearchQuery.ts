@@ -19,7 +19,14 @@ export function useSearchQuery() {
 
     const queryParams = useSearchParams();
     const { page, ...filterParams } = queryParams;
-    const setTotalResults = useSearchStore(s => s.setTotalResults);
+    const {
+        setTotalResults,
+        setAvailableVarietals
+    } = useSearchStore((s) =>
+    ({
+        setTotalResults: s.setTotalResults,
+        setAvailableVarietals: s.setAvailableVarietals
+    }));
 
     const queryClient = useQueryClient()
 
@@ -47,6 +54,13 @@ export function useSearchQuery() {
     /* ---------- write total-count into store ---------- */
     useEffect(() => {
         if (result.isSuccess) setTotalResults(result.data?.totalCount ?? 0)
+
+        // Collect varietals from all products
+        const varietals = result.data?.results.flatMap(p => p.varietals || []);
+        const uniqueVarietals = Array.from(new Set(varietals)).sort();
+
+        setAvailableVarietals(uniqueVarietals);
+
         if (result.isError) setTotalResults(0)
     }, [result.isSuccess, result.isError, result.data, setTotalResults])
 

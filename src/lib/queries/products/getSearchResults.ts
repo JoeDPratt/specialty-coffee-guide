@@ -51,6 +51,12 @@ export const getSearchResults =
                 builder = builder.or(orString);
             }
         }
+        // varietals filters
+        if (params.varietals?.length) {
+            builder = builder.overlaps('search_varietals', params.varietals);
+            // OR for exact subset: builder = builder.contains('varietals', params.varietalFilters);
+        }
+
         // Cup score filters
         if (params.cup_score_min !== undefined) {
             if (params.cup_score_min >= cupScoreMin) builder = builder.gte('sca_cup_score', params.cup_score_min);
