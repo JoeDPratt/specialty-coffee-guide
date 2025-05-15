@@ -17,7 +17,7 @@ export function Breadcrumbs({ className = "" }: BreadcrumbsProps) {
     return (
         <div
             className={cn(
-                "px-4 md:px-6 z-155 fixed w-full bg-pr-100/95 text-pr-900 shadow-sm top-15 transition-colors duration-300",
+                "px-4 md:px-6 z-155 sticky w-full bg-pr-100/95 text-pr-900 shadow-sm top-15 transition-colors duration-300",
                 className
             )}
         >
