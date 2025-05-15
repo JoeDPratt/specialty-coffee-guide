@@ -32,7 +32,7 @@ export default function FilterExpandingTagRow({
                         tagKey={tagKey}
                         onToggle={onToggle}
                         isTagSelected={isTagSelected}
-                        isTagAvailable={availableTags.includes((tagKey.value))}
+                        isTagAvailable={true}
 
                     />
                 ))}

@@ -23,14 +23,14 @@ export default function SearchPageClient({
     return (
         <HydrationBoundary state={dehydratedState}>
             <div className={cn(
-                "flex flex-col gap-3 p-0 my-0 max-w-[1920px] mx-auto min-h-0",
+                "flex-1 flex flex-col gap-3 p-0 my-0 max-w-[1920px] mx-auto min-h-[calc(100vh-4rem)]",
                 "sm:gap-6",
-                "lg:flex-row flex-nowrap lg:gap-0 lg:h-full")
+                "lg:flex-row flex-nowrap lg:gap-0 lg:min-h-full lg:h-full")
             } >
                 <SearchFilterMenu />
                 <div className="@container/grid flex flex-col flex-1 min-h-0">
                     <SearchViewMenu />
-                    <SearchResults className="relative flex-1 w-full min-h-0 lg:shadow-[inset_0_2px_5px_rgba(0,0,0,0.02)]" />
+                    <SearchResults />
                 </div>
             </div>
         </HydrationBoundary>

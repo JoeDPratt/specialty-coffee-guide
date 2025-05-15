@@ -21,7 +21,7 @@ export default function SkeletonSearchResults({
     const isSm = useBreakpointStore((s) => s.isSm)
 
     // Determine container classes matching SearchResults
-    const containerClass = cn(
+    const containerClass = cn("flex-1 w-full",
         view === "list" && !isSm
             ? "gap-8 sm:gap-4 flex flex-col"
             : "gap-4 grid grid-cols-1 @min-search-2-col/grid:grid-cols-2 @min-search-3-col/grid:grid-cols-3 @min-search-4-col/grid:grid-cols-4"
@@ -31,7 +31,7 @@ export default function SkeletonSearchResults({
         <div>
             <div className={containerClass}>
                 {placeholders.map((_, idx) => (
-                    <div key={idx} className="flex flex-col h-full">
+                    <div key={idx} className="flex flex-col h-full flex-1 w-full">
                         {view === "list" && !isSm ? (
                             <SkeletonProductListItem />
                         ) : (

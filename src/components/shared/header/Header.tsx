@@ -12,6 +12,7 @@ import { Bars3Icon } from '@heroicons/react/16/solid';
 import { usePathname } from 'next/navigation'
 import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore'
 import { Breadcrumbs } from '../navigation/Breadcrumbs';
+import DropdownRegion from '@/components/shared/header/DropdownRegion';
 
 export default function Header() {
 
@@ -58,7 +59,9 @@ export default function Header() {
                 <div className={cn("relative", isHeaderBgVisible ? "bg-pr-900 animate-fade-in" : "bg-transparent")}>
                     <motion.div
                         className={cn(
-                            "flex justify-start md:justify-between items-center gap-4 sm:gap-4 md:gap-6 px-3 md:px-6 transition-colors duration-300",
+                            "grid items-center gap-4 sm:gap-4 md:gap-6 px-3 md:px-6 transition-all duration-300",
+                            isScrolled ? "grid-cols-[auto_1fr_auto]" : "grid-cols-[auto_1fr_auto]",
+                            "lg:grid-cols-[auto_minmax(500px,1fr)_1fr]",
                         )}
                         animate={isHeaderBgVisible ? { paddingTop: 8, paddingBottom: 8 } : { paddingTop: 16, paddingBottom: 16 }}
                         transition={{ duration: 0.3 }}
@@ -66,8 +69,8 @@ export default function Header() {
                         {/* Logo */}
                         <motion.div
                             className={cn(
-                                isSearchOpen ? "w-max hidden md:block" :
-                                    isScrolled ? "max-w-min" : "flex-auto md:flex-initial w-1/3"
+                                "w-full flex items-center",
+                                isSearchOpen ? "hidden md:flex" : "justify-start"
                             )}
                         >
                             <HeaderLogo
@@ -77,21 +80,22 @@ export default function Header() {
                         </motion.div>
 
                         {/* Search Button / Looks like an input */}
-                        {!isSearchOpen && <HeaderSearchButton isScrolled={isScrolled} />}
+                        <div className="w-full flex sm:justify-start justify-end">
+                            {!isSearchOpen && <HeaderSearchButton isScrolled={isScrolled} />}
+                        </div>
 
                         {/* Right Menu Buttons */}
                         <div
                             className={cn(
-                                "md:flex justify-end hidden",
-                                isSearchOpen ? "w-max" :
-                                    isScrolled ? "sm:max-w-min" : "w-1/3",
+                                "hidden md:flex justify-end gap-3"
                             )}>
+
                             {/* Login */}
                             <Button variant={"secondary"} styleType={"outline"}>Log in</Button>
+                            <DropdownRegion />
                         </div>
                         <div className={cn(
-                            "md:hidden justify-end flex",
-                            isScrolled ? "max-w-min" : "md:w-1/3",
+                            "md:hidden justify-end flex"
                         )}
                         >
                             {/* Hamburger */}

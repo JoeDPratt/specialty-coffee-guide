@@ -41,30 +41,28 @@ export default function SearchResults({ className }: { className?: string; }) {
     const showPagination = !!data?.results?.length && (data.totalPages ?? 0) > 1;
 
     return (
-        <div className={cn(className)}>
-            <div
-                ref={scrollRef}
-                className={cn("w-full lg:overflow-y-auto overscroll-contain h-full scrollbar-thin pt-3 sm:pt-6 pb-20 px-3 sm:px-4 lg:px-6 m-0", className)
-                }>
-                <ResultsContent
-                    results={data?.results || []}
-                    isLoading={isLoading || isFetching}
-                    isError={isError}
-                />
+        <div
+            ref={scrollRef}
+            className={cn("flex flex-col flex-1 w-full min-h-0 lg:overflow-y-auto overscroll-contain lg:h-full scrollbar-thin pt-3 sm:pt-6 pb-20 px-3 sm:px-4 lg:px-6 m-0")
+            }>
+            <ResultsContent
+                results={data?.results || []}
+                isLoading={isLoading || isFetching}
+                isError={isError}
+            />
 
 
-                {showPagination && (
-                    <div className="sm:fixed w-full bottom-0 z-100 justify-center py-4">
-                        <PaginationControl
-                            page={page}
-                            setPage={setPage}
-                            totalPages={data.totalPages ?? 0}
-                            nextPage={data.nextPage}
-                            className="flex bg-pr-300/60 rounded-full max-w-min items-center"
-                        />
-                    </div>
-                )}
-            </div>
+            {showPagination && (
+                <div className="sm:fixed w-full bottom-0 z-100 justify-center py-4">
+                    <PaginationControl
+                        page={page}
+                        setPage={setPage}
+                        totalPages={data.totalPages ?? 0}
+                        nextPage={data.nextPage}
+                        className="flex bg-pr-300/60 rounded-full max-w-min items-center"
+                    />
+                </div>
+            )}
         </div>
     );
 }

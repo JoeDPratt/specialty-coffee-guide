@@ -10,7 +10,7 @@ export function HeaderSearch() {
 
     return (
         <header
-            className="sticky top-0 z-50"
+            className="sticky top-0 z-50 w-full"
             role="banner"
             aria-label="SCG site header"
 

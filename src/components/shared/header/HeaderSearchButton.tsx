@@ -18,15 +18,14 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
 
     return (
         <div className={cn(
-            "group md:px-6 sm:w-full md:max-w-[700px]",
+            "group w-full md:max-w-[450px]",
             className,
-            isScrolled ? "flex-1" : "sm:flex-1"
         )}
             onClick={toggleSearch}>
             <motion.div
                 className={cn(
-                    "flex items-center min-w-max border-white rounded-full xs:hover:bg-white/98 hover:animate-pulse cursor-pointer",
-                    isScrolled ? "w-auto border-2 bg-white" : "sm:max-md:max-w-min xs:bg-white xs:border-2",
+                    "flex items-center justify-end min-w-max border-white rounded-full xs:hover:bg-white/98 hover:animate-pulse cursor-pointer",
+                    isScrolled ? "w-auto border-2 bg-white" : " xs:bg-white xs:border-2",
                     "group-hover:bg-white/90"
                 )}
                 {...(!isXs && { layoutId: "searchField" })}
@@ -55,8 +54,8 @@ export function HeaderSearchButton({ isScrolled, className }: HeaderSearchButton
                 </button>
                 <Button
                     variant={
-                        !isScrolled && isXs ? "secondary" : "accent"}
-                    styleType={!isScrolled && isXs ? "outline" : null}
+                        !isScrolled && isXs ? "ghostDark" : "accent"}
+                    // styleType={!isScrolled && isXs ? "outline" : null}
                     size={"icon"}
                     className={cn("h-10 w-10",
                     )}

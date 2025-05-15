@@ -3,7 +3,7 @@ import { HeaderSearch } from "@/components/shared/header/HeaderSearch";
 
 export default function SearchLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="lg:fixed lg:inset-0 flex flex-col lg:h-screen lg:overflow-hidden">
+        <div className="lg:fixed lg:inset-0 flex flex-col min-h-screen lg:h-screen lg:overflow-hidden">
             <HeaderSearch />
             <main
                 tabIndex={-1}
