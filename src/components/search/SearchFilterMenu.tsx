@@ -71,7 +71,7 @@ export default function SearchMenuFilter({ className }: { className?: string }) 
                         aria-labelledby="dialog-title"
                         aria-describedby="filter-dialog-description"
                         className={cn(
-                            "p-0 border-none h-full sm:max-h-[calc(100dvh-40px)]",
+                            "p-0 border-none h-full max-h-[calc(100dvh-32px)] max-sm:mt-4",
                             "gap-0 rounded-b-none rounded-t-xl sm:rounded-xl bg-card-200",
                             "grid grid-rows-[auto_1fr_auto]"
                         )}

@@ -9,6 +9,9 @@ import { HeaderLogo } from './HeaderLogo'
 import { HeaderSearchButton } from '@/components/shared/header/HeaderSearchButton'
 import { Button } from '@/components/ui/button';
 import { Bars3Icon } from '@heroicons/react/16/solid';
+import { usePathname } from 'next/navigation'
+import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore'
+import { Breadcrumbs } from '../navigation/Breadcrumbs';
 
 export default function Header() {
 
@@ -17,6 +20,11 @@ export default function Header() {
     const isScrolled = useStickyStore((state) => state.isScrolled);
     const sentinelRef = useRef<HTMLDivElement>(null)
     const isHeaderBgVisible = isSearchOpen || isScrolled;
+
+    const pathname = usePathname()
+    const breadcrumbs = useBreadcrumbStore((s) => s.breadcrumbs)
+    const isProductPage = pathname.startsWith('/coffee-beans/') // Adjust to match your product route
+    const showBreadcrumbs = isProductPage && isScrolled && !isSearchOpen && breadcrumbs.length > 0
 
     useLayoutEffect(() => {
         const observer = new IntersectionObserver(
@@ -47,7 +55,7 @@ export default function Header() {
                     ease: [0.5, 0, 0.1, 1]
                 }}
             >
-                <div className={cn("relative", isHeaderBgVisible ? "bg-pr-900" : "bg-transparent")}>
+                <div className={cn("relative", isHeaderBgVisible ? "bg-pr-900 animate-fade-in" : "bg-transparent")}>
                     <motion.div
                         className={cn(
                             "flex justify-start md:justify-between items-center gap-4 sm:gap-4 md:gap-6 px-3 md:px-6 transition-colors duration-300",
@@ -91,6 +99,9 @@ export default function Header() {
                         </div>
                     </motion.div>
 
+                    {showBreadcrumbs && (
+                        <Breadcrumbs className="animate-fade-in" />
+                    )}
                 </div>
             </motion.header>
             {/* Expanded Search */}

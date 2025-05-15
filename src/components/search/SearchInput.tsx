@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useSearchLogic } from "@/hooks/useSearchLogic";
 import { useEffect, useState } from "react";
 import { useDebouncedEffect } from "@/hooks/useDebounceEffect";
+import { AnimatedPlaceholderInput } from "../shared/inputs/AnimatedPlaceholderText";
 
 export default function SearchInput({ className }: { className?: string }) {
 

@@ -9,7 +9,7 @@ import { getBreadcrumbsFromPath } from "@/utils/navigation/breadcrumbs";
 import { BreadcrumbStructuredData } from "@/components/shared/navigation/BreadcrumbStructuredData";
 import { notFound } from "next/navigation";
 import { getProductPath } from "@/utils/navigation/paths";
-import { BreadcrumbsClientWrapper } from "@/components/shared/navigation/BreadcrumbsClientWrapper";
+import { BreadcrumbsSetter } from "@/components/shared/navigation/BreadcrumbSetter";
 
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
@@ -52,9 +52,7 @@ export default async function Page({
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <BreadcrumbsClientWrapper
-                crumbs={breadcrumbs}
-            />
+            <BreadcrumbsSetter crumbs={breadcrumbs} />
             <BreadcrumbStructuredData items={breadcrumbs} />
             <ProductPage slug={slug} />
         </HydrationBoundary>
