@@ -18,7 +18,7 @@ export const REGIONS = {
         currency: 'USD',
         symbol: '$',
         locale: 'en-US',
-        smallBagSize: 340,    // 12oz
+        smallBagSize: 341,    // 12oz
         largeBagSize: 907,   // 2lb fallback, same tolerance
         smallWeightUnit: 'oz',
         largeWeightUnit: 'lb',

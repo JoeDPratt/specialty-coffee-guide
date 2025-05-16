@@ -27,7 +27,6 @@ export default function ProcessesFilter() {
 
     const isProcessSelected = (key: string) => processFilters.includes(key);
     const { areProcessesSet } = useActiveFilters();
-    console.log("availableProcesses", availableProcesses)
 
     return (
         <div>

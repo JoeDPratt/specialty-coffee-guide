@@ -8,6 +8,7 @@ import { cn } from '@/utils/classes/merge';
 import SearchFilterMenu from '@/components/search/SearchFilterMenu';
 import { useHydrateSearchStores } from '@/hooks/useHydrateSearchStores';
 import SearchViewMenu from './SearchViewMenu';
+import useInitializeWeightFromRegion from '@/hooks/useInitializeWeightFromRegion';
 
 export default function SearchPageClient({
     dehydratedState,
@@ -19,6 +20,7 @@ export default function SearchPageClient({
     console.count("SearchResults render");
     // hydrate the stores with the query params
     useHydrateSearchStores(queryParams);
+    useInitializeWeightFromRegion();
 
     return (
         <HydrationBoundary state={dehydratedState}>

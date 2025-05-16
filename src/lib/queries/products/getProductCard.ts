@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { ProductVariant } from "@/types/aliases";
 import { ProductVariantForCard, RawProductCard } from "@/types/db-returns";
 import { Database } from "@/types/supabase";
 import { transformProductCard } from "@/utils/transformers/product";

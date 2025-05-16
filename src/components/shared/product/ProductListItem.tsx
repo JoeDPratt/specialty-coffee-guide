@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/tooltip";
 import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
 import { SearchState, useSearchStore } from "@/stores/useSearchStore";
+import PricePerKgTag from "./PricePerKgTag";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -30,6 +31,7 @@ interface ProductCardProps {
 export default function ProductListItem({
     product,
 }: ProductCardProps): JSX.Element {
+
     const {
         slug,
         product_name,
@@ -47,13 +49,12 @@ export default function ProductListItem({
     const router = useRouter();
     // const variantDisplayWeight = 250;
 
-    const isXs = useBreakpointStore((s) => s.isXs)
     const isSm = useBreakpointStore((s) => s.isSm)
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
     const blurredImage = getBlurURL(imageUrl);
 
     const variant =
-        product_variants?.find((v) => { return v.weight === parseInt(selectedWeight) })
+        product_variants?.find((v) => { return v.weight === selectedWeight })
         ?? product_variants?.[0];
 
     const pricePerKg = variant?.price_per_kg
@@ -111,7 +112,7 @@ export default function ProductListItem({
                 "sm:max-md:gap-x-3.5",
                 "md:px-6 md:py-5",
                 "sm:max-xl:grid-cols-[1fr_auto] sm:max-xl:grid-rows-[auto_auto] md:max-xl:gap-x-5",
-                "xl:grid-cols-[4fr_3fr_auto] xl:grid-rows-1 xl:gap-5 xl:pt-5 xl:pb-4.75"
+                "xl:grid-cols-[45%_1fr_auto] xl:grid-rows-1 xl:gap-5 xl:pt-5 xl:pb-4.75"
             )}>
                 <div className={cn(
                     "flex items-start w-full",
@@ -240,21 +241,7 @@ export default function ProductListItem({
                             ? "max-sm:justify-between"
                             : "max-sm:justify-end"
                     )}>
-                        {(isSm && isInStock && isBestValue) && <BestValueTag variant="outline" />}
-
-                        <div className="flex items-center gap-1 border-1 border-pr-300 rounded-sm">
-                            <span className={cn(
-                                "bg-pr-300 px-2 pt-0.25",
-                                isInStock ? "text-pr-700" : "text-card-100"
-                            )}>
-                                {selectedWeight === "1000" ? "1kg" : selectedWeight + "g"}
-                            </span>
-                            <span className={cn(
-                                "text-base leading-4 font-normal px-2 pt-0.25",
-                                isInStock ? "text-pr-700" : "text-disabled-400"
-                            )}>{pricePerKg} /kg
-                            </span>
-                        </div>
+                        <PricePerKgTag variants={product_variants ?? []} isInStock />
                     </div>
                 </div>
             </div>

@@ -12,10 +12,12 @@ import { subtleSpring } from "@/utils/animation";
 import AttributeSection from "@/components/product/AttributeSection";
 import BestValueTag from "@/components/shared/product/BestValueTag";
 import CupScoreBadge from "@/components/shared/product/CupScoreBadge";
-import { useBreakpointStore } from '@/stores/useBreakpointStore'
 import { cn } from "@/utils/classes/merge";
-import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import RoastAndFlavourTagsRow from "./RoastAndFlavourTagsRow";
+import { useRegionStore } from "@/stores/useRegionStore";
+import { REGIONS } from "@/consts/regionConfig";
+import useSelectVariant from "@/hooks/useSelectVariant";
+import PricePerKgTag from "./PricePerKgTag";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -37,20 +39,14 @@ export default function ProductCard({
     } = product;
 
     const router = useRouter();
-    const variantDisplayWeight = 250;
-    const selectedWeight = useSearchStore((s: SearchState) => s.selectedWeight);
 
-    const isSm = useBreakpointStore((s) => s.isSm)
+    const region = useRegionStore((s) => s.region);
+    const { symbol } = REGIONS[region];
+
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
     const blurredImage = getBlurURL(imageUrl);
 
-    const variant =
-        product_variants?.find((v) => { return v.weight === variantDisplayWeight })
-        ?? product_variants?.[0];
-
-    const pricePerKg = variant?.price_per_kg
-        ? `£${variant?.price_per_kg.toFixed(2)}`
-        : null;
+    const { variant } = useSelectVariant(product_variants ?? [])
 
     const isBestValue = false; // Add logic for best value
     const isInStock = product?.is_instock ?? false;
@@ -158,7 +154,7 @@ export default function ProductCard({
                             "text-3xl font-bold leading-9 -mb-0.5",
                             isInStock ? "text-pr-900" : "text-disabled-400"
                         )}>
-                            £{variant?.price?.toFixed(2) ?? "--.--"}
+                            {`${symbol}${variant?.price?.toFixed(2)}` ?? "--.--"}
                         </span>
                     </div>
                 </div>
@@ -169,19 +165,7 @@ export default function ProductCard({
                         ? "max-sm:justify-between"
                         : "max-sm:justify-end"
                 )}>
-                    <div className="flex items-center gap-1 border-1 border-pr-300 rounded-sm">
-                        <span className={cn(
-                            "bg-pr-300 px-2 pt-0.25",
-                            isInStock ? "text-pr-700" : "text-card-100"
-                        )}>
-                            {selectedWeight === "1000" ? "1kg" : selectedWeight + "g"}
-                        </span>
-                        <span className={cn(
-                            "text-base leading-4 font-normal px-2 pt-0.25",
-                            isInStock ? "text-pr-700" : "text-disabled-400"
-                        )}>{pricePerKg} /kg
-                        </span>
-                    </div>
+                    <PricePerKgTag variants={product_variants ?? []} isInStock />
                 </div>
             </div>
         </div >

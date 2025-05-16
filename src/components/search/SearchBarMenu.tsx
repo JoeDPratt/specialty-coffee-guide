@@ -5,6 +5,7 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
 import { ButtonWithBadge } from "../shared/buttons/ButtonWithBadge";
 import { useActiveFilters } from "@/hooks/useActiveFilters";
 import { useBreakpointStore } from "@/stores/useBreakpointStore";
+import { DropdownPriceView } from "./DropdownPriceView";
 
 export default function SeacrhBarMenu() {
 
@@ -36,18 +37,9 @@ export default function SeacrhBarMenu() {
                 <span className="hidden sm:inline pl-0.5">Filters</span>
             </ButtonWithBadge>
 
-            <div className="hidden items-center gap-2 lg:flex">
-                <span className="mt-0.5 text-base min-w-max">View prices for:</span>
-                <ToggleWithTooltips<WeightOption>
-                    value={selectedWeight}
-                    onChange={setWeight}
-                    options={[
-                        { value: "250", label: "250g", tooltip: "Compare prices of coffees available in 250g bags" },
-                        { value: "1000", label: "1kg", tooltip: "Compare prices of coffees available in 1kg bags" },
-                    ]}
-                    toggleItemClassName={"py-4.25"}
-                    tooltipOffset={17}
-                />
+            <div className="items-center gap-2 lg:flex">
+                <span className="hidden lg:inline mt-0.5 text-base min-w-max">View prices for:</span>
+                <DropdownPriceView />
             </div>
             <DropdownSort />
         </div>

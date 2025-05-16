@@ -4,7 +4,7 @@ import { getDefaultFilterOptions } from "@/lib/queries/products/getDefaultFilter
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import SearchPageClient from '@/components/search/SearchPageClient';
 import { parseQueryParams } from '@/utils/navigation/serializeQueryParams';
-import type { RawQueryParams, SearchQueryParams, SearchResultsResponse } from '@/types/search';
+import type { RawQueryParams } from '@/types/search';
 
 export default async function Page({
     searchParams,

@@ -6,7 +6,7 @@ import { SearchQueryParams } from '@/types/search';
 import { useHydrateFilters } from '@/hooks/useHydrateFilterParams';
 import { cupScoreRange as cupScoreConfig } from '@/consts/rangeConfig';
 
-export type WeightOption = "250" | "1000";
+export type WeightOption = number;
 export type ViewMode = "grid" | "list";
 export type SortOption = "price_low" | "price_high" | "cup_score_high";
 
@@ -78,6 +78,7 @@ export const initialFilters: Record<FilterKey, boolean> = Object.keys(filterConf
 }, {} as Record<FilterKey, boolean>);
 
 export const useSearchStore = createWithEqualityFn<SearchState>()(
+
     (set, get) => ({
         isSearchOpen: false,
         openSearch: () => set({ isSearchOpen: true }),
@@ -150,7 +151,7 @@ export const useSearchStore = createWithEqualityFn<SearchState>()(
         cupScoreRange: outOfBoundsCupScore,
         setCupScoreRange: (range) => set({ cupScoreRange: range }),
 
-        selectedWeight: "250",
+        selectedWeight: 250,
         setSelectedWeight: (weight) => set({ selectedWeight: weight }),
 
         selectedView: "list",
