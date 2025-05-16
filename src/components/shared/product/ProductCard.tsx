@@ -154,7 +154,7 @@ export default function ProductCard({
                             "text-3xl font-bold leading-9 -mb-0.5",
                             isInStock ? "text-pr-900" : "text-disabled-400"
                         )}>
-                            {`${symbol}${variant?.price?.toFixed(2)}` ?? "--.--"}
+                            {`${symbol}${variant?.price?.toFixed(2)}`}
                         </span>
                     </div>
                 </div>
