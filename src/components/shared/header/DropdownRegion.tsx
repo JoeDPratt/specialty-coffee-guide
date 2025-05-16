@@ -38,18 +38,18 @@ export default function DropdownRegion() {
                 <Button
                     variant={"ghostDark"}
                     size={"none"}
-                    className="justify-between pl-3 pr-2"
+                    className="justify-between px-5"
                 >
                     <span className="flex items-center gap-0">
                         <Flag code={regionConfig.flag} style={{ width: 20, height: 15 }} />
 
                     </span>
-                    <ChevronDownIcon
+                    {/* <ChevronDownIcon
                         className={cn(
                             "size-4 transition-transform duration-300",
                             showChevronUp && "rotate-180"
                         )}
-                    />
+                    /> */}
                 </Button>
             </DropdownMenuTrigger>
 

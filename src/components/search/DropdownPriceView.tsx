@@ -38,7 +38,7 @@ export function DropdownPriceView({ className }: { className?: string }) {
         { label: `${useDisplayWeight(largeBagSize)}`, value: largeBagSize },
     ];
 
-    const isSm = useBreakpointStore((s) => s.isSm);
+    const isXs = useBreakpointStore((s) => s.isXs);
     const [isOpen, setIsOpen] = useState(false);
     const [showChevronUp, setShowChevronUp] = useState(false);
     const activeLabel = sortOptions.find((opt) => opt.value === selectedWeight)?.label ?? "Pack size";
@@ -62,22 +62,17 @@ export function DropdownPriceView({ className }: { className?: string }) {
             <DropdownMenuTrigger asChild>
                 <div>
                     <Button
-                        className="md:hidden flex px-3 lg:pl-2 lg:pr-3 gap-2.5"
-                        styleType={"outline"}>
-                        <ScaleIcon />
-                        <span className="">{activeLabel}</span>
-                    </Button>
-                    <Button
                         styleType={"outline"}
-                        className="hidden md:inline-flex min-w-[130px] justify-between px-3"
+                        size={isXs ? "icon" : "default"}
+                        className="sm:min-w-[130px] xs:justify-between xs:px-3"
                     >
                         <span className="flex items-center gap-2" >
                             <ScaleIcon className="size-5" />
-                            {activeLabel}
+                            <span className="hidden xs:inline">{activeLabel}</span>
                         </span>
                         <ChevronDownIcon
                             className={cn(
-                                "size-4 transition-transform duration-300",
+                                "hidden sm:inline-flex size-4 transition-transform duration-300",
                                 showChevronUp && "rotate-180"
                             )}
                         />

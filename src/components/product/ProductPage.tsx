@@ -17,6 +17,9 @@ import RoastLabel from "../shared/product/RoastLabel";
 import type { JSX } from "react";
 import { motion } from "framer-motion";
 import { fadeUpItem, staggerContainer, subtleSpring } from "@/utils/animation";
+import { cn } from "@/utils/classes/merge";
+import { Button } from "../ui/button";
+import { ChevronRightIcon } from "@heroicons/react/16/solid";
 
 export default function ProductPage({
     slug
@@ -117,13 +120,13 @@ export default function ProductPage({
                             baseHeight={28}
                         />
                         <hr className="hr-light w-1/3 lg:w-1/5 mx-auto mt-3.75 mb-2.25" />
-                        <h1 className="text-center text-white w-full text-6xl lg:text-7xl lg:w-3/4 mx-auto leading-12 lg:leading-14 -mb-3 mt-2 ">
+                        <h1 className="text-center text-white w-full text-6xl lg:text-7xl lg:w-3/4 mx-auto leading-12 lg:leading-14 -mb-3 mt-2 px-3">
                             {product.product_name.toUpperCase()}
                         </h1>
 
                         <div
                             id="roast-flavours"
-                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 items-center font-sofia-sans text-xl text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3 capitalize"
+                            className="flex flex-row flex-wrap -mt-0.25 -mb-1.5 px-3 items-center font-sofia-sans text-xl text-pr-100 justify-center gap-2 mx-auto w-full lg:w-2/3 capitalize"
                         >
                             {flavors}
                         </div>
@@ -186,7 +189,7 @@ export default function ProductPage({
                         {/* Purchase options – links to the brand's product page */}
                         <div
                             id="product-options"
-                            className="dark:text-pr-800 lg:sticky lg:top-8 relative lg:self-start lg:mt-16.75 mt-12.75"
+                            className="lg:mt-16.75 mt-12.75"
                         >
                             <h2 className="pb-1.25">Available from</h2>
                             <a
@@ -197,28 +200,30 @@ export default function ProductPage({
                                 aria-label={"Get this coffee"}
                                 role="listitem"
                             >
-                                <div className="group flex flex-col xs:flex-row w-auto pb-2 gap-6 hover:border-sc-500 mb-4 items-center justify-between transition-colors duration-150 ease-in-out rounded-md">
+                                <div className={cn("group w-auto flex bg-card-200 border-1 border-card-100 mb-4 rounded-md",
+                                    "flex-col gap-2 pt-4 pb-6 px-4",
+                                    "xs:flex-row xs:justify-between items-center xs:py-4 xs:pl-3 xs:pr-6",
+                                    "hover:border-white hover:bg-pr-300/30 transition-colors duration-150 ease-in-out")}>
                                     <BrandLogo
                                         src={product.roaster.logo_img_url}
                                         alt={product.roaster.alt_text}
                                         className="mt-0.25"
+                                        containerClassName="bg-transparent border-none group-hover:scale-105 transition-colors duration-150 ease-in-out"
                                         layout={product.roaster.logo_layout}
                                         baseHeight={32}
                                     />
-                                    <div
-                                        className="text-sc-500 py-4 xs:pt-1 xs:pb-1.75 px-4 text-right font-sofia-sans-condensed font-black text-3xl border-2 border-sc-500 rounded-full group-hover:bg-pr-100"
-                                        aria-hidden="true"
-                                    >
-                                        <span className="text-xl font-medium tracking-wide">
-                                            IN-STOCK: VISIT STORE
-                                        </span>
-                                        <span className="hidden">→</span>
-                                    </div>
+                                    <Button
+                                        variant={"accent"}
+                                        iconPosition={"right"}
+                                        className="pr-3.5">
+                                        Visit store
+                                        <ChevronRightIcon />
+                                    </Button>
                                 </div>
                             </a>
                             <ProductOptionsList
                                 lowestPricePerKg={product.lowest_price_per_kg}
-                                productOptions={product.product_variants}
+                                variants={product.product_variants}
                                 url={product.product_url}
                             />
                         </div>

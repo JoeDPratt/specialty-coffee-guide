@@ -22,7 +22,7 @@ export default function SeacrhBarMenu() {
     const { filterCount } = useActiveFilters();
 
     return (
-        <div className="flex items-center gap-3 lg:gap-4">
+        <div className="flex items-center gap-3">
             {/* Filter Icon Button, shows below lg */}
             <ButtonWithBadge
                 variant={"default"}
@@ -32,15 +32,12 @@ export default function SeacrhBarMenu() {
                 aria-label="Filter Option Button"
                 size={isSm ? "icon" : "default"}
                 className="inline lg:hidden"
+                buttonClassName="sm:pl-3 sm:pr-4"
             >
                 <AdjustmentsHorizontalIcon />
                 <span className="hidden sm:inline pl-0.5">Filters</span>
             </ButtonWithBadge>
-
-            <div className="items-center gap-2 lg:flex">
-                <span className="hidden lg:inline mt-0.5 text-base min-w-max">View prices for:</span>
-                <DropdownPriceView />
-            </div>
+            <DropdownPriceView />
             <DropdownSort />
         </div>
     )

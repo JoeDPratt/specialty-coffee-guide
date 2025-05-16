@@ -23,6 +23,9 @@ import {
 import { DefaultTooltip } from "@/components/tooltips/DefaultTooltip";
 import { SearchState, useSearchStore } from "@/stores/useSearchStore";
 import PricePerKgTag from "./PricePerKgTag";
+import { useRegionStore } from "@/stores/useRegionStore";
+import { REGIONS } from "@/consts/regionConfig";
+import useSelectVariant from "@/hooks/useSelectVariant";
 
 interface ProductCardProps {
     product: ProductCard;
@@ -44,22 +47,16 @@ export default function ProductListItem({
         sca_cup_score
     } = product;
 
-
-    const selectedWeight = useSearchStore((s: SearchState) => s.selectedWeight);
     const router = useRouter();
-    // const variantDisplayWeight = 250;
+    const region = useRegionStore((s) => s.region);
+    const { symbol } = REGIONS[region];
 
     const isSm = useBreakpointStore((s) => s.isSm)
     const imageUrl = images?.[0]?.image_url || "/placeholder.png";
     const blurredImage = getBlurURL(imageUrl);
 
-    const variant =
-        product_variants?.find((v) => { return v.weight === selectedWeight })
-        ?? product_variants?.[0];
+    const { variant } = useSelectVariant(product_variants ?? [])
 
-    const pricePerKg = variant?.price_per_kg
-        ? `£${variant?.price_per_kg.toFixed(2)}`
-        : null;
     const flavourText = flavours?.join(", ");
     const isBestValue = false; // Add logic for best value
     const isInStock = variant?.is_instock ?? false;
@@ -227,7 +224,7 @@ export default function ProductListItem({
                                         "text-3xl font-bold leading-9 -mb-0.5",
                                         isInStock ? "text-pr-900" : "text-disabled-400"
                                     )}>
-                                        £{variant?.price?.toFixed(2) ?? "--.--"}
+                                        {`${symbol}${variant?.price?.toFixed(2)}`}
                                     </span>
 
                                 </div>

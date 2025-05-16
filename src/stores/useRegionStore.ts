@@ -8,6 +8,6 @@ interface RegionState {
 }
 
 export const useRegionStore = create<RegionState>((set) => ({
-    region: 'UK',
+    region: 'US',
     setRegion: (region) => set({ region }),
 }));

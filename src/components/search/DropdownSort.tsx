@@ -56,19 +56,19 @@ export function DropdownSort({ className }: DropdownSortProps) {
             <DropdownMenuTrigger asChild>
                 <div>
                     <Button
-                        className="md:hidden flex sm:pl-3 sm:pr-4"
+                        className="sm:hidden flex"
                         styleType={"outline"}
-                        size={isSm ? "icon" : "default"}>
+                        size={"icon"}>
                         <ArrowsUpDownIcon />
-                        <span className="hidden sm:inline">Sort</span>
                     </Button>
                     <Button
                         styleType={"outline"}
-                        className="hidden md:inline-flex min-w-[250px] justify-between"
+                        className="hidden sm:inline-flex min-w-min lg:min-w-[250px] justify-between px-3"
                     >
                         <span className="flex items-center gap-2" >
                             <ArrowsUpDownIcon className="size-5" />
-                            {activeLabel}
+                            <span className="lg:hidden inline">Sort</span>
+                            <span className="hidden lg:inline">{activeLabel}</span>
                         </span>
                         <ChevronDownIcon
                             className={cn(

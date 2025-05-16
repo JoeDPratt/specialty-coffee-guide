@@ -1,4 +1,5 @@
 import type { LogoLayout } from "@/types/product";
+import { cn } from "@/utils/classes/merge";
 import { cloudinaryLoader } from "@/utils/image/cloudinary";
 import Image from "next/image";
 import type { ImageProps } from "next/image";
@@ -18,6 +19,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
     src,
     alt = "Brand Logo",
     className = "",
+    containerClassName = "",
     priority = false,
     layout = "wide",
     baseHeight = 32,
@@ -39,7 +41,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
 
     if (isSvg) {
         return (
-            <div className={defaultContainerClass}>
+            <div className={cn(defaultContainerClass, containerClassName)}>
                 <img
                     src={src}
                     alt={alt}
@@ -51,7 +53,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
     }
 
     return (
-        <div className={defaultContainerClass}>
+        <div className={cn(defaultContainerClass, containerClassName)}>
             <Image
                 priority={priority}
                 loader={cloudinaryLoader}
